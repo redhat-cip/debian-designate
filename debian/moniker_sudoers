@@ -1,0 +1,3 @@
+Defaults:moniker !requiretty
+
+moniker ALL = (root) NOPASSWD: /usr/sbin/rndc

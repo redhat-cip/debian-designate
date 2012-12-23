@@ -1,0 +1,57 @@
+moniker (0.0.249.64bd947-1) precise; urgency=low
+
+  * Version bump
+
+ -- Kiall Mac Innes <kiall@hp.com>  Tue, 08 Jan 2013 13:37:06 +0000
+
+moniker (0.0.235.b5ecff2-8) precise; urgency=low
+
+  * Depend on python-pyparsing since python-cmd2 does not (LP# # LP# 1036295).
+  * Add debian/copyright
+
+ -- Kiall Mac Innes <kiall@managedit.ie>  Wed, 02 Jan 2013 22:50:41 +0000
+
+moniker (0.0.235.b5ecff2-7) precise; urgency=low
+
+  * Add sudoers file
+
+ -- Kiall Mac Innes <kiall@managedit.ie>  Sat, 29 Dec 2012 23:22:11 +0000
+
+moniker (0.0.235.b5ecff2-6) precise; urgency=low
+
+  * Ensure the moniker-central.conf file is in place before
+    initializing the database.
+
+ -- Kiall Mac Innes <kiall@managedit.ie>  Sat, 29 Dec 2012 18:16:27 +0000
+
+moniker (0.0.235.b5ecff2-5) precise; urgency=low
+
+  * Purge log and state files when purging moniker-common.
+
+ -- Kiall Mac Innes <kiall@managedit.ie>  Sat, 29 Dec 2012 18:08:58 +0000
+
+moniker (0.0.235.b5ecff2-4) precise; urgency=low
+
+  * Work around a moniker-manage bug that causes the db init/sync commands
+    to fail.
+
+ -- Kiall Mac Innes <kiall@managedit.ie>  Sat, 29 Dec 2012 17:44:55 +0000
+
+moniker (0.0.235.b5ecff2-3) precise; urgency=low
+
+  * Init and Sync DB during moniker-central install.
+
+ -- Kiall Mac Innes <kiall@managedit.ie>  Sat, 29 Dec 2012 17:32:23 +0000
+
+moniker (0.0.235.b5ecff2-2) precise; urgency=low
+
+  * Include `moniker-manage` in 'moniker-common' package.
+  * Ensure default config paths are correct.
+
+ -- Kiall Mac Innes <kiall@managedit.ie>  Sat, 29 Dec 2012 17:18:40 +0000
+
+moniker (0.0.235.b5ecff2-1) precise; urgency=low
+
+  * Initial packaging
+
+ -- Kiall Mac Innes <kiall@managedit.ie>  Sat, 29 Dec 2012 16:46:41 +0000
