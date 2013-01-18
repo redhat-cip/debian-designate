@@ -1,3 +1,4 @@
+etc/moniker
 var/lib/moniker
 var/log/moniker
 usr/share/moniker
