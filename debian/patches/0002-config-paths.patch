@@ -1,6 +1,6 @@
 --- a/etc/moniker.conf.sample
 +++ b/etc/moniker.conf.sample
-@@ -7,10 +7,10 @@ verbose = True
+@@ -9,10 +9,10 @@
  debug = False
  
  # Top-level directory for maintaining moniker's state
@@ -8,9 +8,9 @@
 +state_path = /var/lib/moniker
  
  # Log directory
--#logdir=/var/log/moniker
-+logdir=/var/log/moniker
+-#logdir = /var/log/moniker
++logdir = /var/log/moniker
  
- # There has to be a better way to set these defaults
- allowed_rpc_exception_modules = moniker.exceptions, moniker.openstack.common.exception
+ # Driver used for issuing notifications
+ #notification_driver = moniker.openstack.common.notifier.rabbit_notifier
  
