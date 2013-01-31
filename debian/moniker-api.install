@@ -1,2 +1,2 @@
 usr/bin/moniker-api
-etc/moniker-api-paste.ini.sample /usr/share/moniker/
+etc/moniker/api-paste.ini.sample /usr/share/moniker/

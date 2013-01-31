@@ -30,6 +30,7 @@ Architecture: all
 Depends:
     python-moniker (= ${binary:Version}),
     python-pyparsing,
+    python-jsonschema (>= 0.8.0),
     ${misc:Depends}
 Description: Moniker Common
  Moniker Common

@@ -1,4 +1,4 @@
 debian/moniker_sudoers /etc/sudoers.d/
 usr/bin/moniker-manage
-etc/moniker.conf.sample /usr/share/moniker/
-etc/policy.json /usr/share/moniker/
+etc/moniker/moniker.conf.sample /usr/share/moniker/
+etc/moniker/policy.json /usr/share/moniker/

@@ -4,8 +4,7 @@ set -e
 
 #DEBHELPER#
 
-if [ "$1" = "configure" ]
-then
+if [ "$1" = "configure" ]; then
 	# This needs to be AFTER the debhelper include above, so the config file is in place.
 	su -s /bin/sh -c 'cd /tmp && moniker-manage database init' moniker || true
 	su -s /bin/sh -c 'cd /tmp && moniker-manage database sync' moniker

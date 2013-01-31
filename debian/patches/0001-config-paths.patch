@@ -1,5 +1,5 @@
---- a/etc/moniker.conf.sample
-+++ b/etc/moniker.conf.sample
+--- a/etc/moniker/moniker.conf.sample
++++ b/etc/moniker/moniker.conf.sample
 @@ -9,10 +9,10 @@
  debug = False
  
