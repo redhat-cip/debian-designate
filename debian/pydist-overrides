@@ -11,5 +11,6 @@ sqlalchemy python-sqlalchemy
 kombu python-kombu
 monikerclient python-monikerclient
 cliff python-cliff
+cliff-tablib cliff-tablib
 extras python-extras
 jsonschema python-jsonschema
