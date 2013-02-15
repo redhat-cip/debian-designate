@@ -1,3 +1,9 @@
+moniker (2013.1.alpha1.24.ge44e6c3-1) precise; urgency=low
+
+  * Version bump
+
+ -- Kiall Mac Innes <kiall@hp.com>  Fri, 15 Feb 2013 18:42:28 +0000
+
 moniker (2013.1.alpha1.22.gc344c23-1) precise; urgency=low
 
   * Version bump
