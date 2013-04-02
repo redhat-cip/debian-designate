@@ -1,3 +1,11 @@
+moniker (2013.1.alpha1.89.gc79d6f6-1) precise; urgency=low
+
+  * Version bump
+  * Add moniker-sink service
+  * Add /etc/moniker/conf.d
+
+ -- Kiall Mac Innes <kiall@hp.com>  Tue, 02 Apr 2013 10:54:56 +0100
+
 moniker (2013.1.alpha1.24.ge44e6c3-1) precise; urgency=low
 
   * Version bump
