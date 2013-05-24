@@ -1,3 +1,10 @@
+moniker (2013.1.alpha1.121.g0c7535e-1) precise; urgency=low
+
+  * Version bump
+  * Move moniker-manage bin to moniker-common package
+
+ -- Kiall Mac Innes <kiall@hp.com>  Fri, 24 May 2013 12:07:28 +0100
+
 moniker (2013.1.alpha1.89.gc79d6f6-1) precise; urgency=low
 
   * Version bump
