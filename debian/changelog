@@ -1,5 +1,115 @@
-designate (0.0.0-1) UNRELEASED; urgency=low
+designate (2013.2.a133.g3eec5a9-1) precise; urgency=high
 
-  * Import Packaging
+  * Rename to designate
+  * Version bump
 
- -- Kiall Mac Innes <kiall@hp.com>  Fri, 22 Feb 2013 17:35:46 +0000
+ -- Kiall Mac Innes <kiall@hp.com>  Tue, 11 Jun 2013 12:35:35 +0100
+
+moniker (2013.1.alpha1.121.g0c7535e-1) precise; urgency=low
+
+  * Version bump
+  * Move moniker-manage bin to moniker-common package
+
+ -- Kiall Mac Innes <kiall@hp.com>  Fri, 24 May 2013 12:07:28 +0100
+
+moniker (2013.1.alpha1.89.gc79d6f6-1) precise; urgency=low
+
+  * Version bump
+  * Add moniker-sink service
+  * Add /etc/moniker/conf.d
+
+ -- Kiall Mac Innes <kiall@hp.com>  Tue, 02 Apr 2013 10:54:56 +0100
+
+moniker (2013.1.alpha1.24.ge44e6c3-1) precise; urgency=low
+
+  * Version bump
+
+ -- Kiall Mac Innes <kiall@hp.com>  Fri, 15 Feb 2013 18:42:28 +0000
+
+moniker (2013.1.alpha1.22.gc344c23-1) precise; urgency=low
+
+  * Version bump
+
+ -- Kiall Mac Innes <kiall@hp.com>  Thu, 14 Feb 2013 12:10:26 +0000
+
+moniker (2013.1.alpha1.18.g92896f8-1) precise; urgency=low
+
+  * Version bump
+
+ -- Kiall Mac Innes <kiall@hp.com>  Wed, 13 Feb 2013 12:46:17 +0000
+
+moniker (2013.1.alpha1.5.gbced563-1) precise; urgency=low
+
+  * Version bump
+
+ -- Kiall Mac Innes <kiall@hp.com>  Thu, 07 Feb 2013 12:51:41 +0000
+
+moniker (2013.1.alpha1-1) precise; urgency=low
+
+  * Version bump
+
+ -- Kiall Mac Innes <kiall@hp.com>  Thu, 31 Jan 2013 10:56:57 +0000
+
+moniker (0.0.269.5160e70-1) precise; urgency=low
+
+  * Version Bump
+
+ -- Kiall Mac Innes <kiall@hp.com>  Fri, 18 Jan 2013 12:27:22 +0000
+
+moniker (0.0.249.64bd947-1) precise; urgency=low
+
+  * Version bump
+
+ -- Kiall Mac Innes <kiall@hp.com>  Tue, 08 Jan 2013 13:37:06 +0000
+
+moniker (0.0.235.b5ecff2-8) precise; urgency=low
+
+  * Depend on python-pyparsing since python-cmd2 does not (LP# # LP# 1036295).
+  * Add debian/copyright
+
+ -- Kiall Mac Innes <kiall@managedit.ie>  Wed, 02 Jan 2013 22:50:41 +0000
+
+moniker (0.0.235.b5ecff2-7) precise; urgency=low
+
+  * Add sudoers file
+
+ -- Kiall Mac Innes <kiall@managedit.ie>  Sat, 29 Dec 2012 23:22:11 +0000
+
+moniker (0.0.235.b5ecff2-6) precise; urgency=low
+
+  * Ensure the moniker-central.conf file is in place before
+    initializing the database.
+
+ -- Kiall Mac Innes <kiall@managedit.ie>  Sat, 29 Dec 2012 18:16:27 +0000
+
+moniker (0.0.235.b5ecff2-5) precise; urgency=low
+
+  * Purge log and state files when purging moniker-common.
+
+ -- Kiall Mac Innes <kiall@managedit.ie>  Sat, 29 Dec 2012 18:08:58 +0000
+
+moniker (0.0.235.b5ecff2-4) precise; urgency=low
+
+  * Work around a moniker-manage bug that causes the db init/sync commands
+    to fail.
+
+ -- Kiall Mac Innes <kiall@managedit.ie>  Sat, 29 Dec 2012 17:44:55 +0000
+
+moniker (0.0.235.b5ecff2-3) precise; urgency=low
+
+  * Init and Sync DB during moniker-central install.
+
+ -- Kiall Mac Innes <kiall@managedit.ie>  Sat, 29 Dec 2012 17:32:23 +0000
+
+moniker (0.0.235.b5ecff2-2) precise; urgency=low
+
+  * Include `moniker-manage` in 'moniker-common' package.
+  * Ensure default config paths are correct.
+
+ -- Kiall Mac Innes <kiall@managedit.ie>  Sat, 29 Dec 2012 17:18:40 +0000
+
+moniker (0.0.235.b5ecff2-1) precise; urgency=low
+
+  * Initial packaging
+
+ -- Kiall Mac Innes <kiall@managedit.ie>  Sat, 29 Dec 2012 16:46:41 +0000
