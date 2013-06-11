@@ -6,7 +6,26 @@ Build-Depends:
     debhelper (>= 8.0.0),
     python-all (>= 2.6),
     python-pbr,
-    python-d2to1
+    python-d2to1,
+    python-sphinx,
+    python-extras,
+    python-webob,
+    python-routes,
+    python-sqlalchemy (>= 0.7),
+    python-sqlalchemy (<= 0.7.99),
+    python-sqlalchemy-ext,
+    python-migrate,
+    python-stevedore,
+    python-paste,
+    python-pastedeploy,
+    python-ipaddr,
+    python-jsonschema (>= 0.8),
+    python-jsonschema (<=1.0),
+    python-flask,
+    python-mock,
+    python-mox,
+    python-unittest2,
+    python-nose
 Build-Depends-Indep:
     python-setuptools
 Standards-Version: 3.9.3
@@ -83,8 +102,8 @@ Depends:
     ${python:Depends},
     ${misc:Depends}
 Recommends:
-    python-sqlalchemy (>= 0.7.8),
-    python-sqlalchemy (<= 0.7.9),
+    python-sqlalchemy (>= 0.7),
+    python-sqlalchemy (<= 0.7.99),
     python-migrate,
     python-kombu,
     python-keystoneclient

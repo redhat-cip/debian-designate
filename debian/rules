@@ -16,6 +16,26 @@
 # This has to be exported to make some magic below work.
 export DH_OPTIONS
 
+# Prevent setuptools/distribute from accessing the internet.
+export http_proxy = http://127.0.9.1:9
 
 %:
 	dh $@ --with python2
+
+ifeq (,$(findstring nocheck, $(DEB_BUILD_OPTIONS)))
+override_dh_auto_test:
+	PYTHONPATH=$(CURDIR) python setup.py nosetests
+endif
+
+#override_dh_auto_build:
+#		dh_auto_build
+#ifeq (,$(findstring nodocs, $(DEB_BUILD_OPTIONS)))
+#		mkdir doc/build
+#		python setup.py build_sphinx
+#else
+#		mkdir -p doc/build/html
+#endif
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -rf doc/build build *.egg-info
