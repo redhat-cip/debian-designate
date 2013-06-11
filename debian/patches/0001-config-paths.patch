@@ -1,16 +1,16 @@
---- a/etc/moniker/moniker.conf.sample
-+++ b/etc/moniker/moniker.conf.sample
+--- a/etc/designate/designate.conf.sample
++++ b/etc/designate/designate.conf.sample
 @@ -9,10 +9,10 @@
  debug = False
  
- # Top-level directory for maintaining moniker's state
--#state_path = /var/lib/moniker
-+state_path = /var/lib/moniker
+ # Top-level directory for maintaining designate's state
+-#state_path = /var/lib/designate
++state_path = /var/lib/designate
  
  # Log directory
--#logdir = /var/log/moniker
-+logdir = /var/log/moniker
+-#logdir = /var/log/designate
++logdir = /var/log/designate
  
  # Driver used for issuing notifications
- #notification_driver = moniker.openstack.common.notifier.rabbit_notifier
+ #notification_driver = designate.openstack.common.notifier.rabbit_notifier
  

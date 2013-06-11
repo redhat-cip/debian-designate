@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -e
+
+if [ "$1" = "purge" ]
+then
+	rm -rf /var/lib/designate /var/log/designate || true
+	
+	if (which deluser && getent passwd designate) > /dev/null 2>&1; then
+		deluser --system --quiet --backup-to /var/lib designate
+	fi	
+	if (which delgroup && getent group designate) > /dev/null 2>&1; then
+		delgroup --system --quiet designate
+	fi
+fi
+
+#DEBHELPER#

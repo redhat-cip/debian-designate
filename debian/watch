@@ -1,2 +1,2 @@
 version=3
-http://tarballs.openstack.org/moniker/moniker-(?!master)(.*)\.tar\.gz
+http://tarballs.openstack.org/designate/designate-(?!master)(.*)\.tar\.gz

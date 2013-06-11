@@ -1,5 +1,0 @@
-etc/moniker
-etc/moniker/conf.d
-var/lib/moniker
-var/log/moniker
-usr/share/moniker

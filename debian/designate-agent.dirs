@@ -1,0 +1,3 @@
+etc/designate
+var/lib/designate
+usr/share/designate

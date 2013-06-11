@@ -1,0 +1,2 @@
+usr/bin/designate-api
+etc/designate/api-paste.ini.sample /usr/share/designate/

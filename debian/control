@@ -1,82 +1,95 @@
-Source: moniker
+Source: designate
 Section: python
 Priority: extra
 Maintainer: Kiall Mac Innes <kiall@managedit.ie>
 Build-Depends:
     debhelper (>= 8.0.0),
-    python-all (>= 2.6)
+    python-all (>= 2.6),
+    python-pbr,
+    python-d2to1
 Build-Depends-Indep:
     python-setuptools
 Standards-Version: 3.9.3
 XS-Python-Version: >= 2.6
-Homepage: https://launchpad.net/moniker
-Vcs-Git: https://github.com/stackforge/moniker.git
-Vcs-Browser: https://github.com/stackforge/moniker
+Homepage: https://launchpad.net/designate
+Vcs-Git: https://github.com/stackforge/designate.git
+Vcs-Browser: https://github.com/stackforge/designate
 
-Package: moniker
+Package: designate
 Architecture: all
 Depends:
-    python-moniker (= ${binary:Version}),
-    moniker-common (= ${binary:Version}),
-    moniker-central (= ${binary:Version}),
-    moniker-api (= ${binary:Version}),
-    moniker-agent (= ${binary:Version}),
+    python-designate (= ${binary:Version}),
+    designate-common (= ${binary:Version}),
+    designate-central (= ${binary:Version}),
+    designate-api (= ${binary:Version}),
+    designate-agent (= ${binary:Version}),
     ${misc:Depends}
-Description: Moniker Virtual Package
- Moniker Virtual Package
+Description: Designate Virtual Package
+ Designate Virtual Package
 
-Package: moniker-common
+Package: designate-common
 Architecture: all
 Depends:
-    python-moniker (= ${binary:Version}),
+    python-designate (= ${binary:Version}),
     python-pyparsing,
     python-jsonschema (>= 0.8.0),
     ${misc:Depends}
-Description: Moniker Common
- Moniker Common
+Description: Designate Common
+ Designate Common
 
-Package: moniker-api
+Package: designate-api
 Architecture: all
 Depends:
-    python-moniker (= ${binary:Version}),
-    moniker-common (= ${binary:Version}),
+    python-designate (= ${binary:Version}),
+    designate-common (= ${binary:Version}),
     ${python:Depends},
     ${misc:Depends}
-Description: Moniker API
- Moniker API
+Description: Designate API
+ Designate API
 
-Package: moniker-central
+Package: designate-central
 Architecture: all
 Depends:
-    python-moniker (= ${binary:Version}),
-    moniker-common (= ${binary:Version}),
+    python-designate (= ${binary:Version}),
+    designate-common (= ${binary:Version}),
     ${python:Depends},
     ${misc:Depends}
-Description: Moniker Central
- Moniker Central
+Description: Designate Central
+ Designate Central
 
-Package: moniker-agent
+Package: designate-agent
 Architecture: all
 Depends:
-    python-moniker (= ${binary:Version}),
-    moniker-common (= ${binary:Version}),
+    python-designate (= ${binary:Version}),
+    designate-common (= ${binary:Version}),
     ${python:Depends},
     ${misc:Depends}
-Description: Moniker Agent
- Moniker Agent
+Description: Designate Agent
+ Designate Agent
 
-Package: python-moniker
+Package: designate-sink
+Architecture: all
+Depends:
+    python-designate (= ${binary:Version}),
+    designate-common (= ${binary:Version}),
+    ${python:Depends},
+    ${misc:Depends}
+Description: Designate Sink
+ Designate Sink
+
+Package: python-designate
 Architecture: all
 Depends:
     ${python:Depends},
     ${misc:Depends}
 Recommends:
-    python-sqlalchemy,
+    python-sqlalchemy (>= 0.7.8),
+    python-sqlalchemy (<= 0.7.9),
     python-migrate,
     python-kombu,
     python-keystoneclient
 Provides:
     ${python:Provides}
 XB-Python-Version: ${python:Versions}
-Description: Moniker Python Libraries
- Moniker Python Libraries
+Description: Designate Python Libraries
+ Designate Python Libraries

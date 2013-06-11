@@ -9,8 +9,9 @@ routes python-routes
 webob python-webob
 sqlalchemy python-sqlalchemy
 kombu python-kombu
-monikerclient python-monikerclient
+designateclient python-designateclient
 cliff python-cliff
 cliff-tablib cliff-tablib
 extras python-extras
 jsonschema python-jsonschema
+iso8601 python-iso8601
