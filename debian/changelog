@@ -1,3 +1,9 @@
+designate (2013.2.a133.g3eec5a9-4) precise; urgency=high
+
+  * Update 0002-clean-test-deps.patch
+
+ -- Kiall Mac Innes <kiall@hp.com>  Tue, 11 Jun 2013 14:41:13 +0100
+
 designate (2013.2.a133.g3eec5a9-3) precise; urgency=high
 
   * Add missing Build-Depends

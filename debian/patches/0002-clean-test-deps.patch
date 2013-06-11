@@ -1,11 +1,11 @@
 diff --git a/test-requirements.txt b/test-requirements.txt
-index ade5380..9559610 100644
+index ade5380..245ad34 100644
 --- a/test-requirements.txt
 +++ b/test-requirements.txt
 @@ -1,18 +1,7 @@
  # Packages needed for dev testing
- distribute>=0.6.24
- 
+-distribute>=0.6.24
+-
 -# Install bounded pep8/pyflakes first, then let flake8 install
 -pep8==1.4.5
 -pyflakes==0.7.2
@@ -14,7 +14,8 @@ index ade5380..9559610 100644
 -
 -coverage>=3.6
 -nosexcover
--
++distribute>0.6.23
+ 
  nose
 -openstack.nose_plugin>=0.7
 -nosehtmloutput>=0.0.3
