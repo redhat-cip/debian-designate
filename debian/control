@@ -117,3 +117,45 @@ Provides:
 XB-Python-Version: ${python:Versions}
 Description: Designate Python Libraries
  Designate Python Libraries
+
+Package: moniker-common
+Depends: designate-common (= ${binary:Version}), ${misc:Depends}
+Architecture: all
+Section: oldlibs
+Description: Transitional dummy package
+ This is a transitional dummy package. It can safely be removed.
+
+Package: moniker-api
+Depends: designate-api (= ${binary:Version}), ${misc:Depends}
+Architecture: all
+Section: oldlibs
+Description: Transitional dummy package
+ This is a transitional dummy package. It can safely be removed.
+
+Package: moniker-central
+Depends: designate-central (= ${binary:Version}), ${misc:Depends}
+Architecture: all
+Section: oldlibs
+Description: Transitional dummy package
+ This is a transitional dummy package. It can safely be removed.
+
+Package: moniker-agent
+Depends: designate-agent (= ${binary:Version}), ${misc:Depends}
+Architecture: all
+Section: oldlibs
+Description: Transitional dummy package
+ This is a transitional dummy package. It can safely be removed.
+
+Package: moniker-sink
+Depends: designate-sink (= ${binary:Version}), ${misc:Depends}
+Architecture: all
+Section: oldlibs
+Description: Transitional dummy package
+ This is a transitional dummy package. It can safely be removed.
+
+Package: python-moniker
+Depends: python-designate (= ${binary:Version}), ${misc:Depends}
+Architecture: all
+Section: oldlibs
+Description: Transitional dummy package
+ This is a transitional dummy package. It can safely be removed.
