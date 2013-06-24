@@ -1,3 +1,9 @@
+designate (2013.2.a144.g83b331e-1) precise; urgency=high
+
+  * New upstream release
+
+ -- Kiall Mac Innes <kiall@hp.com>  Mon, 24 Jun 2013 22:34:57 +0100
+
 designate (2013.2.a133.g3eec5a9-6) precise; urgency=high
 
   * Add Moniker transitional packages
