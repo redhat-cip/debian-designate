@@ -3,36 +3,36 @@ Section: python
 Priority: extra
 Maintainer: Kiall Mac Innes <kiall@managedit.ie>
 Build-Depends:
-    debhelper (>= 8.0.0),
-    python-all (>= 2.6),
-    python-pbr,
-    python-d2to1,
-    python-sphinx,
+    debhelper (>=8.0.0),
+    python-all (>=2.6),
+    python-cliff (>=1.4),
+    python-d2to1 (>=0.2.10),
+    python-d2to1 (<0.3),
+    python-eventlet (>=0.9.12),
     python-extras,
-    python-webob,
-    python-routes,
-    python-sqlalchemy (>= 0.7),
-    python-sqlalchemy (<= 0.7.99),
-    python-sqlalchemy-ext,
-    python-migrate,
-    python-stevedore,
-    python-paste,
-    python-pastedeploy,
+    python-flask (>=0.9),
+    python-flask (<0.10),
     python-ipaddr,
-    python-jsonschema (>= 0.8),
-    python-jsonschema (<=1.0),
-    python-flask,
-    python-iso8601,
-    python-eventlet,
-    python-cliff,
-    python-kombu,
-    python-keystoneclient,
-    python-mock,
-    python-mox,
-    python-unittest2,
-    python-nose
-Build-Depends-Indep:
-    python-setuptools
+    python-iso8601 (>=0.1.4),
+    python-jsonschema (>=1.0.0),
+    python-jsonschema (<2),
+    python-kombu (>2.4.7),
+    python-paste,
+    python-pastedeploy (>=1.5.0),
+    python-pbr (>=0.5.16),
+    python-pbr (<0.6),
+    python-keystoneclient (>=0.2),
+    python-keystoneclient (<0.3),
+    python-routes (>=1.12.3),
+    python-sqlalchemy (>=0.7),
+    python-sqlalchemy (<=0.7.99),
+    python-migrate (>=0.7),
+    python-stevedore (>=0.9),
+    python-webob (>=1.0.8),
+    python-mock (>=0.8.0),
+    python-mox (>=0.5.3),
+    python-nose,
+    python-unittest2
 Standards-Version: 3.9.3
 XS-Python-Version: >= 2.6
 Homepage: https://launchpad.net/designate
@@ -55,8 +55,6 @@ Package: designate-common
 Architecture: all
 Depends:
     python-designate (= ${binary:Version}),
-    python-pyparsing,
-    python-jsonschema (>= 0.8.0),
     ${misc:Depends}
 Description: Designate Common
  Designate Common
@@ -104,14 +102,32 @@ Description: Designate Sink
 Package: python-designate
 Architecture: all
 Depends:
+    python-cliff (>=1.4),
+    python-d2to1 (>=0.2.10),
+    python-d2to1 (<0.3),
+    python-eventlet (>=0.9.12),
+    python-extras,
+    python-flask (>=0.9),
+    python-flask (<0.10),
+    python-ipaddr,
+    python-iso8601 (>=0.1.4),
+    python-jsonschema (>=1.0.0),
+    python-jsonschema (<2),
+    python-kombu (>2.4.7),
+    python-paste,
+    python-pastedeploy (>=1.5.0),
+    python-pbr (>=0.5.16),
+    python-pbr (<0.6),
+    python-keystoneclient (>=0.2),
+    python-keystoneclient (<0.3),
+    python-routes (>=1.12.3),
+    python-sqlalchemy (>=0.7),
+    python-sqlalchemy (<=0.7.99),
+    python-migrate (>=0.7),
+    python-stevedore (>=0.9),
+    python-webob (>=1.0.8),
     ${python:Depends},
     ${misc:Depends}
-Recommends:
-    python-sqlalchemy (>= 0.7),
-    python-sqlalchemy (<= 0.7.99),
-    python-migrate,
-    python-kombu,
-    python-keystoneclient
 Provides:
     ${python:Provides}
 XB-Python-Version: ${python:Versions}
