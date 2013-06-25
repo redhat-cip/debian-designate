@@ -1,3 +1,10 @@
+designate (2013.2.a146.g09fdf2a-2) precise; urgency=high
+
+  * Correct python-keystoneclient version epoch
+  * Reduce python-kombu version dep to 1.0.4
+
+ -- Kiall Mac Innes <kiall@hp.com>  Tue, 25 Jun 2013 01:25:16 +0100
+
 designate (2013.2.a146.g09fdf2a-1) precise; urgency=high
 
   * New upstream version
