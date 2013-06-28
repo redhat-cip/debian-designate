@@ -1,3 +1,9 @@
+designate (2013.2.a152.g67de2b0-1) precise; urgency=high
+
+  * New upstream version
+
+ -- Kiall Mac Innes <kiall@hp.com>  Fri, 28 Jun 2013 19:23:00 +0100
+
 designate (2013.2.a147.g9a107da-1) precise; urgency=high
 
   * New upstream version
