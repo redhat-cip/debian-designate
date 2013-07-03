@@ -8,7 +8,7 @@ index a54d0ca..04f261c 100644
  jsonschema>=1.0.0,!=1.4.0,<2
 -kombu>2.4.7
 +kombu>=1.0.4
+ oslo.config>=1.1.0
  paste
  pastedeploy>=1.5.0
- pbr>=0.5.16,<0.6
  
