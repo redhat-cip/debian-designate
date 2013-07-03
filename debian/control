@@ -16,7 +16,7 @@ Build-Depends:
     python-iso8601 (>=0.1.4),
     python-jsonschema (>=1.0.0),
     python-jsonschema (<<2),
-    python-kombu (>=1.0.4),
+    python-kombu (>>2.4.7),
     python-paste,
     python-pastedeploy (>=1.5.0),
     python-pbr (>=0.5.16),
@@ -32,7 +32,8 @@ Build-Depends:
     python-mock (>=0.8.0),
     python-mox (>=0.5.3),
     python-nose,
-    python-unittest2
+    python-unittest2,
+    python-anyjson (>=0.3.3)
 Standards-Version: 3.9.4
 XS-Python-Version: >= 2.6
 Homepage: https://launchpad.net/designate
@@ -114,7 +115,7 @@ Depends:
     python-iso8601 (>=0.1.4),
     python-jsonschema (>=1.0.0),
     python-jsonschema (<<2),
-    python-kombu (>=1.0.4),
+    python-kombu (>>2.4.7),
     python-paste,
     python-pastedeploy (>=1.5.0),
     python-pbr (>=0.5.16),
@@ -127,6 +128,7 @@ Depends:
     python-migrate (>=0.7),
     python-stevedore (>=0.9),
     python-webob (>=1.0.8),
+    python-anyjson (>=0.3.3),
     ${python:Depends},
     ${misc:Depends}
 Provides:

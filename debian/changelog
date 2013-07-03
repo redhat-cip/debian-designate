@@ -1,3 +1,11 @@
+designate (2013.2.a156.g450d164-2) precise; urgency=high
+
+  * Drop debian/patches/0003-clean-deps.patch
+  * Depend on kombu > 2.4.7
+  * Depend on python-anyjson >= 0.3.3
+
+ -- Kiall Mac Innes <kiall@hp.com>  Wed, 03 Jul 2013 16:10:13 +0100
+
 designate (2013.2.a156.g450d164-1) precise; urgency=high
 
   * New upstrteam version
