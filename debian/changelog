@@ -1,3 +1,11 @@
+designate (2013.2.a185.geb16b1e-1) precise; urgency=high
+
+  * New upstream version
+  * Update debian/control for new+updated deps
+  * Update debian/patches/0002-clean-test-deps.patch
+
+ -- Kiall Mac Innes <kiall@hp.com>  Mon, 22 Jul 2013 08:52:17 +0100
+
 designate (2013.2.a172.gde0b55a-1) precise; urgency=high
 
   * New upstream version
