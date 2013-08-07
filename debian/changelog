@@ -1,3 +1,9 @@
+designate (2013.2.a215.g78b9d89-2) precise; urgency=high
+
+  * api-paste is no longer a sample
+
+ -- Kiall Mac Innes <kiall@hp.com>  Wed, 07 Aug 2013 13:23:28 +0100
+
 designate (2013.2.a215.g78b9d89-1) precise; urgency=high
 
   * New Upstream Version
