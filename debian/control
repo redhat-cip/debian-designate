@@ -34,6 +34,8 @@ Build-Depends:
     python-nose,
     python-unittest2,
     python-anyjson (>=0.3.3),
+    python-prettytable (>=0.6),
+    python-prettytable (<<0.8),
     python-pyparsing (= 1.5.7),
     python-cmd2 (>= 0.6.4)
 Standards-Version: 3.9.4

@@ -1,3 +1,10 @@
+designate (2013.2.a213.gfc90fda-3) precise; urgency=high
+
+  * Add explicit python-prettytable Build-Dep. Missed in the last
+    change.
+
+ -- Kiall Mac Innes <kiall@hp.com>  Wed, 07 Aug 2013 12:01:27 +0100
+
 designate (2013.2.a213.gfc90fda-2) precise; urgency=high
 
   * Add explicit python-prettytable, python-cmd2 and
