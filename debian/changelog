@@ -1,3 +1,11 @@
+designate (2013.2.a213.gfc90fda-2) precise; urgency=high
+
+  * Add explicit python-prettytable, python-cmd2 and
+    python-pyparsing deps. Something, somewhere has a
+    loose dependency.
+
+ -- Kiall Mac Innes <kiall@hp.com>  Wed, 07 Aug 2013 11:44:57 +0100
+
 designate (2013.2.a213.gfc90fda-1) precise; urgency=high
 
   * New upstream version
