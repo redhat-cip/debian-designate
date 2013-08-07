@@ -1,3 +1,16 @@
+designate (2013.2.a218.g0bac094-2) precise; urgency=high
+
+  * Remove d2to1 dep
+
+ -- Kiall Mac Innes <kiall@hp.com>  Wed, 07 Aug 2013 20:32:49 +0100
+
+designate (2013.2.a218.g0bac094-1) precise; urgency=high
+
+  * New upstream version
+  * New PBR version
+
+ -- Kiall Mac Innes <kiall@hp.com>  Wed, 07 Aug 2013 20:17:50 +0100
+
 designate (2013.2.a215.g78b9d89-2) precise; urgency=high
 
   * api-paste is no longer a sample
