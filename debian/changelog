@@ -1,3 +1,22 @@
+designate (2013.2-3) precise; urgency=high
+
+  * Add several patches to fix compatibility with package versions supplied
+    by the ubuntu cloud-archive.
+
+ -- Kiall Mac Innes <kiall@hp.com>  Thu, 31 Oct 2013 14:56:47 +0000
+
+designate (2013.2-2) precise; urgency=high
+
+  * Update dependancies for 2013.2
+
+ -- Kiall Mac Innes <kiall@hp.com>  Thu, 31 Oct 2013 14:04:49 +0000
+
+designate (2013.2-1) precise; urgency=high
+
+  * New upstream release
+
+ -- Kiall Mac Innes <kiall@hp.com>  Thu, 31 Oct 2013 13:16:48 +0000
+
 designate (2013.2.a250.ga96e345-1) precise; urgency=high
 
   * New upstream version
