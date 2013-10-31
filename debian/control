@@ -138,6 +138,8 @@ Depends:
     python-cmd2 (>= 0.6.4),
     ${python:Depends},
     ${misc:Depends}
+Recommends:
+    python-mysqldb
 Provides:
     ${python:Provides}
 XB-Python-Version: ${python:Versions}
