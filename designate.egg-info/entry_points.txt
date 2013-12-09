@@ -1,0 +1,48 @@
+[designate.api.v1]
+domains = designate.api.v1.domains:blueprint
+records = designate.api.v1.records:blueprint
+tsigkeys = designate.api.v1.tsigkeys:blueprint
+limits = designate.api.v1.limits:blueprint
+servers = designate.api.v1.servers:blueprint
+
+[designate.backend]
+powerdns = designate.backend.impl_powerdns:PowerDNSBackend
+multi = designate.backend.impl_multi:MultiBackend
+rpc = designate.backend.impl_rpc:RPCBackend
+dnsmasq = designate.backend.impl_dnsmasq:DnsmasqBackend
+mysqlbind9 = designate.backend.impl_mysqlbind9:MySQLBind9Backend
+fake = designate.backend.impl_fake:FakeBackend
+bind9 = designate.backend.impl_bind9:Bind9Backend
+nsd4slave = designate.backend.impl_nsd4slave:NSD4SlaveBackend
+
+[designate.notification.handler]
+quantum_floatingip = designate.notification_handler.quantum:QuantumFloatingHandler
+nova_fixed = designate.notification_handler.nova:NovaFixedHandler
+
+[designate.storage]
+sqlalchemy = designate.storage.impl_sqlalchemy:SQLAlchemyStorage
+
+[console_scripts]
+designate-api = designate.cmd.api:main
+designate-sink = designate.cmd.sink:main
+designate-manage = designate.cmd.manage:main
+designate-agent = designate.cmd.agent:main
+designate-central = designate.cmd.central:main
+
+[designate.api.v1.extensions]
+sync = designate.api.v1.extensions.sync:blueprint
+touch = designate.api.v1.extensions.touch:blueprint
+quotas = designate.api.v1.extensions.quotas:blueprint
+reports = designate.api.v1.extensions.reports:blueprint
+diagnostics = designate.api.v1.extensions.diagnostics:blueprint
+
+[designate.manage]
+powerdns database-init = designate.manage.powerdns:DatabaseInitCommand
+database-init = designate.manage.database:InitCommand
+database-sync = designate.manage.database:SyncCommand
+powerdns database-sync = designate.manage.powerdns:DatabaseSyncCommand
+
+[designate.quota]
+storage = designate.quota.impl_storage:StorageQuota
+noop = designate.quota.impl_noop:NoopQuota
+

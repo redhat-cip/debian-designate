@@ -16,6 +16,10 @@
 # This has to be exported to make some magic below work.
 export DH_OPTIONS
 
+# Hack to be able to build sdist without the
+# 'Versioning for this project requires...' error
+export PBR_VERSION=master
+
 # Prevent setuptools/distribute from accessing the internet.
 export http_proxy = http://127.0.9.1:9
 
@@ -24,7 +28,7 @@ export http_proxy = http://127.0.9.1:9
 
 ifeq (,$(findstring nocheck, $(DEB_BUILD_OPTIONS)))
 override_dh_auto_test:
-	PYTHONPATH=$(CURDIR) python setup.py nosetests
+	PYTHONPATH=$(CURDIR) python setup.py testr
 endif
 
 #override_dh_auto_build:

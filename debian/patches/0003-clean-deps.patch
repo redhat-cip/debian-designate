@@ -1,5 +1,13 @@
+From: Artom Lifshitz <artom.lifshitz@enovance.com>
+Date: Fri, 22 Nov 2013 20:06:48 +0000
+Subject: clean-deps
+
+---
+ requirements.txt |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 diff --git a/requirements.txt b/requirements.txt
-index ad7f2d6..01bf625 100644
+index 3755645..861d8f8 100644
 --- a/requirements.txt
 +++ b/requirements.txt
 @@ -13,7 +13,7 @@ pbr>=0.5.21,<1.0
@@ -11,3 +19,4 @@ index ad7f2d6..01bf625 100644
  sqlalchemy-migrate>=0.7.2
  stevedore>=0.10
  WebOb>=1.2.3,<1.3
+-- 

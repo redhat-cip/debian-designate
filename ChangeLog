@@ -1,0 +1,5038 @@
+commit 019d7536a2d51ac08f6e767371d97987cff342a0
+Author: Artom Lifshitz <artom.lifshitz@enovance.com>
+Date:   Mon Dec 9 10:13:56 2013 -0500
+
+    Use % when printing keyfile/certfile errors
+    
+    Somehow:
+    
+    '%s missing or permission denied', '/etc/nsd/nsd_control.key'
+    
+    was deemed acceptable. Herp derp.
+    
+    Change-Id: I2ad1bd49719f0a876afee119ef22f1d4287c82f9
+
+commit af6da9587af24ffbeb2dcd67972de2a3b62176fc
+Merge: 1e981d0 5293c29
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Fri Dec 6 21:37:54 2013 +0000
+
+    Merge "BUG# 1258262 Added secret parameter to options for sensitive data"
+
+commit 1e981d05ddb6a156c3d6fff5fe2af2981b8a8d38
+Author: Artom Lifshitz <artom.lifshitz@enovance.com>
+Date:   Fri Dec 6 13:43:00 2013 -0500
+
+    Make sure that certfile and keyfile are readable
+    
+    If the certfile or keyfile is missing or Designate doesn't have
+    permission to read them, nsd4slave would throw a cryptic SSL exception
+    when it tried to connect to the NSD4 servers. To avoid this, make sure
+    that the certfile and keyfile are readable upon backend init and raise a
+    human-readable exception if they're not.
+    
+    Change-Id: I837cd328cf31f568e5da4ad4edf8c4dd34ddf8e2
+
+commit 5293c29cd099cb4a501f54408ccdabe915b2c938
+Author: Patrick Galbraith <patg@patg.net>
+Date:   Thu Dec 5 07:57:53 2013 -0500
+
+    BUG# 1258262 Added secret parameter to options for sensitive data
+    
+    Change-Id: Ib523b4df2540fde6972c1dcb9c8485c52f022dc4
+
+commit 52835ba68d29259f4af97d583f4b3e41cf8bb4ec
+Author: rjrjr <rrickard@ebaysf.com>
+Date:   Wed Dec 4 14:30:19 2013 -0700
+
+    Bug #1257888: Remote Designate Agent Call Fails
+    
+    Fix the Agent RPC API method signatures to align properly with the method signatures of the backend drivers.
+    
+    Closes-bug: #1257888
+    
+    Change-Id: Iaa6cbfd5c88f7e45e24e24d42e23f1b6669d9054
+
+commit 5aaf7c5a57a4c8876d9d7711f674b805ce880c19
+Merge: 31950b8 ade59a7
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Wed Dec 4 11:48:36 2013 +0000
+
+    Merge "Multi-backend"
+
+commit 31950b85cbf708ffa8d94d407bbc5cfa6429bacd
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Dec 3 14:34:45 2013 +0000
+
+    Denormalize tenant_id into the records table
+    
+    Change-Id: I7b6da41aaeb2fb53cc3333fa9e75f6e8b04a9351
+
+commit ade59a7f79d987bd0242fa41193877a6c18c2ca2
+Author: Artom Lifshitz <artom.lifshitz@enovance.com>
+Date:   Mon Nov 11 13:45:23 2013 -0500
+
+    Multi-backend
+    
+    Multi backend implementation using the composite pattern. The
+    multi-backend is its own self-contained backend that simply dispatches
+    all methods to a master and a slave backend, with ordering described in
+    MultiBackend's docstring.
+    
+    Change-Id: Ibe2790471aa0fc37dcf874e3030d73d5abee1d62
+    Implements: blueprint multi-backend
+
+commit f4c30e59fd172620fb7f9c653a146104237287b3
+Author: Artom Lifshitz <artom.lifshitz@enovance.com>
+Date:   Tue Dec 3 13:59:36 2013 -0500
+
+    Put test resources into own folder
+    
+    Centralise all test resources (zonefiles, SSL certs and keys and
+    sample notifications) into a resources folder and update the tests
+    that use them accordinly.
+    
+    Change-Id: If12516a4597df3da04d5c36aaf6262aafaa6cbce
+
+commit afa1df3341a1cb14186ed6810fdd2907c94f2657
+Merge: 5fd0152 3c578a9
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Tue Dec 3 21:39:10 2013 +0000
+
+    Merge "Backend tests restructure"
+
+commit 3c578a980a1f6ccf3c16ae44139750a5788dda11
+Author: Artom Lifshitz <artom.lifshitz@enovance.com>
+Date:   Mon Nov 11 13:45:23 2013 -0500
+
+    Backend tests restructure
+    
+    Split off Endre's backend tests restructuring from
+    https://review.openstack.org/#/c/55887/12 into its own patchset.
+    
+    Change-Id: Ie88765a8d530efa99fbf33d165ce25ce74926195
+
+commit 5fd0152e42b3b3683d6a2b06cc503bb186a47cd1
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Dec 3 16:02:04 2013 +0000
+
+    Ensure logs are captured and displayed when tests fail
+    
+    Change-Id: Ie0d59e6f8c2ffb0db3f350cee9eafe0dc3f16c0e
+
+commit 23009b81934dd4f5150669891d7aa2abaa8cc300
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Fri Nov 29 15:17:53 2013 +0100
+
+    Fix typo in config and rename Quantrum > Neutron everywhere
+    
+    Change-Id: I95e26f5235ff320a2ac5427b2bca8a4ca07d8b0d
+
+commit eb164336c555e2617f478af7b4c37fb6eba0e81b
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Mon Dec 2 01:25:49 2013 +0100
+
+    Multiple testing fixes
+    
+    * Changes NotificationHandler base to be a object and the tests to inherit it
+      like a mixin, test_invalid method fails if not due to duplicate test id.
+    * Changes backend tests to use scenarios and special NSD4 tests puts the setUp
+      logic into a fixture which is loaded for the NSD4 backend tests.
+    * Remove any get_*_service call into start_service(name) which uses a fixture
+      ServiceFixture that automatically cleans up the service upon teardown (no
+      more sprinkling tearDowns all over the tests to stop a service).
+    * Use fixture for database. Removes storage.setup_schema and teardown_schema.
+    * Fix cleanup of notifications.
+    * Use fixture for Policy instead of in teardown().
+    
+    bug #1256728
+    
+    Change-Id: I72a53eed9e81d3f014015aa443582de21a4e66ee
+
+commit a109782c8ac05cf76087f853472b8b733c794fc1
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Nov 28 12:45:08 2013 +0000
+
+    Allow a context to be elevated to admin status
+    
+    The mimics the method included in the oslo.rpc CommonRpcContext, so will
+    work both at the API and Central layers
+    
+    Change-Id: I55a89fb93618c56caa80d5d471aecbbe7a898cc9
+
+commit 271e258506cbe8f72f0e360a318cb893e00ca838
+Merge: 741441c 3388c37
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Sun Nov 24 14:19:37 2013 +0000
+
+    Merge "Pass the service-catalog if any to the context"
+
+commit 741441cfdf6cd25c99017dabf858f6082304cbf3
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Fri Nov 22 01:21:53 2013 +0100
+
+    Don't require domain_id in find_record* methods
+    
+    * Requiring domain_id makes the method useless when you actually don't have the
+      domain id in for example finding records based on upcoming managed_tenant_id
+      columns.
+    * Can be done by passing the domain_id in the criterion instead which is
+      effectively what it does anyways. Which is what is done here in a higher
+      level.
+    
+    Change-Id: I2c93cea8aa25763fe85393e5e51b8a06151eba40
+
+commit 3388c37be1da37257fa6bbda17f7013f748cbcc5
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Fri Nov 22 09:23:46 2013 +0100
+
+    Pass the service-catalog if any to the context
+    
+    Change-Id: Idc005b39f28a0fd30058d263643a44c777682f35
+
+commit 2e1c6ca95d924e7d76ae087322a3ca9c82b1d714
+Merge: 110a27c 7852a83
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Wed Nov 20 20:56:56 2013 +0000
+
+    Merge "Add placeholder migrations to allow backports to Havana"
+
+commit 110a27c436f1f8e3b7a252fca761ad4d6f1ae37d
+Merge: 01d5ba2 4fbf0e0
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Wed Nov 20 20:51:45 2013 +0000
+
+    Merge "nsd4slave backend"
+
+commit 01d5ba28d5d01d8b38c6f8c5a9c6d9f62cdc5d77
+Merge: f073160 a993ea9
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Wed Nov 20 19:39:26 2013 +0000
+
+    Merge "Added a check for HTTP_X_IDENTITY_STATUS"
+
+commit 7852a8363b41771876604ec822bb5985b8f40e9c
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Nov 20 13:58:42 2013 +0000
+
+    Add placeholder migrations to allow backports to Havana
+    
+    Change-Id: I0c92b609009e7231542407196d59cbf7278faa49
+
+commit a993ea93dcff69c392e62f77ccb428e5be1c7b8d
+Author: Graham Hayes <graham.hayes@hp.com>
+Date:   Wed Nov 20 12:51:18 2013 +0000
+
+    Added a check for HTTP_X_IDENTITY_STATUS
+    
+    If keystone is configured to run in 'delay_auth_decision' mode it will
+    pass the token, along with the HTTP header X-Identity-Status set to
+    'Invalid'. This check for this, and returns a 401
+    
+    Closes-Bug: #1253074
+    
+    Change-Id: Ia531f73f98418594f867f3c2849865c26b13e18d
+
+commit f073160f52a9de278395951ae9a09ff082a9702a
+Merge: d837f16 3db98ab
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Tue Nov 19 15:54:23 2013 +0000
+
+    Merge "Add SLDs that act like TLDs"
+
+commit 3db98ab1fd1596a544f84c4ad0a6314383ed6629
+Author: Vinod Mangalpally <vinod.mang@rackspace.com>
+Date:   Tue Nov 19 08:53:53 2013 -0600
+
+    Add SLDs that act like TLDs
+    
+    This change offers the designate administrator the ability to configure
+    2 lists to indicate the TLDs(accepted_tlds_file) and SLDs and others
+    that
+    effectively act as TLDs.(effective_tlds_file)
+    
+    2 sample files are included to show the format required for these files.
+    The TLD file is from http://data.iana.org/TLD/tlds-alpha-by-domain.txt
+    Commented lines in this file begin with a #. There is one entry per line
+    and the entries are in the IDNA format.
+    
+    The sample effective TLD file is from http://publicsuffix.org/list/
+    This file is in the UTF-8 format.  Lines beginning with a // and ! are
+    ignored.  The wildcard character * (asterisk) may only be used to
+    wildcard
+    the topmost level in a domain name.  All the entries  are converted to
+    idna format.
+    
+    Closes-Bug: #1249396
+    
+    Change-Id: I9718489335e24cb24733d4c4fc2a966e490014d3
+
+commit d837f16af36f14f438ee5be621fa7fb9a0d1868e
+Author: Sascha Peilicke <speilicke@suse.com>
+Date:   Tue Nov 19 10:40:08 2013 +0100
+
+    Support building wheels (PEP-427)
+    
+    With that, building and uploading wheels to PyPI is only one "python
+    setup.py bdist_wheel" away.
+    
+    Change-Id: Iee606a822775c99d03b5884c238707420f061d5d
+
+commit a5f6a1fb3d5e64553f07e3e67c2fd1094d43cab0
+Merge: deedf1d ca795c3
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Mon Nov 18 16:13:41 2013 +0000
+
+    Merge "Add .testrepository to ST2 project ignore"
+
+commit ca795c3a58ce0b44632963866c9e70d8a89a7719
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Nov 18 16:02:56 2013 +0000
+
+    Add .testrepository to ST2 project ignore
+    
+    Change-Id: I0980e6e7b90e6ae51d09451491d5ac0b5bfb2658
+
+commit 4fbf0e09b15dc48a17639d797e2023d89289e86e
+Author: Artom Lifshitz <artom.lifshitz@enovance.com>
+Date:   Fri Nov 15 12:54:01 2013 -0500
+
+    nsd4slave backend
+    
+    This backend sends nsd-control commands to a remote NSD4 server. It
+    depends on the multi backend and on another master backend, most likely
+    PowerDNS.
+    
+    Change-Id: I722210de97b207d318f300092f4e3be08e894961
+    Implements: blueprint nsd4-slave-backend
+
+commit deedf1d58acbcd1ea108d54bb650756f7bd13ead
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Fri Nov 15 17:46:22 2013 +0100
+
+    Update notifications towards oslo.messaging
+    
+    * Send notifications upon faults
+    * Change to a api that emulatse oslo.messagings notification api
+    * Remove utils.notify
+    
+    Change-Id: I9499049eebdd571890cd9f11a9fc47eda75d2e45
+    Signed-off-by: Endre Karlson <endre.karlson@gmail.com>
+
+commit c81d5f36c289ef3eeb7f23e3995ce1aa9377e50f
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Mon Nov 18 13:53:30 2013 +0100
+
+    Switch to testr / testtools / fixtures, remove nose
+    
+    * This also fixes us up to hacking standards
+    * Remove assertGreater* usage in favor of assertEqual py26..
+    * assertEquals > assertEqual
+    
+    Change-Id: I8083c96da09897d650ca6fffc0e340d9c057db8d
+
+commit 20fd3a90fb5a97b3de43776063d529fa9b69f814
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Nov 12 16:35:15 2013 +0000
+
+    Update PPA URL
+    
+    Change-Id: Idf4c1d401f3e9b4c84d3029f1f1935ab947c01f1
+
+commit dce134e557b2c0cb71acbaa719ff4d567e49f608
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Nov 12 11:51:21 2013 +0000
+
+    Expose touch_domain via an API extension
+    
+    Change-Id: Ic46049376f05d3a4dae41a61b3ead5b0f7d2e4c7
+
+commit 6df678bd14958ca287575f431e0ed6312337d18c
+Merge: b8df7bd 45c59c7
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Fri Nov 8 03:03:40 2013 +0000
+
+    Merge "Update TLD list per IANA list version 2013110700"
+
+commit 45c59c74e181e94b790d7ee0cc1c23e4b2e73029
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Nov 8 02:57:58 2013 +0000
+
+    Update TLD list per IANA list version 2013110700
+    
+    See http://data.iana.org/TLD/tlds-alpha-by-domain.txt
+    
+    Change-Id: I42ec4a82db188af66c92bf6744c7670f96b2eb6d
+
+commit b8df7bd0eee87b272174e8d2d9c36cc06bf3e6af
+Author: Artom Lifshitz <artom.lifshitz@enovance.com>
+Date:   Tue Nov 5 11:42:00 2013 -0500
+
+    Fix inconsistent dnspython imports bug
+    
+    Change-Id: Iec3862805778a7c295c9d23385270c54d71a1452
+    Closes-bug: 1248247
+
+commit 343e087e65e19489fb50e9bd7cc93d8966c7f32a
+Author: Artom Lifshitz <artom.lifshitz@enovance.com>
+Date:   Fri Sep 27 17:05:33 2013 -0400
+
+    Domain Import/Export
+    
+    Change-Id: Ic9e43eadc6aa2110ca89be071a3d6579f343be01
+    Implements: blueprint domain-import-export
+
+commit ddfcd36f9eb67722709e1d098889cdc1c3a65310
+Merge: 9bee88a 179a9aa
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Fri Nov 1 13:20:56 2013 +0000
+
+    Merge "Zoneextractor tool"
+
+commit 9bee88ad2271a6fa9d9ffe9de7484bc9508fabbc
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Oct 31 17:19:01 2013 +0000
+
+    Update setup.cfg for Icehouse development cycle
+    
+    Change-Id: Ib137dd75c181fe4af82f3f210fc17ae5073d8561
+
+commit 5b280913c1efdbedc72b7fd9f9e6ed85b14f3fd3
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Oct 31 12:34:05 2013 +0000
+
+    Ensure we're compatible with JSONSchema 1.3.0 through 2.2.0
+    
+    Change-Id: I551241c84112727eb55b0fb65f97fd532f064207
+
+commit ba104159d77b467306080142f09ceebdd20d485d
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Oct 30 13:34:17 2013 +0000
+
+    Sync requirements with stable/havana requirements
+    
+    Change-Id: I401fd276633f7bf41d6c9fbeb5255fdaf44e9ead
+
+commit 179a9aa265000a92a8aa876582e399899bcf772c
+Author: Artom Lifshitz <artom.lifshitz@enovance.com>
+Date:   Tue Oct 8 18:13:46 2013 -0400
+
+    Zoneextractor tool
+    
+    zoneextractor.py helps on the client-side of the new zone
+    import API. It takes a BIND9 named.conf and writes out or prints a
+    zonefile for every configured master zone. Said zonefile can then be
+    curled or otherwise submitted to the zonefile import API.
+    
+    Change-Id: Ibc15639771da52e678be067ec4474bcbcc2f0865
+
+commit 6ebfe75637eeed7a0e7e4d639aa740cdcbc653a3
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Oct 21 17:47:00 2013 +0100
+
+    Ensure all FakeBackend methods use info level logs
+    
+    Change-Id: I9b32021ea2780af8f283c43aa191cc5c92be18ae
+
+commit b76ff81565f6b6700b298ca2121df6548972f0a3
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Oct 16 14:02:59 2013 +0100
+
+    Abstract quota enforcement in central service
+    
+    Change-Id: Ibc746aed1fd7960722ecd8eaf44bf55da682f6c7
+
+commit 064eb4f26d9ccf9c86a804778c6c6a4e5bfdfad0
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Oct 16 14:02:23 2013 +0100
+
+    Minor tox.ini changes, should speed things up
+    
+    Change-Id: Ie5611ed1d15280b798e10779479c7174d4d83b05
+
+commit b982573688e9958f094d105218cc9e53ce2ef6f3
+Author: Graham Hayes <graham@hayes.ie>
+Date:   Mon Sep 2 16:31:36 2013 +0100
+
+    Add status fields for domains and records
+    
+    Added a status column in the domains and records tables.
+    This is part of the asynchronous backends work to allow use to have
+    record and domains in pending states
+    
+    Change-Id: Id30756365f8eb2427626b334c2c6119783924679
+    Implements: blueprint domain-status
+
+commit 361cd7af637870627ae399a98aff0201d6a3babb
+Merge: 94a7bbe f2c8658
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Fri Oct 11 12:21:06 2013 +0000
+
+    Merge "Update domains when servers are created, modified or deleted"
+
+commit 94a7bbe417ad00368bbf4cb3b028e03e0617dca0
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Oct 9 14:48:30 2013 +0100
+
+    Correct JSONSchemas for min/max TTLs
+    
+    Change-Id: Iffe4bfd85a16e683e88838f5097cb63b1a0868bb
+
+commit 09cb5b95595e2cecc86b1d1f950d45929a20e0a3
+Author: Graham <graham.hayes@hp.com>
+Date:   Thu Oct 3 16:36:06 2013 +0100
+
+    Added info on flake8 to docs
+    
+    Added information about flake8 to the documetation, in the getting involved section
+    
+    Change-Id: I99374ce0e64ad27c074bc7d8c4ac39acecfc99d9
+
+commit f2c8658b944ca75832e9e1e02fa2caec5e568231
+Author: emmanuel.ankutse <emmanuel.ankutse@rackspace.com>
+Date:   Wed Sep 4 08:24:52 2013 -0500
+
+    Update domains when servers are created, modified or deleted
+    
+    Existing domains do not get updated in the backend when new servers are
+    added or existing ones modified or deleted.
+    This is rectified in this fix by implementing methods in all of the backends.
+    Three abstract methods were added to the base module that all backends
+    inherit from and implemented in all backends.
+    The three methods implemented are create_server, update_server, and
+    delete_server.
+    The methods are called from central/service.py as needed.
+    
+    Change-Id: I1ac9add27f91ee6d73fdcfda5b2ef8c0c1ecb0ab
+    Closes-Bug: #1214869
+
+commit 6698b14a42479f1e37b08443ace2f39d25268b72
+Merge: d7ea050 a8b0177
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Thu Sep 26 21:40:08 2013 +0000
+
+    Merge "BIND9 Plugin Cleanup"
+
+commit d7ea0504f836c99ce81e9d0d7eecf52e63e066be
+Merge: b3ad5fd 6934fb0
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Thu Sep 26 16:51:55 2013 +0000
+
+    Merge "Add rudimentary migration testing"
+
+commit 6934fb0801990d092001a0c1918118389d77e7a5
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Sep 26 17:28:10 2013 +0100
+
+    Add rudimentary migration testing
+    
+    We start at version 0 and apply each migration one at a time.
+    
+    bp db-migration-testing
+    
+    Change-Id: If098d9baeca4c58e19b23fac69bcb48a3d6c072a
+
+commit b3ad5fd1692ab0ef8b0ec05eb6c883e0719fdd3e
+Author: betsy luzader <betsy.luzader@rackspace.com>
+Date:   Fri Sep 20 17:37:51 2013 -0500
+
+    docs: Correct errors in the Create Record examples
+    
+    Fixed a couple of minor errors in the create record examples.
+    
+    Change-Id: I0e9c085b6f9869b07226372201d02bf1502be133
+    Fixes: bug#1226249
+
+commit a8b017769c42fd19edffb0ab8b2f25b421eb5aac
+Author: Tim Simmons <tim.simmons@rackspace.com>
+Date:   Mon Sep 9 19:46:09 2013 +0000
+
+    BIND9 Plugin Cleanup
+    
+    General cleanup of the bind9 plugin. Adds rndc addzone/delzone
+    functionality, which speeds up the plugin by allowing for dynamic
+    syncing of zones. Removes management of central bind configuration
+    from designate copying bind's statement of zones over. Also
+    updates some documentation to reflect the change.
+    
+    Change-Id: I474ac1c2f0f1b5d8027862ac372bad653cb5d7ea
+
+commit 7308b9225272d6e8e21160fc86b744a96c8c0b51
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Sep 18 16:50:00 2013 +0100
+
+    Ensure beta versions are not downloaded from pypi
+    
+    Change-Id: I57bbfba4903f888e6e39c00f9a4a0dfa9834ee8d
+
+commit 43e9fda3d1297ae8e80f55925dad377b24e24a77
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Sep 18 15:26:57 2013 +0100
+
+    Correct PowerDNS migration 006
+    
+    Change-Id: I92d5e55eb1365ee2f2cb8b3b784fd2bec7a97a30
+
+commit 970db4fdbab60adbf46bd34c7733827a958fa9dd
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Sep 17 17:23:36 2013 +0100
+
+    Monkeypatch WebTest to support HTTP PATCH
+    
+    This allows us to sync with the global-requirements version of
+    WebTest (i.e. 1.3.3)
+    
+    Change-Id: I517e5b057db6f1d6b98cfdc4a6fd99e28ef0f58c
+
+commit e68a68348e00fec37fba194b1175a688995772a4
+Author: betsy luzader <betsy.luzader@rackspace.com>
+Date:   Mon Sep 16 15:33:38 2013 -0500
+
+    Give more meaningful error message when no servers are configured
+    
+    If the user tries to create a domain and there are no servers
+    configured, the error message is 'configuration_error.' This
+    can be confusing, especially for new users.
+    
+    This changes the message to be 'no_servers_configured'
+    
+    Change-Id: Ic02d1f516db659a0c09838729c51ac386280f7eb
+    Fixes: bug#1204578
+
+commit 848d5aa613602c9b8eff1491721f6ba24a908e4e
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Sep 16 10:44:20 2013 +0100
+
+    Add initial BIND9 backend docs
+    
+    Change-Id: I28afe376026c6546a1e87bad5bdf67ae6b4d907e
+
+commit fde4d7e01b150655434c0969ad94c16e3db2fa7d
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Sep 13 16:44:23 2013 +0100
+
+    Ensure default TTL is respected by PowerDNS backend
+    
+    Previousally, all records without an explict TTL were defaulting to 3600
+    regardless of the per-zone default.
+    
+    Change-Id: Idbfaad5303e05dfdc7bcbb371dd69d3e4f988a7c
+
+commit 1f8a9b3a680b065b7c804be92a4a80c7246d7003
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Sep 13 11:13:13 2013 +0100
+
+    Allow default SOA values to be configured
+    
+    We now allow the default SOA values to be specified in the
+    configuration file.
+    
+    Change-Id: Ie24a9c3c70114a38e6f8979ad3113bf1c1b3b945
+
+commit 00ad09f558d2dd42847f4874d7c5291df2b74987
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Sep 11 11:18:28 2013 +0100
+
+    Ensure tables are InnoDB and UTF8
+    
+    Previousaly, We accepted whatever default the DB server was configured
+    to use, this was not optimal!
+    
+    Change-Id: If31976049a5b9f368c6da88638dac1f33ea77e1e
+
+commit 003e7e3ca3e78cc96d13829776ca579815962bf2
+Author: Graham Hayes <graham@hayes.ie>
+Date:   Mon Sep 2 16:17:15 2013 +0100
+
+    Cleaned up fake backend backend
+    
+    removed un-used calls
+    
+    Change-Id: I81b4ee27aa63ccf0ac35a3ae1ed72c3115da7b2d
+
+commit 5adba38a38e00d83f1439d68e8f3f2625d7ed8de
+Merge: c8ad782 6897dfd
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Sun Sep 1 20:13:31 2013 +0000
+
+    Merge "Central RPCAPI should call the correct sync methods"
+
+commit 6897dfd0aa781cfb05471119024f627daf486ee6
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sun Sep 1 19:11:41 2013 +0100
+
+    Central RPCAPI should call the correct sync methods
+    
+    Change-Id: I77f00908400d434f9150843fc037005b44a07926
+
+commit c8ad7827b78ecdf516fef8714264f9d73db800ea
+Merge: 2aa6f0f 24ca94c
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Tue Aug 27 12:51:23 2013 +0000
+
+    Merge "Add APIv2 Zones Controller"
+
+commit 24ca94cda8ee756e2fba7e9b5b1dd0375100166e
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Aug 20 11:34:33 2013 +0100
+
+    Add APIv2 Zones Controller
+    
+    Change-Id: Ia85d22e4766cbf4e2af630d12a8b0ca3fc00ab1c
+
+commit 2aa6f0fb0b3d2709c6fe12a0d09250066b276234
+Merge: ad80f3f 1fe95e6
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Mon Aug 26 10:45:43 2013 +0000
+
+    Merge "Fixed broken links in README.md"
+
+commit 1fe95e607c69fc604ecffa1e67a246d3ecc51804
+Author: Graham Hayes <graham@hayes.ie>
+Date:   Mon Aug 26 11:38:42 2013 +0100
+
+    Fixed broken links in README.md
+    
+    Change-Id: I1bbf328075308098c340bcc31f4f846b936c2c5b
+
+commit ad80f3f6eab70588aa203cd919bac94d25660d8d
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Fri Aug 23 23:30:33 2013 +0100
+
+    Fixup CNAME placement validation
+    
+    CNAME's may have child records, but may not have sibling records
+    
+    Change-Id: I50ffb37b20691424f5611dfdc2059536b8fd1688
+
+commit a96e345e7a2f8451dc7a45822a057ec3e9ddc230
+Merge: d685d2c da5fae1
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Thu Aug 22 10:39:04 2013 +0000
+
+    Merge "PowerDNS - Correctly quote TXT and SPF record"
+
+commit da5fae1410608f97074e2eb0d6756e0f8d17309b
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Aug 21 14:43:44 2013 +0100
+
+    PowerDNS - Correctly quote TXT and SPF record
+    
+    Change-Id: I2064fcca9c920f435676cd35edf7ca6f76346956
+
+commit d685d2c6e53714403d3ce72aecf4795dcd7c710b
+Merge: 16e75ae e4e46d3
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Wed Aug 21 16:21:13 2013 +0000
+
+    Merge "docs: Add 'description' field to domains"
+
+commit 16e75ae52570f26ec038ccc135e447f4b6374cde
+Merge: 4fd44c7 80970f2
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Wed Aug 21 15:16:24 2013 +0000
+
+    Merge "Fix utils.render_temaplate_to_file() test case name"
+
+commit 4fd44c7d56ab0a0b4523a2289156aa8010c0f8e0
+Merge: 93822f8 fcf1e10
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Wed Aug 21 15:16:23 2013 +0000
+
+    Merge "Revert "PowerDNS - Ensure SPF records are quoted correctly""
+
+commit 80970f2b1bb58cc96964f7f030be3b99f408fd72
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Aug 21 14:43:06 2013 +0100
+
+    Fix utils.render_temaplate_to_file() test case name
+    
+    Change-Id: I9948beccde1c9b52b6e4507feb5cad61aaff049a
+
+commit fcf1e10fcf43b4c31ca352354fe8191431f6fce2
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Aug 21 13:38:01 2013 +0000
+
+    Revert "PowerDNS - Ensure SPF records are quoted correctly"
+    
+    This change was totally wrong in practice.
+    
+    This reverts commit 0f781dfdb673dde771647313346e0f5406dbbf9d
+
+commit e4e46d3f94ecf25f027136933ba522d8f0a72fc3
+Author: betsy luzader <betsy.luzader@rackspace.com>
+Date:   Tue Aug 20 15:49:26 2013 -0500
+
+    docs: Add 'description' field to domains
+    
+    When the 'description' field got added for domains and records,
+    only the documentation for records was updated.
+    
+    Also, fix minor domain schema error - the description for the
+    "created_at" and "updated_at" fields in domain.json is incorrect
+    in the v1 code base.
+    
+    Change-Id: Id50ed109be81723da8e46e23f792173f435e0e3e
+    Fixes: bug#1213273
+
+commit 93822f87bcbe21c40d5adba2138569ad7c27ae20
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Aug 20 00:19:27 2013 +0100
+
+    Cleanup v2 schema links
+    
+    Change-Id: I17c6978d4c8017df5e75ae7a2d89a5bb30cb15ef
+
+commit 09a8dfd1d9d09d3eb7c1e7834c64525ce4bbdbf9
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Aug 20 00:19:00 2013 +0100
+
+    Add description field to v2 schemas
+    
+    Includes both the zone and recordset schemas
+    
+    Change-Id: Ie8fa1a0a536fd35e2d2a2ac780773f5e88988bf5
+
+commit b0528c51f38f224949844b58fd13879dac052582
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Aug 20 00:15:14 2013 +0100
+
+    Minor v1 records schema corrections
+    
+    Change-Id: I6962213672a9504208955ccdf1f60c474f5713bd
+
+commit f9aff8ea49056b3381ac6a589d8fe911c7dd8bb3
+Merge: c06f84f c79dd04
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Mon Aug 19 21:22:54 2013 +0000
+
+    Merge "Correct V2 limits schema"
+
+commit c06f84f3c1d0313a73bc94b59c0ec5b1085ea3f3
+Merge: bd2af3a 0c17817
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Mon Aug 19 19:32:27 2013 +0000
+
+    Merge "Add "Invalid TLD" error message"
+
+commit 0c17817c03d22153b47d49a536f87f26b9dc06c3
+Author: betsy luzader <betsy.luzader@rackspace.com>
+Date:   Fri Aug 16 16:39:34 2013 -0500
+
+    Add "Invalid TLD" error message
+    
+    Currently, when creating a domain, if the TLD doesn't match,
+    the error message returned is "invalid domain name". An error
+    of "Invalid TLD" would be clearer to the user.
+    
+    Change-Id: Iaffbbe2d79a65dccead0f6e82a0b97865aa646a2
+    Fixes: bug #1208874
+
+commit c79dd04623f4d94c28594de81d2adad3ee67d194
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Mon Aug 19 16:12:06 2013 +0100
+
+    Correct V2 limits schema
+    
+    Change-Id: If28c543111d62d3b998675986b332b2a2d9319eb
+
+commit bd2af3a0258d6da1a74ce1d43828886d6688da51
+Merge: 8a3f4d8 ec908ee
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Mon Aug 19 11:27:10 2013 +0000
+
+    Merge "Switch to EntryPoints for the binaries"
+
+commit 8a3f4d8d3f3783bab73ac766c0f3801859534d0c
+Merge: 77312c2 144b39c
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Mon Aug 19 11:25:49 2013 +0000
+
+    Merge "Add API v2 /limits endpoint"
+
+commit ec908ee9330e21a9bbcb5865248d78047fe58860
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Aug 18 14:26:41 2013 +0100
+
+    Switch to EntryPoints for the binaries
+    
+    This sync's us up with the latest "best practices" as implemented by
+    the other core components.
+    
+    Change-Id: I20984b873f360c875d7b810d150275b653e6c4ba
+
+commit 144b39c8ae68c03e72303b6ba1657956228ba93f
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Fri Aug 16 14:31:49 2013 +0100
+
+    Add API v2 /limits endpoint
+    
+    Change-Id: I00846321677a8e9cdb392c3e127058e8f4403710
+
+commit 77312c268e36ddd5068faa00460570e1062c66fb
+Author: Tim Simmons <tim.simmons@rackspace.com>
+Date:   Fri Aug 16 16:10:50 2013 +0000
+
+    Update Getting Started Guide
+    
+    Make a couple of small changes in the getting started guide,
+    one change in the configuration file, and removing one
+    obsolete line from the guide.
+    
+    Change-Id: Ieaf88f0ad3c9e7b511e8fb98cae6e96d611bbdde
+
+commit 42299f4eb17ec68b4f40574784ed182ade512124
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Fri Aug 16 13:39:37 2013 +0100
+
+    Sync doc/requirements.txt with openstack/requirements
+    
+    Change-Id: I89bd363bb9b7455c06d0e09cf6a61b515f7d1f30
+
+commit 5697f2e01dc43d364b6e2e361894469c5802cd5a
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Jul 29 12:27:45 2013 +0100
+
+    API Version 2 - Initial Framework
+    
+    Change-Id: Id99f9b7191c8ae949311b95e60426c55d0faed55
+
+commit 48593908239499e4fd3f822d02b1eead6cf36aff
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Fri Aug 16 13:31:26 2013 +0100
+
+    Sync requirements with openstack/requirements
+    
+    Change-Id: I18326e7dad2ff2702e3a386b1e8f26cba825598f
+
+commit 646106dca060479eaa1a0d40bd4a29c1e8c7be0c
+Merge: f6cc276 0c345c4
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Wed Aug 14 09:53:26 2013 +0000
+
+    Merge "Bug 1206849: Add more logging to the API Layer"
+
+commit f6cc2765ca4a35afb03c9f52feee15cae4179504
+Merge: 85f674b 0f781df
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Wed Aug 14 09:52:55 2013 +0000
+
+    Merge "PowerDNS - Ensure SPF records are quoted correctly"
+
+commit 85f674b0b848cd380fd3ac4d6f58bf5691b4bc20
+Author: Betsy Luzader <betsy.luzader@rackspace.com>
+Date:   Fri Aug 9 09:58:38 2013 -0500
+
+    Add more API documentation for record types
+    
+    Add examples to the REST API documentation section for each of
+    the record types supported. Currently, there are only examples
+    for types 'A' and 'MX'.
+    
+    Change-Id: Iba9a8e4b88312b6266b46fb3e353076dd03cab8f
+    Fixes: bug #1204578
+
+commit 0c345c425b59b2f1bbad32113b78c9fcdb89ca20
+Author: Vinod Mangalpally <vinod.mang@rackspace.com>
+Date:   Mon Aug 12 12:02:22 2013 -0500
+
+    Bug 1206849: Add more logging to the API Layer
+    
+    Bug 1206849: Add more logging to the API Layer
+    Added more logging to the API Layer. When in doubt, I erred on the side
+    of more.
+    
+    Change-Id: I82f173e0a63972cf852ca2f0c66db9af9488673b
+
+commit 0f781dfdb673dde771647313346e0f5406dbbf9d
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Mon Aug 12 12:18:14 2013 +0100
+
+    PowerDNS - Ensure SPF records are quoted correctly
+    
+    PowerDNS requires SPF records to be quoted, unlike TXT records which
+    do not require the quotes.
+    
+    Change-Id: I3aede09462fdf98dd9dd235e87127afb326f8711
+
+commit ad1935a9dae7cc989babe4b87f76eda84fef7cd4
+Author: Tim Simmons <tim.simmons@rackspace.com>
+Date:   Wed Aug 7 20:27:47 2013 +0000
+
+    Add Description Field to Domains/Records
+    
+    Adds a description field to Domains and Records. Adds accompanying tests to
+    ensure that the field is UTF-8 compatible. Adds databse migration to add the
+    appropriate columns to the database.
+    
+    Change-Id: Iaa1ac6aee01fadc409ea16298c83946f35bdde33
+    Implements: blueprint resource-notes
+
+commit d6be443c68f48d9b2113f1280f6121595ef2e1b2
+Merge: 53abe11 ba41ff5
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Thu Aug 8 13:34:18 2013 +0000
+
+    Merge "Internal SQLA Storage Consistency Cleanup"
+
+commit 53abe117599afe14190a801ff2f364f47cc1b6f1
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Aug 7 22:53:14 2013 +0100
+
+    Update PBR to 0.5.21
+    
+    Change-Id: I5e8602485d28ee8c9326b4f19ed9bf4e4f9efa7a
+
+commit 0bac09457405a5b6f9c145e59da40ea6090e0618
+Merge: b082f02 358ef49
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Wed Aug 7 19:12:26 2013 +0000
+
+    Merge "Update PBR"
+
+commit b082f02d609f0b865389026bc84ed2c5ecc76b5d
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Aug 7 16:30:15 2013 +0100
+
+    Fixup incorrect exception handler
+    
+    Change-Id: I85fec791f1c6aaee1fccc9508556ec2f828f2456
+
+commit 358ef498f3c82a5322b46190547496c2c57b6561
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Aug 7 13:20:40 2013 +0100
+
+    Update PBR
+    
+    Change-Id: I7ba7072b07cea431987e0cec9137bd381f9b5681
+
+commit 78b9d89cb265ae2711af428b5bc831b79dcf73b1
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Aug 7 12:53:32 2013 +0100
+
+    Restore JSONSchema 1.1.0 compatibility
+    
+    A previous change relied on some functionailty from 1.3.0
+    
+    Change-Id: I5b2aa2519bfa8e65ef88f4182365b8d79b8b79e4
+
+commit 1630878861ab7608289caca5f94807a5d4fec740
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Aug 7 10:32:43 2013 +0100
+
+    Fix a minor doc build warning
+    
+    Change-Id: I557175527541214fe2e75f632d2b203f79054c4a
+
+commit fc90fda6d0cf7443a144678530f3948426871a07
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Aug 6 20:23:13 2013 +0100
+
+    Ensure all errors raised from netaddr are caught
+    
+    Some values would cause schema validation to fail, even if those values
+    were valid for the record type being created.
+    
+    Change-Id: I5d85a6edd6bffeb2acf3d48037f1507611b18170
+
+commit ba41ff543805b8b12060bf72b3d46651be1bee8c
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Aug 6 19:18:53 2013 +0100
+
+    Internal SQLA Storage Consistency Cleanup
+    
+    This will make adding paging support for all resources simpler, and
+    much more DRY.
+    
+    Change-Id: I5a3c4e05a8565057066d98525e4c074a52a6b015
+
+commit d46293d295f6d077e9e48069ac0a209e18218e39
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Aug 6 13:41:07 2013 +0100
+
+    Ensure the deleted column is not truncated
+    
+    Currently, the deleted column get's a truncated UUID, this ensures the
+    column is set to the correct ID.
+    
+    Fixes bug #1203929
+    
+    Change-Id: Ia5701c2453c33e2507bd0c7e7fc3f1fdac6f4cca
+
+commit 6dd2f563326af213c2afa3f882d07f5265ede795
+Merge: 614be76 dd9c90d
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Wed Jul 31 17:01:32 2013 +0000
+
+    Merge "Update 'Getting Started' Doc"
+
+commit dd9c90d80b5f52e34a0a5a70f33a55cc407a02d0
+Author: TimSimmons <tim.simmons@rackspace.com>
+Date:   Mon Jul 29 15:23:08 2013 -0500
+
+    Update 'Getting Started' Doc
+    
+    Change directions slightly for the Getting
+    Started Document and updating the sample
+    configuartion file. Also updating .gitignore
+    for Mac Users.
+    
+    Change-Id: I90fff8c780fbbe990f14234a14371f6be67f8966
+
+commit 614be76283f39c77c77cb69a69f181cc894d05fe
+Merge: 8b63ef0 1c8428e
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Wed Jul 31 11:02:02 2013 +0000
+
+    Merge "Refactor JSONSchema handling code"
+
+commit 8b63ef08c089fcca391875cf3cb67845caee6c71
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Jul 31 10:48:01 2013 +0100
+
+    Reduce logspam from amqp
+    
+    Change-Id: I9323e46397c41cb2e0a1e117ce3e668731a50a2a
+
+commit 86b7b75b8c2c3053d56acd6a024ebfea3af0f030
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Jul 31 10:23:25 2013 +0100
+
+    Ensure backend resources are always deletable
+    
+    This generally should only ever show up in dev environments, but is
+    also a sane course of action should it show in production.
+    
+    Change-Id: Ie953d7c0d9c13fcaa0482e0d9c50ff9bce6c107d
+
+commit 1c8428e7a9d919db4102e26bf400b7d0e9a8e97e
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Jul 30 15:41:44 2013 +0100
+
+    Refactor JSONSchema handling code
+    
+    This to better support both Draft 3 and Draft 4 simultaneously.
+    
+    Additionally, we fix some bugs in the API v1 Schemas.
+    
+    Change-Id: Iead88f0fb1320ef4ad545a2b66a53b82424c4b14
+
+commit 6a44de8ff92659271d4c9ca336882f22e6a1da17
+Merge: b0fd2aa 0d00610
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Mon Jul 29 15:26:59 2013 +0000
+
+    Merge "Move Keystone config to main designate config"
+
+commit b0fd2aa6c11d27c035bc2deb177c2e5004642a15
+Merge: 95bd561 464ccaa
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Mon Jul 29 15:10:49 2013 +0000
+
+    Merge "Remove out of date TODOs from README"
+
+commit 95bd5615c1a13f7a65f3243f24df1d84ad11efb3
+Merge: b0fab9d f3cfca7
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Mon Jul 29 15:10:05 2013 +0000
+
+    Merge "Move doc/examples to doc/source/examples"
+
+commit 464ccaa57a8da3e4e2d0e16710d05e0f9dcaf674
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Jul 29 16:03:48 2013 +0100
+
+    Remove out of date TODOs from README
+    
+    Change-Id: Ife6baf7ae7697d9a60d0d1b8d26344c39b951616
+
+commit f3cfca77aee7008ea2e075d782a7ba8b7b4ecb1b
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Jul 29 15:55:02 2013 +0100
+
+    Move doc/examples to doc/source/examples
+    
+    This is to match the doc/source/images folder
+    
+    Change-Id: I32cb1211f4a5a60e5e620b687d17508192c72944
+
+commit b0fab9dc925aa9af57d9c462e403fd5e5e985985
+Merge: 7f4334f 21b8788
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Mon Jul 29 14:44:40 2013 +0000
+
+    Merge "Replace missing indexes for SQLite"
+
+commit 0d00610eef4e3cb56c5dc12781b2bc7d99bfe9d5
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Jul 29 12:36:03 2013 +0100
+
+    Move Keystone config to main designate config
+    
+    The keystone middleware can be configured using the main designate
+    config file. This allows the api-paste config file to be left as is
+    by most designate users.
+    
+    Bug #1206091
+    
+    Change-Id: I6b0be7dbdecdecd5579b3024b59d8a070205fc1e
+
+commit 7f4334f8b1e751bb0b5bec4115834d280dfd3c38
+Merge: 1cd2b54 fce9ffb
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Mon Jul 29 14:39:28 2013 +0000
+
+    Merge "re-org docs & add details on production architecture"
+
+commit 1cd2b54123f38d2f8b0dbcf47ff9608d8511027d
+Merge: 6b161e4 4f5eab2
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Mon Jul 29 14:37:55 2013 +0000
+
+    Merge "better ipv4 validation"
+
+commit fce9ffb5ddaedb49122f7536787564f2e876e39c
+Author: Simon McCartney <simon.mccartney@hp.com>
+Date:   Thu Jul 18 22:33:10 2013 +0100
+
+    re-org docs & add details on production architecture
+    
+    bug# 1201494
+    
+    Change-Id: Ie2bd28a1cb7e9f3408e44e2164d72de2c857fc6a
+
+commit 6b161e41a16d5a3118f917972eb6ca1fd8a4331c
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Jul 29 13:00:42 2013 +0100
+
+    Ensure Code Coverage only includes designate
+    
+    Change-Id: I73de4f2b2783f6276fb45364e3579f71e310d965
+
+commit 4f5eab2162975619d8615c06636a54c5ec05c2de
+Author: Simon McCartney <simon.mccartney@hp.com>
+Date:   Fri Jul 26 15:56:54 2013 +0100
+
+    better ipv4 validation
+    
+    bug# 1205333
+    
+    Change-Id: I2c23544cd7f94fbc0592252344def99dcee4b797
+
+commit 21b8788e2df4fa143dcb7594510c3bff60367224
+Author: CaptTofu <patg@patg.net>
+Date:   Wed Jul 24 11:00:27 2013 -0400
+
+    Replace missing indexes for SQLite
+    
+    Migration 018 to replace missing indexes on domains and servers
+    
+    Bug #1200027
+    
+    Change-Id: I2240af58c7730d019916924f8f314134899c7cf6
+
+commit e2419eae65698c303e23c7070f77e832d11c60de
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Jul 24 15:50:31 2013 +0100
+
+    Ensure StorageAPI always re-raises exceptions appropriately
+    
+    Due to the I/O included the exception handlers, eventlet correctly switches
+    greenthreads in order to not block. This has the side effect of clearing
+    pythons internal exception context, resulting in the reraise failing with
+    a confusing error message.
+    
+    Fixes bug #1204539
+    
+    Change-Id: I15061ed48bef09890ac4649a4705b0bf83c02a81
+
+commit 17e01b560465e01835b02fa2da3cf605b2b2848d
+Author: Simon McCartney <simon.mccartney@hp.com>
+Date:   Wed Jul 24 14:26:02 2013 +0100
+
+    corrected event details in Nova Handler notes
+    
+    Change-Id: Ie22b66291b2c88ea00f99d18edc889a25b1b1d75
+
+commit cd11ae01e54c93df8d65b74a8a2033a6430267d5
+Merge: 6e275e2 88265bb
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Wed Jul 24 13:16:01 2013 +0000
+
+    Merge "Logging & docs improvement for notification_handler"
+
+commit 88265bbdd927142b5637c9498012e9c64ebaa669
+Author: Simon McCartney <simon.mccartney@hp.com>
+Date:   Wed Jul 24 13:38:35 2013 +0100
+
+    Logging & docs improvement for notification_handler
+    
+    Change-Id: I0ef0b9c1bc1907a7d43397dcc98183bc52cd40a3
+
+commit 6e275e2f23e303705478021a2f53cef9fde6752e
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Jul 23 11:46:33 2013 +0100
+
+    Remove unnecessary default criterion value
+    
+    Change-Id: I5a2e8ec6bb0ca988e31c21cbd4e514f83bfd5ba0
+
+commit 306967c57ad310da3699cb934552115b25a285f9
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Jul 23 11:35:23 2013 +0100
+
+    find_record should take a domain_id argument
+    
+    This allows us to use domain['tenant_id'] rather than context.is_admin
+    for privilege checks.
+    
+    Change-Id: Ic4724c2aed8a2bcaa3409998c7d23c5c3855f975
+
+commit b4a08ae048f360a11b430bdc80dc6d68908af7e1
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Jul 23 11:32:02 2013 +0100
+
+    find_records does not need to perform an is_admin check
+    
+    Fixes bug #1203804
+    
+    Change-Id: I14cbc8a334dca5b5106d672b68ac355fd0e54080
+
+commit eb16b1e1be8da26193fd3482c8f5eb55eebfcbc2
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sat Jul 20 13:01:40 2013 +0100
+
+    Sync requirements with openstack/requirements
+    
+    This switches us from the ipaddr lib, to the netaddr lib which is
+    in use by other openstack projects.
+    
+    This also means an updated:
+    
+    - keystoneclient
+    - hacking
+    - distribute
+    - setuptools
+    
+    Finally, we're violating two new Hacking rules (H231 / H501), so
+    we cleanup these violations.
+    
+    Change-Id: I6658a0209fc7f0942188f7c518171e6b1fa2b4aa
+
+commit b59a696aca4648182a85efadd244cf1fe51473ad
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sat Jul 20 12:52:46 2013 +0100
+
+    Remove openstack.common.cfg.
+    
+    We migrated to oslo.config a while back, this was leftover.
+    
+    Additionally, cleanup the openstack-common.conf file.
+    
+    Change-Id: Ic24f444a66a0221a0618133e30e0f762b0f599e9
+
+commit fea304331b19baa5f9613a1ed002de6bb86fd4a3
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Jul 19 16:03:19 2013 +0100
+
+    Remove invalid entrypoints
+    
+    These were copyied and pasted from the designateclient package by
+    mistake.
+    
+    Change-Id: I59f29156476f0a11e8ed2f76f02dded2d4c20e34
+
+commit 6103e82981f4841bc183f083a3ae3cf5f4edef1c
+Author: Vinod Mangalpally <vinod.mang@rackspace.com>
+Date:   Thu Jul 18 16:29:49 2013 -0500
+
+    Accept trailing /'s on URLs.
+    
+    The API should accept trailing slashes.  The werkzeug map rule strict
+    slashes is set to False to allow trailing slashes.  The tests have
+    been updated using mock methods to verify that the api accepts the
+    call and then calls central service.
+    Fixes: bug 1202411
+    Change-Id: Iedf9d60b24cd835f3f628b90993ca125faa9389b
+
+commit a7261226f5829bac1a4436b18a0050fcd603b8e4
+Merge: 5f2b5fe 2e65d27
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Thu Jul 18 09:20:34 2013 +0000
+
+    Merge "Implement a Quota management API extension"
+
+commit 5f2b5fe2668ed5c8bb86b60f9b69e7aba0ba23bd
+Author: TimSimmons <tim.simmons@rackspace.com>
+Date:   Wed Jul 17 16:22:15 2013 -0500
+
+    Add 'Getting Started' Doc
+    
+    Add a 'Getting Started' page to the Documentation under
+    doc/source/gettingstarted.rst. Added a sample configuration file
+    that's referenced in the file under doc/examples.
+    
+    Bug: 1201490
+    Change-Id: I3d307568230f61d105908540ae809d583b347e56
+
+commit 7030199923136721993bb67d0863d7a4f0e81392
+Merge: ffa5bd3 496461b
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Wed Jul 17 11:47:33 2013 +0000
+
+    Merge "bug# 1198890 internal api tidy"
+
+commit 2e65d271e92c75f59a4443268153db6a04482cca
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Jul 10 18:09:48 2013 +0100
+
+    Implement a Quota management API extension
+    
+    Additionally, this adds the prerequisite plumbing
+    
+    Fixes bug #1199025
+    
+    Change-Id: Ie84e77ce891cf17a32930326961d16a377850da0
+
+commit 496461b18adbe87c6e554ff61a75ec0c19c42232
+Author: Simon McCartney <simon.mccartney@hp.com>
+Date:   Fri Jul 12 10:58:15 2013 +0100
+
+    bug# 1198890
+    internal api tidy
+    
+    Change-Id: I1b6d843eba5bc9f3a793f28392d0b675333cc17a
+
+commit ffa5bd38b4bcee8ecab39dcbf50473c139aa6ece
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Jul 16 15:42:49 2013 +0100
+
+    Update docs links from moniker.rtfd.org to designate.rtfd.org
+    
+    Change-Id: If217582dc9175d697f74d3591d686ec82df59be3
+
+commit 4652c9543145102ae2e7462052d9e3cbd2920c6f
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Jul 12 14:42:08 2013 +0100
+
+    Add DevStack documentation page
+    
+    Change-Id: I8206418bbbcdf06ff55c241194ccc8e01cbf9f4f
+
+commit d0ec349ec79977f6eaad8aa72948a59716b24814
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Jul 12 13:28:10 2013 +0100
+
+    Override default config values correctly
+    
+    Change-Id: If00c23892611ad3db7782315993e392a8f015da0
+
+commit 2af0a8687e4389cc552fd8c87d7a0de8b3d980bb
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Jul 12 12:45:26 2013 +0100
+
+    Middlewares should tell you they have started
+    
+    This adds a LOG.info() call to the __init__ of each Middleware
+    
+    Change-Id: Iac0e2611acc5aedc7ff42402f08778a6b563dea9
+
+commit de0b55a24a5a29b86c3f09062e328947f65de8d6
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Jul 11 13:28:43 2013 +0100
+
+    Sync with oslo-incubator stable/grizzly
+    
+    SHA1: c7862b5239822d701b7fb155faa4607eff602627
+    
+    Change-Id: I98364124433165d6bd1de42dd4566286de7e0e4a
+
+commit 2f5f2c3f2a95b503feb1e35d9bcdb556458bab48
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Jul 11 00:12:11 2013 +0100
+
+    Update link to designate-cookbook
+    
+    Change-Id: I7900859cf58cd15719a4c97835ee486fae96035a
+
+commit 79bdecfe8b68d548a03423cffdd0b08346414d30
+Merge: 18cec1e f8acd81
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Wed Jul 10 11:48:46 2013 +0000
+
+    Merge "Add doc link to sample plugin repo"
+
+commit f8acd81eb6448a25fa032768c759f730d2503bce
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Jul 10 12:24:22 2013 +0100
+
+    Add doc link to sample plugin repo
+    
+    Change-Id: I71aa1840e8f6b09bfa52a72b79f9419efb22ae2f
+
+commit 18cec1e2ce5e1c707b6bb3534f7defdb351fdf86
+Merge: b142a2e 343452b
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Wed Jul 10 10:45:19 2013 +0000
+
+    Merge "Add a related links page to the docs"
+
+commit 343452bedff57213f2ebe1a34d85ffb223607a46
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Jul 9 19:01:43 2013 +0100
+
+    Add a related links page to the docs
+    
+    Change-Id: I904914ae2a4eef5313cef2a0882608d9ec85d8a9
+
+commit b142a2ed6df3ed384e95ecac17d15bcefb6103db
+Merge: 5e7219a 729bae4
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Tue Jul 9 14:56:29 2013 +0000
+
+    Merge "bug# 1198849 - from blallau"
+
+commit 5e7219aa7ccfecaf061ce961dabb5c6b4413c1a0
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Jul 9 12:31:44 2013 +0100
+
+    Remove comments from *requirements.txt (workaround pbr bug)
+    
+    Workaround for pbr bug #1191923
+    
+    Change-Id: Iebf4bd311006be9fe1b4fcc5753886aaa5805461
+
+commit 729bae476009f608723d39957ef6ab9333a9ea4c
+Author: Simon McCartney <simon.mccartney@hp.com>
+Date:   Mon Jul 8 16:06:34 2013 +0100
+
+    bug# 1198849 - from blallau
+    
+    Change-Id: I40f9e01c89838d8b7efa05fe4d12c0bf340e5d4d
+
+commit 34d8a522c9474e37ff82ab76adb45d7d9fc47bc0
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Jul 9 06:27:25 2013 +0100
+
+    Update the outdated install document
+    
+    Change-Id: Ie2227b9034d7613b641d5e93c664ffcb1a7e45be
+
+commit e29a2b837076083e9383c2c7d8d4f2a162b3f6c5
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Jul 9 05:43:57 2013 +0100
+
+    Ensure sphinx and sphinxcontrib-httpdomain are installed for doc builds
+    
+    Change-Id: I1be2865a5d9809c030decaa71c415ca14228116b
+
+commit e8a8a3c9818977c75f929ec3644417d063810a2a
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Jul 9 05:35:44 2013 +0100
+
+    Ensure RTD builds install all the necessary deps
+    
+    doc/requirements.txt now proxies to the main requirement files
+    
+    Change-Id: I8b5d0323bb478bdf5db67f13db30313fe7c67344
+
+commit 41f8cedb6be3f1fdf39c2c5e1a6a3cb8884e8d00
+Merge: 6c18e63 e08667b
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Mon Jul 8 15:10:40 2013 +0000
+
+    Merge "bug# 1198885 - report 'latest' instead 'None' on database-sync"
+
+commit e08667bd846c031fb51975f1f838e94ac87e9f98
+Author: Simon McCartney <simon.mccartney@hp.com>
+Date:   Mon Jul 8 15:01:07 2013 +0100
+
+    bug# 1198885 - report 'latest' instead 'None' on database-sync
+    
+    Change-Id: I9706269f87076d5bd87a112978884b34b5708dbd
+
+commit 6c18e6337bcb0e1247c98f9486c0ab7b7745a112
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sat Jul 6 17:51:59 2013 +0100
+
+    Ensure central cleans up storage if the backend fails
+    
+    Change-Id: I749d8eaf90f24b5bf81412a6d27bee56a86b37a6
+
+commit 33dc8b1eeac418361385b4810e68757a71c30416
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sat Jul 6 12:42:46 2013 +0100
+
+    Add the Request-ID as a HTTP reponse header
+    
+    Fixes bug #1198443
+    
+    Change-Id: I54c745019b2aa10d99ec38a532c087c053f547f8
+
+commit 450d1640710c6691c0527dc0f435220a2fd1acbf
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Jul 3 15:04:36 2013 +0100
+
+    Carry oslo-incubator review #34949.
+    
+    This adds support for AMQP heartbeats.
+    
+    Change-Id: I4a6720f514d72611fc52fcf4538283b4e217c00b
+
+commit f3ce2698dc5a02759d4dfd4f00e7ddf4497fb701
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sun Jun 30 23:37:19 2013 +0100
+
+    Sync with oslo stable/grizzly c7862b5239822d701b7fb155faa4607eff602627
+    
+    Change-Id: Ib7f5dd1404bdac1969e947cc310573052760f3f4
+
+commit f2513a09b8161a52a2e2f0696a34a8dfce41dcdf
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sat Jun 29 14:59:18 2013 +0100
+
+    Ensure all backend methods respect deleted domains
+    
+    Change-Id: Iabaf990309e7f9950e61a763176d3d4ada90a8c4
+
+commit 08ee80c547d90c531c8e94787ad7ebbf552683a3
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Jun 28 23:33:30 2013 +0100
+
+    quota-domain-records sould be an IntOpt
+    
+    Change-Id: I7e900710e3dece9474d7b8ea019e3f482ab80307
+
+commit 67de2b028d25c95c17d47c850be8dafc20e41dc7
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Jun 28 14:17:59 2013 +0100
+
+    Ensure the unique index on domains.name is correctly dropped.
+    
+    Migration #16 failed to do this correctly.
+    
+    Change-Id: I5a5ad8d98f8208571523f1d7ce344663ae654796
+
+commit 62d1dd7608f70119537e780831f88dc116e7ebb2
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Jun 28 15:09:24 2013 +0100
+
+    Bug #1194889 - Fix migration 16 on SQLite
+    
+    Change-Id: Ief93a5e16a8304c0e3e2bce743ad5d842e7f3887
+
+commit 5b5a2b540529bdea89900bd5c9ba4dd17903641c
+Merge: 9c645dc b4568b7
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Thu Jun 27 15:40:35 2013 +0000
+
+    Merge "Added notes on setting up a designate dev environment"
+
+commit b4568b7de55b0e49faffc499f36eedc5f86b0abd
+Author: Simon McCartney <simon.mccartney@hp.com>
+Date:   Thu Jun 27 13:34:29 2013 +0100
+
+    Added notes on setting up a designate dev environment
+    
+    Change-Id: I63b61b024bc6571671124a4afa50954d222805e4
+
+commit 9c645dc0702829fd0ea1ed5ead7f53fcce85e871
+Author: Simon McCartney <simon.mccartney@hp.com>
+Date:   Thu Jun 27 13:31:45 2013 +0100
+
+    bug/1195284 - correct ttl checks to match RFC
+    
+    Change-Id: I2fec655ce7d823ff951267b4c6a6f72a1e96e83e
+
+commit 9a107daf07859a60acb1876fe44cd0a487b7dd1d
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Jun 26 15:23:07 2013 +0100
+
+    Add simple Maintenance Mode WSGI middleware.
+    
+    Additionally, this commit moves the auth middware to a common middleware
+    module.
+    
+    Change-Id: Ieddc8ebca25b99483232cb4b0203871454789ad4
+
+commit 09fdf2a2503acc28f97ef46f182a88c74f01e4b7
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Jun 24 23:07:37 2013 +0100
+
+    Update jsonschema dependancy
+    
+    Change-Id: I2cd13502443d21cbdc4b11b68576e6ce2044c738
+
+commit 7b572268e81ba6621c68406e8b9086c68946ad67
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Jun 24 22:53:26 2013 +0100
+
+    Sync requirements with openstack/requirements (except jsonschema)
+    
+    Change-Id: Ie00dea1c9f9ef30776939d0821bfb3784994f5bf
+
+commit 83b331e561c2a4aaf01266a797d4fe4fbfb7f2f7
+Merge: 3ea73e7 680cb09
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Mon Jun 24 21:30:33 2013 +0000
+
+    Merge "Keep deleted domains in the DB"
+
+commit 3ea73e7f2ee087775b531caa4ee0e8d65a4827a2
+Merge: efe2fd1 956a468
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Mon Jun 24 21:29:33 2013 +0000
+
+    Merge "Ensure domains that fail to create are cleaned"
+
+commit 680cb09de62b8c90545deab4ac126f9c6d9d7391
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Jun 24 15:24:46 2013 +0100
+
+    Keep deleted domains in the DB
+    
+    The allows the admin to choose when domains should be purged from
+    the database.
+    
+    Change-Id: I4dcc5ff2b4b3c517a77251bfb0d831072d1746d8
+
+commit efe2fd14ab3c0d27de7cd3c1e13bfea3e4a18888
+Merge: d04e66d 11cd621
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Mon Jun 24 10:32:21 2013 +0000
+
+    Merge "Add LICENSE file."
+
+commit 956a46850dda3f60a72db5fedee5a1e44e40ed48
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Jun 21 18:41:25 2013 +0100
+
+    Ensure domains that fail to create are cleaned
+    
+    This helps to reduce the cases where creating a domain in the configured
+    backend fails for whatever reason.
+    
+    Longer term, we need a better fix to this issue for all the backend
+    modifying calls.
+    
+    Change-Id: Id194c3df51323ed52ce2e694e5ac8a1b0a8b9a23
+
+commit d04e66dd72b40837038ba6aeb0b8f0264af9d719
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Jun 19 23:07:27 2013 +0100
+
+    Ensure request media-types are sane
+    
+    This ensures both the Accept and Content-Type headers have
+    agreeable values.
+    
+    Change-Id: If84c137299063884bf4c6805a0506664504862c0
+
+commit 6c53d660208f6d6d1f32f0cab35953363f7007ca
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Jun 19 12:13:30 2013 +0100
+
+    Ensure records are unique, per RFC2181 Sec 5.0
+    
+    Change-Id: I711eee300fca76259522b94673c1585197dff488
+
+commit 11cd6210b34f09bc3e22a1c1e99a8f50e6b3bd6c
+Author: Russell Bryant <rbryant@redhat.com>
+Date:   Tue Jun 18 16:12:39 2013 -0400
+
+    Add LICENSE file.
+    
+    Change-Id: Iea6bce2945c930158eda3b30d4fd6b4da2ad4b8c
+
+commit 10a342f87848c146ce402cb2f07d90ee7b763c7d
+Author: Monty Taylor <mordred@inaugust.com>
+Date:   Fri Jun 14 18:29:04 2013 -0400
+
+    Rename to designate in .gitreview.
+    
+    Change-Id: I2a7a7ca969ae756f525fff26dd05cd63d7f2cdce
+
+commit 2ffa222a54b58d3f45d79648cf1d717204cb20e0
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Jun 13 13:28:53 2013 +0100
+
+    Rename keystone-setup script for designate
+    
+    Change-Id: I8366ba81ba6c58ceb9e8ba457a8b2f9b6006b3fa
+
+commit fda87cf8855a72cc9e78011110aeb2b1a91c3452
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Jun 13 13:25:36 2013 +0100
+
+    Correct some overzealous s/moniker/designate/'s
+    
+    The PowerDNS migrations were altered by mistake. This reverts those
+    changes and add's a new migration to rename the columns correctly.
+    
+    Change-Id: Ieee66af5c52fba259be05c628fffdc393da8dd67
+
+commit 3eec5a90fbacc03a2ffb990f7ba8b8e8029dfbd1
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Jun 11 12:38:29 2013 +0100
+
+    Bump version to 2013.2
+    
+    Change-Id: I8bdcd4edfb5869e881a4403072dfd4c37bb8f670
+
+commit ceef7763141e303152b771774f5b859790b20cce
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sun Jun 9 22:56:47 2013 +0100
+
+    Correct a few links broken during the s/moniker/designate/
+    
+    Change-Id: Ief4e7b933ed03a3d481493e83c929d098539e6b8
+
+commit 193085cf56d9c27b6341a677c8f92358fa99f79f
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sun Jun 9 21:00:32 2013 +0100
+
+    Rename Moniker -> Designate
+    
+    Change-Id: I4b9c7b277a524058408d5c551bb51531e9a3949c
+
+commit ea765d52ef7f9212250ceebea97b60b2d886de41
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sun Jun 9 14:30:05 2013 +0100
+
+    Switch to Flake8 and add Hacking checks
+    
+    Change-Id: I44a235e22677031262025152b869ea7d82ee266a
+
+commit 8c4124098accd83ba67015e5c7e3c9e110fb19ae
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Jun 7 17:19:41 2013 +0100
+
+    Sync requirements with openstack/requirements. (Except jsonschema)
+    
+    Change-Id: I2b2180bfc75df322566d8eaab645752fe7f915da
+
+commit 2d3ef40bdacd12bf6b532f2bfd936b1a3ab78157
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Jun 6 09:29:43 2013 +0100
+
+    Fix pyflakes error
+    
+    Change-Id: Ifc202bb8bceebb1daf2ae2196af075213fe31d7c
+
+commit 1d57994581a370307f8dfcdcf7acff1260ba9d0f
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Jun 6 08:25:49 2013 +0100
+
+    Guard against deletion of a parent domain
+    
+    Change-Id: I72f5529af37941daa2f86c5f0d50373e5947727f
+
+commit 809eef1692c6457f9ed5a612accbaa93afa8cfef
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Jun 5 23:35:44 2013 +0100
+
+    Remove unused SQLA utils code
+    
+    Change-Id: I3b1b33087ab330326859c299aed0db67657b7718
+
+commit 1e4c4a488b90de3fb48e43c32137b9b772d4a275
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Jun 5 22:22:11 2013 +0100
+
+    Ensure record placement validation does not prevent updates
+    
+    Change-Id: If085fed9738dad41d84836f258ad1b39cdc9cb32
+
+commit a728bc5f8ecfb448b572e629cbd822817df9164a
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Jun 5 16:03:03 2013 +0100
+
+    Validate UUID URL parameters
+    
+    Change-Id: I129aedc593e32fe23d813173b11d128e9d6aed89
+
+commit d70eb3da78f921f436fcfee38c139b7219435c52
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Jun 4 12:21:27 2013 +0100
+
+    Add request-id to the API's fault responses.
+    
+    Change-Id: Ib3bfb29690cdf15b1d884e728a57b485909d6d75
+
+commit 28becedeeefbaf30d60a55fef0d7117aa112ba8f
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri May 31 21:32:24 2013 +0100
+
+    Switch to PBR
+    
+    Change-Id: Ib62c6ab685c1bcf14ed363031010c4a145098df6
+
+commit 0c7535e4b9a10a21d131ba1a46c91183e624201d
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Thu May 23 22:21:59 2013 +0200
+
+    Helper utilities
+    
+    Change-Id: Ia689302fc1bcc3b11dceb51f131cdd4ac1ad30ba
+
+commit 99ef6cf65bdce722e23cc9cebd2b7285afdd925e
+Author: Michael Still <mikal@stillhq.com>
+Date:   Sun May 19 09:19:42 2013 +1000
+
+    The utils module in oslo is no more.
+    
+    The utils module in oslo has been removed (with most of its
+    functionality moving across to strutils). Luckily it was imported
+    in heat but never actually used, so removing it is relatively easy.
+    
+    Change-Id: Ic3cb8bb9bbae282f5a753c6abe58b1d47ad640db
+
+commit 5c7869f2069fe08908063bfce67f663c30429da5
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri May 17 22:03:44 2013 +0100
+
+    Ensure create domain/record records call the correct count_* methods
+    
+    Change-Id: I31ac63d0f76f9e569868581d51aff54eef450475
+
+commit 59e432e1c1623039ced9fe57c81c58eb10b27654
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed May 15 16:50:54 2013 +0100
+
+    Ensure our quotas/limits are consistent with other OpenStack projects
+    
+    Change-Id: Ib09a4339109765a7703020ebceed6acad60dc095
+
+commit db57bc531c1ba005adc3dadad6f16deab612ec34
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed May 15 12:31:44 2013 +0100
+
+    Implement Quota Support
+    
+    Intented to be a quick implementation until OpenStack gains a centralised
+    quota service.
+    
+    Change-Id: Ie8cc0e391e621905583e6fd76aad401df6d705a3
+
+commit fdc8c222c2b4d30005cf015f6e746ba63a265751
+Merge: 6b81f53 f51366c
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Wed May 8 08:10:40 2013 +0000
+
+    Merge "Update import of oslo's processutils."
+
+commit 6b81f532b9bc07c7813f71d28f46e51ac4611adf
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue May 7 17:30:59 2013 +0100
+
+    Ensure two PTR records cannot have the same name
+    
+    Change-Id: I17d3d8ea83f4021c02034275d958bb5e73f1e198
+
+commit f51366ca8c018cee7d5a4a6158f779a25f765296
+Author: Michael Still <mikal@stillhq.com>
+Date:   Tue May 7 13:24:39 2013 +1000
+
+    Update import of oslo's processutils.
+    
+    Brings processutils inline with the current state of oslo.
+    
+    Change-Id: I8ab65737853a2d4ec61c060434101b85ba3057e8
+
+commit 4a1b325e89316f645dd55c5925a1b3d7c34eb7a6
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Apr 29 21:44:06 2013 +0100
+
+    Extend reports API extension with more information
+    
+    Change-Id: Id8ebd69e32f520e8aa56a9df1f34b2532b899e35
+
+commit 8c4b88d7ff0c49eebefee648c6af0e8338f8ddbc
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Apr 29 20:34:12 2013 +0100
+
+    Cleanup method/varible ordering in the various places they are defined
+    
+    Change-Id: I59ddd120737111c7abc4d497150ecc2b53a7f88c
+
+commit 182f1ab71ff7abcbf54340c59dc438cacf80d066
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Apr 29 18:52:00 2013 +0100
+
+    Update report API ext method names to match URLs
+    
+    Change-Id: Ie3fea57d17f1e9fada98fdaae3cc9c0e9bc3b1f5
+
+commit d4fd8855882ae0244a0db8132e35d014f1d8d69b
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Apr 29 18:45:33 2013 +0100
+
+    Remove unnecessary try/catches from API extensions
+    
+    Change-Id: Ifec845280f2f2abf545271a17c6b245d461a4e7b
+
+commit eaa33b4e849050c43bf590eca1ffee0266b5a604
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Apr 29 15:47:13 2013 +0100
+
+    Ensure all error responses are JSON
+    
+    Change-Id: I311be55316096b04ca36ce3d10c0332ae874bc78
+
+commit 4a1eb8b1b9e2f3f0349076e37c0b3eabaaf68c77
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Apr 29 14:00:48 2013 +0100
+
+    Ensure API calls fail when junk/unexpected properties are supplied
+    
+    Change-Id: I27e621df073c51804ca230b4b328bb66c0790676
+
+commit d36fee75762197b0c61f92074b1a9ba818354b0c
+Merge: 0a0e472 2806ebe
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Mon Apr 29 11:25:27 2013 +0000
+
+    Merge "Update to the latest loopingcall from oslo."
+
+commit 0a0e47296fa4cb06f46f6820288f7f2be1090327
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Apr 23 18:26:11 2013 +0100
+
+    Add tests to ensure domain notifications are sent correctly
+    
+    Change-Id: Iac63214f5675f5ecae15ca848ec8606c8f1ee6ca
+
+commit a2a44271615f492d28aa47c0b6cd5a2de9fa1095
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Apr 23 17:38:25 2013 +0100
+
+    Removing unused test helpers
+    
+    Change-Id: I70e57a8dde9723b8a6123c2f982ed664f7070a4f
+
+commit 61025693628ef61ff4f46083bac0cafb796c7ad9
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Apr 23 15:56:49 2013 +0100
+
+    Add periodic_task from Oslo
+    
+    Change-Id: I356ef8d9ce0b82d00f916b39ae3cac703e47b6c7
+
+commit 7856622296a9b8b7ee8498f323573c618c1949ab
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Apr 23 15:53:19 2013 +0100
+
+    Correct the service name used in notifications.
+    
+    Change-Id: I3aa37765ce4613d69c8df22becd817263eb9878e
+
+commit ca1c17e0bb596ef03b286c283907586cb1225df7
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Apr 11 15:27:27 2013 +0100
+
+    Add a "force" option to context sudo.
+    
+    Change-Id: I6da29e005616b51cb4e2b1ae388f648808610c70
+
+commit 9f5ba038f6b95e50a3da5985abc93383bc6f58ad
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Apr 11 14:02:48 2013 +0100
+
+    Add Central.find_*() methods
+    
+    Change-Id: Icc7fd5e1cee108e20511f35f5bde9468f14b3fd2
+
+commit 49b7a34626a6f1abf0ca43e7dc1b4463e9801614
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Apr 11 13:21:46 2013 +0100
+
+    Show log level in moniker-manage output
+    
+    Change-Id: Ie7db8e04620805e9e06f7bf0f2a7e9418b8f8ccd
+
+commit e9f30a85cc01589d9cb8c112e780899ada35f864
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Apr 9 17:39:03 2013 +0100
+
+    Commands should extend our Base Command, rather than cliff.Command
+    
+    Change-Id: I42c8f1b95217964130aa5c77c21124f5f305ef9a
+
+commit 82b0cf66f66b5a963abc0c64948eb4568583cd74
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Apr 9 17:36:33 2013 +0100
+
+    Remove un-used base CLI command classes
+    
+    Change-Id: I0f029e0d027e00f9f7e0f408d6161748e9c619a0
+
+commit 2806ebeeb199d857af8967780623309479a1cf28
+Author: Michael Still <mikal@stillhq.com>
+Date:   Tue Apr 9 14:38:13 2013 +1000
+
+    Update to the latest loopingcall from oslo.
+    
+    This needs threadgroup as well, as it uses loopingcall.
+    
+    Change-Id: I757aa4578feaccf1a42978e98d0c8f91b7e04819
+
+commit e3cd9f19e6d51afda3f3b0dfdab1861d41181f42
+Author: Michael Still <mikal@stillhq.com>
+Date:   Tue Apr 9 14:32:29 2013 +1000
+
+    Convert openstack-common.conf to the new format.
+    
+    Its easier to read.
+    
+    Change-Id: I26cd4ec8dee19e87e1bda1098644ebec043b57a4
+
+commit ceb662475204e017fc28209a17c43f619f4c7acf
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Apr 8 13:53:47 2013 +0100
+
+    Ensure X-Moniker-Sudo-Tenant-ID values are either a UUID or int
+    
+    Change-Id: I39d4cb3a9dd1e63b725615b65839e64216d36471
+
+commit 8a3d9fc42ddac43d52b63ff029706fbc9a9d2141
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Apr 8 12:14:17 2013 +0100
+
+    Prefix all Moniker notifications with "dns."
+    
+    Change-Id: I17d6204e9c870fa338832b77a40ca4dbda0834e0
+
+commit b06a19543f81395618ee4c66c128092275931c8d
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Apr 3 15:41:43 2013 +0100
+
+    Add a test case for email addr's with a trailing period
+    
+    Change-Id: Id2a83414f7273da114932340e1a379ce691e2eba
+
+commit 9b170050d6e0fa41a3a088efd8248ecbbd3416fd
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Apr 3 14:49:06 2013 +0100
+
+    0.0.0.0 is an invalid IPv4 address
+    
+    Change-Id: I23f3532d297e94c748516fab138e12ab58f59c44
+
+commit 1efd996362df0678809c166965bea2fb499e3678
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Apr 3 13:44:31 2013 +0100
+
+    Cleanup PowerDNS database schema
+    
+    Change-Id: Ie8dbfb1c7ca52b29e9fffa0594b3097d95cbf61e
+
+commit 411f1da0a391a25cf9a1aa3a838377a5fc186b98
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Apr 3 12:23:40 2013 +0100
+
+    Support all valid (per RFC1035) email addresses
+    
+    Change-Id: I3ca896c5aafdb893e4c6da0dd2be5fecf4f65d4e
+
+commit c79d6f662170ba416fade69006901a8742121712
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sun Mar 31 15:01:54 2013 +0100
+
+    Implement support for RPC Versioning
+    
+    Change-Id: Ied234ed2ca691feb4bfe35450a701230db186364
+
+commit 38681ad86df44533d9d7ed14d0114960dd4fa60b
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sun Mar 31 15:00:59 2013 +0100
+
+    Remove redundant moniker-manage commands.
+    
+    These should have never been here..
+    
+    Change-Id: I0c0eb4f4c022f3848d1c4ab83c17fdb7ee7d973a
+
+commit 544002ab5cbf5f202c774bd9d8f651c4622a1fb1
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sun Mar 31 13:11:46 2013 +0100
+
+    Ensure record changes trigger a backend serial increment.
+    
+    Change-Id: Icd81db354d58ca39595e74779e762482bf2f776c
+
+commit f0c49181d93c1d7666ac132c9bec35bf19d4e714
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Mar 22 15:41:09 2013 +0000
+
+    Abstract API exception handling
+    
+    Change-Id: I5017dfa60d4a8266908cc09c40b95139f01da0de
+
+commit 19087e5ba5b91e5b11913061835527db0b5875b2
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Mar 25 22:44:25 2013 +0000
+
+    Tighten up TTL and Priority acceptable value ranges
+    
+    Change-Id: Icfafcdf7bf60c63948d955cfefb95e261e5f34cd
+
+commit 1d1fcd608b19569e78f34d121ca830f8f9ca79b0
+Merge: 8f21cf9 5455ade
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Mon Mar 25 22:48:31 2013 +0000
+
+    Merge "Added /reports, /reports/domains, /reports/records & /reports/tenants"
+
+commit 5455ade27e1349a3b30c6c08f38fc68ae8f8aa9e
+Author: Simon McCartney <simon.mccartney@hp.com>
+Date:   Wed Mar 13 17:59:34 2013 +0000
+
+    Added /reports, /reports/domains, /reports/records & /reports/tenants
+    
+    Change-Id: I687f236f5f51789d2b8226bd38966bd050c21171
+
+commit 8f21cf9d9e679d2e0b9a4fdeb7f9c600c881ae3f
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Mar 20 13:52:42 2013 +0000
+
+    A domain may not have a NULL TTL
+    
+    Change-Id: I67f4512e8962e64d19542cd3ed5faa5c57d3e058
+
+commit 2eb7534356a51b35176e8fbaa38b3f1ff860d178
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Mar 20 13:35:13 2013 +0000
+
+    Ensure supplied email addresses are valid for use in the SOA RNAME field
+    
+    Change-Id: Ifb7c0bfd3081a716652c744f45c69d66974d1247
+
+commit d00dec485896c936a916b133e3d757f016af5fea
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Mar 20 12:07:38 2013 +0000
+
+    Add support for specifying custom domain/record name max lengths.
+    
+    Change-Id: I269fffaae8d6fb3e1462c85a8ac44a470e760628
+
+commit 82eec7a98fdb03ccb8e6ac1b8629457d9521575d
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Mar 19 17:04:58 2013 +0000
+
+    Validate SRV record format
+    
+    Change-Id: I9caae086cae49c20321a27ca0816b4243955f99c
+
+commit 1636a4740c3a964a4caa2f8b0453a6bd9da074a4
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Mar 18 23:28:56 2013 +0000
+
+    Add localhost, localdomain and local and remove com, net, org from default blacklist.
+    
+    com, net, org are now blocked simply by being a single label domain name.
+    
+    Change-Id: I2527199580a9d140e9171d95266831494460d5d7
+
+commit fff4fd45cdc33cae7b51fc7cac1f6d6946dcba6c
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Mar 18 23:57:57 2013 +0000
+
+    Set the default value for accepted TLD's to match the IANA TLD list.
+    
+    Change-Id: Ie62bd1c174b2eed2620a1b8fba5a93d7bddf4711
+
+commit dbe251ebc976f3959e9e097b5857bb1e22826b48
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sun Mar 17 13:17:15 2013 +0000
+
+    Quick fix to oslo-wsgi for wsgi.Service compat with service.ProcessLauncher
+    
+    See https://review.openstack.org/24595
+    
+    Change-Id: Ic5f6045c0b620a2a51fcbbdfb5108f769e977d36
+
+commit 73740a02611b7ae38ceac4496c98e8f5e70eb4fd
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Mar 18 11:01:07 2013 +0000
+
+    Domain name's should not be accepted with wildcards
+    
+    Change-Id: I26388398699324dd95baedac333e31393745e46e
+
+commit c571f3726fc07afe04383b6d99b9a64e38d16a7e
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Mar 14 12:28:46 2013 +0000
+
+    Add 'accepted_tld_list' config option
+    
+    Change-Id: I0731dc2fada7f0ada2e5107566bc744d385541e2
+
+commit c20d7d2cfd19cc3e4ff90ad155adf1db4e249d30
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Mar 13 16:29:46 2013 +0000
+
+    Add ability to "touch" a domain via the API
+    
+    This increments the serial number without requiring any other changes.
+    
+    Change-Id: Ifdb70a2876c926b322c8f0249b52e385bccd466a
+
+commit e0191bc3b0f8df8a56cd8929da4cedd9abd60299
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Mar 13 13:32:49 2013 +0000
+
+    Allow for record create/update/delete's and domain updates's without incrementing the serial number
+    
+    Change-Id: I391280c904f73c25198c0cb6e17caa869e8f4d92
+
+commit 6f75dbc26460b153c394704f753118d2be0931c7
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Mar 13 11:58:39 2013 +0000
+
+    Add a simple profiling decorator.
+    
+    Change-Id: I433d8296d15081d05a58e45dcf92218338e52a90
+
+commit 227d7958c4b4a092d490c96b8400c085dc7a2b52
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Mar 12 23:39:03 2013 +0000
+
+    Prevent is_subrecord iterating past the domain name itself.
+    
+    Change-Id: I828f3ec6064e45c3428e96ce4c4fb8ead8827abf
+
+commit b02a03b89a2a542cd57db96ba67b98908b8abbf9
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Mar 12 22:49:28 2013 +0000
+
+    Revert "A domain's TTL must not be null."
+    
+    This reverts commit 9d0386b661986d6435b5532d4239ede042df8972
+
+commit 9d0386b661986d6435b5532d4239ede042df8972
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Mar 12 15:26:37 2013 +0000
+
+    A domain's TTL must not be null.
+    
+    Change-Id: Ifdd5ad12a33fb5a5c0d96133629fc9ca7f11068a
+
+commit b539b6c7ee17c1a0df509b14560518c3fbce6459
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Mar 12 12:09:37 2013 +0000
+
+    Use the 'fake' backend by default
+    
+    Change-Id: Id6546d6df9aff9d8474c12011115493199a9eff4
+
+commit 0092df7f8a152e615eba7fa1500ee348f91c57f3
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Mar 12 11:33:06 2013 +0000
+
+    Make Diagnostics and Sync API's optional
+    
+    Change-Id: I55ddaa72b95a4b79bee644d0cc6ba8216307a3e8
+
+commit b4aa98bf3217258c9b2054b6ad42aed67e449567
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sun Feb 3 17:46:46 2013 +0000
+
+    Separate notification handling from the central service
+    
+    Change-Id: Iee0be50dfa3c56b70279580b7af243842df96d74
+
+commit 83d135a66957d7ce35393bfbedf0994699d98984
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Mar 11 21:44:11 2013 +0000
+
+    Remove base Plugin testcase
+    
+    Change-Id: I5d01233fac24f837402957440d37724135252b59
+
+commit f238d2f036d79cd9d192b09b05575a71864fb682
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Mar 11 18:47:49 2013 +0000
+
+    API tests should tearDown in the correct order
+    
+    Change-Id: I1305aeb27b6fe229f7c26fa5acb8555919a62bdf
+
+commit 449ec68875d1c8afa50337a8d44bd27018c96269
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Mar 5 16:55:13 2013 +0000
+
+    Refactor DNSMasq plugin for easier transition to the upcoming transactional changes.
+    
+    Other backends to follow, this was just the smallest Backend to trial.
+    
+    Change-Id: I154bdacdee3d74a0d5d32e311e0cf88f99f07f48
+
+commit d2bdcbd7eea0271a6f8183f3bead2e998be1eb04
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sun Mar 10 14:25:04 2013 +0000
+
+    Remove the distinction between a storage engine and connection.
+    
+    It's unused, and leaves storage plugins in-consistent with all other plugin types.
+    
+    Change-Id: I4c304c253a37dbd5ea29cbc58d64d932483aeb78
+
+commit 3d71af8a93600e86dc225fceb6873eab40e001ea
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sat Mar 2 21:48:18 2013 +0000
+
+    Add Also-Notify support to PowerDNS backend.
+    
+    Change-Id: I32b0a72fa5d004339e00103f797027eae044cfe7
+
+commit d48698fc94c9b3d36e70768a6fdfe8fe5038a092
+Merge: 3d5930c ec6b751
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Mon Mar 4 18:19:34 2013 +0000
+
+    Merge "Simple implementation of DNSMasq backend"
+
+commit 3d5930c9d776842b71498fe0b11a026b30f0f9dd
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Mar 4 17:12:09 2013 +0000
+
+    Wrap backend interactions in try/catch blocks
+    
+    Change-Id: I3e4e3b9a8ace7cd89d2244aca07248e7cfaaad9d
+
+commit 1dfb0aa3f8be2cf134dc2474e19b02c65dc8892e
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Mar 4 13:50:43 2013 +0000
+
+    Add a base 'Backend' exception class for backend specific exceptions to extend from
+    
+    Change-Id: Id627eee72f548a894bd7ae7ff30e3c1761726f42
+
+commit 3959bb8438d5e145712f1e4507134afb5e334365
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sat Mar 2 19:05:28 2013 +0000
+
+    Fetching a domain's list of authoritative name servers should not be filtered by tenant_id.
+    
+    Change-Id: I5c151f0c2c32df6695ca8c71b85984dfaad5b2fa
+
+commit 21be753e9145b34c8f2ddfd22bf5b363a66ce606
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sat Mar 2 16:09:11 2013 +0000
+
+    Ensure database-sync works when no version is specified
+    
+    Change-Id: Ic6e42e62ed7a0f2c708dfd679209265e5c77508b
+
+commit cd9e2797792fc53c1078d9ae3b2011c49a29431c
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sat Mar 2 12:43:41 2013 +0000
+
+    Rename sync-all to the more accurate "sync-domains"
+    
+    Change-Id: I7d89d5cb6e02b237396987c179583b64213bba78
+
+commit 4072f433704f7cc6cccd4ff06fbae1260929a543
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Mar 1 17:19:52 2013 +0000
+
+    Ensure we enforce the various rules for CNAME records
+    
+    Change-Id: Ib77c1364997b23e4d766b8017eb26a1ceeb1217f
+
+commit 8ce4d3124bc96a6792c34b5c063547cf1a8f2f3b
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Mar 1 14:55:12 2013 +0000
+
+    Add novalocal to the default domain name blacklist.
+    
+    Change-Id: I6bb1d6d25343d7bb235bd982642718c4cb6d4f3a
+
+commit 1713a5b12d478eab0d9e2a21055fe512ab2be1ae
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Mar 1 10:59:13 2013 +0000
+
+    Fixup migration #12 and support a target version when doing a database-sync
+    
+    Change-Id: I54a80c96dc7376f6cd65fe5387e2bb813f12d94c
+
+commit 4ed54c9d3b06cc4e8dc375f99550368df7a39fa8
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Feb 28 22:05:54 2013 +0000
+
+    Ensure migrate.cfg's are included in the sdist tarball
+    
+    Change-Id: I44765730d975d9e00b9121b68d0bcb1d4325a650
+
+commit e4f1f467a2a14ed24c68a5d8fec3d2d49020ab5a
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Feb 28 22:00:22 2013 +0000
+
+    Saner default values for SOA
+    
+    Change-Id: Iad5bfd0432ac249de40aa61f15285517b4052f39
+
+commit cee4768d6db090c1d0f5b53922ff87e617589135
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Feb 26 16:38:34 2013 +0000
+
+    Ensure serial number does not go backwards.
+    
+    Change-Id: Idb81e108c2be562c8514f1a732165917ddc0bb6e
+
+commit 0da486e9fff6cc61bff298a749e5154b7537dc8d
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Feb 26 17:01:24 2013 +0000
+
+    Pin to jsonschema less than 1.0
+    
+    Change-Id: Ia53a31435174eef6792a2e7c44944f72f2a9a881
+
+commit 6f9aedb57694403a97b5a514cb327723ea9fdbc0
+Author: Davide Guerri <davide.guerri@gmail.com>
+Date:   Sun Feb 24 16:47:17 2013 +0100
+
+    Rename the X-Moniker-Tenant-ID header to X-Moniker-Sudo-Tenant-ID to make more clear its meaning and use
+    
+    Change-Id: I434fa62c0b143a45b6c28b4234102849a984a0e5
+
+commit 5f11e21d4918f8e0c7ff065b83eb9f83f5ee139b
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sun Feb 24 00:51:33 2013 +0000
+
+    Support SSHFP records
+    
+    Change-Id: Iba7a40db072576831011c41bddd85bfe35483d80
+
+commit 46a0d3b27d7e2ebe7a0825179993bf918c614a05
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sat Feb 23 18:21:32 2013 +0000
+
+    Correct migration #10
+    
+    Change-Id: I7a51b1ed653cf559357217c318ec3fe8e23cbdc5
+
+commit 738e0a26b06e9a1dfae814060f48e07e6f8fbe56
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sat Feb 23 14:58:55 2013 +0000
+
+    Massively improve hostname validation
+    
+    Change-Id: I910a715d86f56dc6fadf63cb52d2a4850a17a785
+
+commit 4db7a68ad63d63f914f038ffd284264d6383621d
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Feb 22 00:32:48 2013 +0000
+
+    Move diagnostics API resource under /v1/ and split out the sync methods.
+    
+    Change-Id: Id984989f61ceec1d750b14084377f7d103547b14
+
+commit 5d9bcfb9a35b637a8c6f752dd32db03a7b0b45ec
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Feb 22 00:30:26 2013 +0000
+
+    Add support for plugin provided API resources.
+    
+    Change-Id: I201461e255edb1bc5ca35e9c8c989cb777bb2924
+
+commit 4be975feae89c4ad5d6f1b0a97fc9ecc1af93b08
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Feb 22 00:22:18 2013 +0000
+
+    Add 'servers' link to domain schema
+    
+    Change-Id: Ic5eabbc16dc90d4d1e3b1cc9be85b5a86bfce373
+
+commit c085766c2e98365be14875f86ab36ea4e3b7d2f1
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Feb 21 21:47:30 2013 +0000
+
+    Drop the ipv4 and ipv6 columns from servers. It's never been used and makes little sense.
+    
+    Change-Id: I9f22a77d5adcf0fb18a081aa1a73253925ed150d
+
+commit e0c227ec3f3509acb1f116ce4131c8e92f1d79ee
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Feb 21 21:21:43 2013 +0000
+
+    Add ability to fetch the list of nameservers hosting a particular domain.
+    
+    Change-Id: Ib12fd56003bbd5fb4d00149db1b15c1e368a5673
+
+commit 2b70ae152b075d0e1525836ea0fdd6c1e11958a3
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Feb 21 21:07:13 2013 +0000
+
+    Consistently use try/except/else
+    
+    Change-Id: Ib2c0ea8672ce07dbcfc2b221c44f835ed3b40a17
+
+commit 33d1191e8e0768fb18fc7815e5ad9b0726279a8c
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Feb 21 13:32:55 2013 +0000
+
+    Ensure doc examples use valid JSON
+    
+    Change-Id: I2f615a5a135e4de60159d2b0f0c3fad351efd287
+
+commit cd31c3730381dde7496a18e7a91a151ca135cf72
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Feb 21 13:26:11 2013 +0000
+
+    Correct Context-Type -> Content-Type typo in docs.
+    
+    Change-Id: I96c163768159df7a390f2411912680ce75459c6e
+
+commit 87d7f65b409a03f14fecb98057bf8521f305ebd3
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Feb 18 13:46:07 2013 +0000
+
+    Attach context to local.store a little earlier
+    
+    Change-Id: Ibdfaf98a25cbb2a8a8839247b14db7a7928c2c3e
+
+commit 8cca83f08f4fea8647968e36e0a4a9a69f488050
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Feb 18 12:49:40 2013 +0000
+
+    Ensure tools/* is included in sdist
+    
+    Change-Id: I494ec8bfb1abd58cfdcdda6e5eefd081a7166021
+
+commit 8a42cd7ca5ff6f05ac76e0dae5a40b0e61ec06b0
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sun Feb 17 23:49:28 2013 +0000
+
+    Remove unnecessary test api-paste and policy.json
+    
+    Change-Id: I40e4e13a0dae9199ab53a7907e7eadb52b373e76
+
+commit 3297a50ab0c459de98f0aec4ebb6ac8404e33755
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sun Feb 17 23:48:12 2013 +0000
+
+    Ensure resources are included in dist packages
+    
+    Change-Id: I263a1a917f3d63e2c36d6e31fd372c824ccbc4ed
+
+commit f8337ea43745451dda26e2f8fe095fd711cfdab3
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sun Feb 17 23:37:42 2013 +0000
+
+    Ensure we attach the context object to oslo-local for oslo-log to find.
+    
+    Change-Id: Id84b641036486f96a394f31807ea8530f632358c
+
+commit ec6b7519ef4b65ebc8e8853605cf6eac3a550b2e
+Author: Andrey Perminov <d1pro@yandex.ru>
+Date:   Thu Jan 31 22:46:53 2013 +0400
+
+    Simple implementation of DNSMasq backend
+    
+    The logic is quite simple. All dns zones are stored in separate files.
+    They are eventually merged into one flat dns zone.
+    And this file (or any separate zone) should be specified in dnsmasq config file (--addn-hosts=).
+    Update is also simple, all you need is to send a SIGHUP to dnsmasq to force re-read of the file.
+    
+    Change-Id: Id634ca2843fd02a8406913881d4989c7c2112249
+
+commit 425f8c9bd6d2c38fee31c63773cf1a28eaca315d
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sat Feb 16 00:40:44 2013 +0000
+
+    PowerDNS: Allow domain type to be configured.
+    
+    Change-Id: I056b80573a9a23628b6cab6e3886f4a77443e58a
+
+commit b967268f5b53d21fc52c978f5176622f827d8524
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sat Feb 16 00:31:08 2013 +0000
+
+    Ensure PowerDNS backup updates the SOA serial when necessary
+    
+    Change-Id: I011f22a787cc8bb12487dd3fe0105e23629f9827
+
+commit cf53c532818367d2315fa425a1aada896776a4a6
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Feb 15 23:53:28 2013 +0000
+
+    Add ordername/auth cols to PowerDNS Record model
+    
+    Change-Id: I2be3ca94c394449f3e4b59b6c2efba75fd76d8d1
+
+commit 6ef413eaf09679ad11d2c95d34c28639b4790cfc
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Feb 15 23:17:37 2013 +0000
+
+    Set the auth field correctly for PowerDNS
+    
+    Change-Id: I2e1a361ba449df8922c28d51b66671c0315a35e6
+
+commit e44e6c3a780a8e42b76c375bde8e4a91d6eeb34a
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Feb 15 18:19:14 2013 +0000
+
+    Allow Context properties to be passed through get_admin_context()
+    
+    Change-Id: I409f24255cd10dc218551cc4351dd6ddce6a4446
+
+commit 17619b81456d6784f4157b178ce79ff0d4c8a21b
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Feb 15 18:12:36 2013 +0000
+
+    Fixup moniker-manage sync commands.
+    
+    Change-Id: I1c7da8c1fd04a21e96814362f653e07359beb0f7
+
+commit c344c230c83754882c200d9c78021b45c9051464
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Feb 14 11:07:53 2013 +0000
+
+    Add moniker-manage CLI commands to trigger sync's
+    
+    Change-Id: I5445ed183754f4f5a75860d14b94cf69b13c83e2
+
+commit d36055c59e75b16a2554201e3faa2e3fa13cd695
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Feb 14 10:45:26 2013 +0000
+
+    Allow admin context's to retrieve domains from all tenants.
+    
+    Change-Id: If3a5118bfb0fea6739b6d68f8c20b67a95a0045c
+
+commit 9b70edc337b66cfef92b78c84d415d342cd996ef
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Feb 13 20:24:05 2013 +0000
+
+    PowerDNS currently only supports hmac-md5 TSIG
+    
+    Change-Id: I47352391f75a3acb1e635260d66955b1d8b11f90
+
+commit 4eecb4e04552d97962024f3a2cdbab146e9883dd
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Feb 13 13:20:37 2013 +0000
+
+    Calls to get_servers from backends should use an admin context
+    
+    Change-Id: I476a09a24e7949eb58c600029d0e5c7f115f8749
+
+commit 92896f85f0fd6e38414805e93ea0f42efac20039
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Feb 13 12:24:55 2013 +0000
+
+    Add moniker-manage commands for maintaining servers and TSIG keys
+    
+    Change-Id: Ic8b6892dbaca3ce643c5ec8e6b81a6a7a0d1aeb2
+
+commit c7f060d0e08e895e6ce11ad0c7790153e7d35a3f
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Feb 13 12:26:50 2013 +0000
+
+    Use a dash as the command separater in moniker-manage.
+    
+    Except for "namespaces", which continue to use a space.
+    
+    Change-Id: I08e2120ae02ec92a74d06b5b9881f195fe6e8781
+
+commit be7140c05281c813c84f50a6f3ee972634093781
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Feb 12 18:20:53 2013 +0000
+
+    Fix incorrect column name used when updating a TSIG key
+    
+    Change-Id: Ib0d9be56b955c10d907940db3f46308f02c89d10
+
+commit d258d8a84421c2f877ac250d712582b281cbbac0
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Feb 11 22:37:25 2013 +0000
+
+    Add support for TSIG to PowerDNS backend
+    
+    Change-Id: I7c1a8c452706d8d482580520ec8ecef2e0400bc8
+
+commit 49b491f06c6add46dc8f46606026dd8856ed0d05
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Feb 12 13:34:02 2013 +0000
+
+    Add tests for incorrect domain_id checks.
+    
+    Change-Id: I1aa838502a1c58ed2bc2154591351dbd242ec5b4
+
+commit cc48b8f8fdb764fc6ec29bfd72ebb3886b0a8e75
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Feb 12 13:27:21 2013 +0000
+
+    Ensure records belong to the domain_id supplied in the URL
+    
+    Change-Id: I0587bfb937e42ab0c727c99020e9a81b1a61cdc9
+
+commit 6835a7a1cdac2e38a1b82be7885001c66e739538
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Feb 11 22:14:52 2013 +0000
+
+    Pass TSIG Key Create/Update/Delete to backend implementations
+    
+    Refs bug #1122323
+    
+    Change-Id: Ifcbae801a4ba014415032eb668a0b8a4afc2a4b0
+
+commit ae68cbd426cc7e91621e8ca2729c595e07fcde15
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Feb 11 22:19:36 2013 +0000
+
+    Fixup a rebase gone wrong..
+    
+    Change-Id: I332d222010fbee0e04f2f9bbcb1ada02c38cab5d
+
+commit a62bc08696dfbf829ee286eb6db2c67029f8b36a
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Feb 11 19:05:11 2013 +0000
+
+    Provide initial support for TSIG.
+    
+    Currently no backends implement support.
+    
+    Fixes bug #1122323
+    
+    Change-Id: I192c1d853068fdb006e96bab115b44ffb39d8b2d
+
+commit 5a42fe29a5df6eb13eec493d3e9eb8d2719f0173
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Feb 11 19:47:27 2013 +0000
+
+    Pass an instance of the central service, or the central_api proxy to backends.
+    
+    Change-Id: Id8a7a0f7443089e3a91134e452da19f5b5f55945
+
+commit 0edf9a5de417b1a6bc1f083d7104ccd7fd43b34e
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Feb 11 11:47:33 2013 +0000
+
+    Add initial PowerDNS migration repo
+    
+    Change-Id: I24823d391cb642ebc5c47a1e4de1602a6d088879
+
+commit f1fd51eb9060ec61ef846757ea58a3b8e5c70d03
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Feb 11 13:46:06 2013 +0000
+
+    Fixup bug in bind9 backend.
+    
+    Change-Id: I48f9e8b247419dc4a27daacf7421cd380862f974
+
+commit 6a9a362066be14515993e0c72bce5abc40a51359
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Feb 7 17:54:49 2013 +0000
+
+    Domain Sync should not attempt to delete records after deleting the domain
+    
+    Change-Id: I9af1299931ab9737ad7d6d08dc705e4e62ad480b
+
+commit bced56316fb541c111c0968b18c29b85a6f1601b
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Feb 7 11:51:25 2013 +0000
+
+    Prevent renaming of a domain, and ensure records are contained in their parent domain.
+    
+    Change-Id: I0969b22ae75dbc2a20aa8947a601c96bbfdc6979
+
+commit 8eca9495ff25fc6956109602bcc8c3a1abe9532e
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Feb 7 11:12:26 2013 +0000
+
+    Add SPF to type ENUM in Records Table
+    
+    Change-Id: I49209de65446e50acfb1b99c33f5bbbe88ee17bf
+
+commit f841936e39b29679cff9b8f91cc00ca3fe2172f7
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Feb 5 22:01:10 2013 +0000
+
+    Update REST API docs to remove links
+    
+    Change-Id: Ied2b963b5edd32e6bb25df230c359b89c4be5ae0
+
+commit 620e61f248a3905144ac0e6f233299fbba6b34f7
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Sun Feb 3 23:10:59 2013 +0000
+
+    Remove some magic from the RPC Backend API
+    
+    Change-Id: Iccf83e2231c18036263e4a0b6183f75405ef247b
+
+commit 6d27a19aaf4d2d5a787a93c183e7f6ff6a338d5a
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Feb 1 13:33:51 2013 +0000
+
+    Add naive domain/record synchronization implementations
+    
+    Change-Id: I2307210c4523cd7ad181912d5951f14429021c25
+
+commit 32d1523c2bf63e0130af9319429553e08b378949
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Jan 31 11:30:05 2013 +0000
+
+    Ensure config files are included in sdist tarball
+    
+    Change-Id: I5c3a467c8bd7f6b75e7a0dc0a585f7a3e2d3643b
+
+commit 6819ff8901889802c6d6a5fe519c1358ce00c1a8
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Jan 31 11:17:13 2013 +0000
+
+    Rename moniker-api-paste.ini -> api-paste.ini
+    
+    Change-Id: Id4a1de56b3f645655b9c02cc4fe18faa25a18453
+
+commit cb37fbc9902bda191ffb195660b0763d5318d743
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Jan 31 10:19:36 2013 +0000
+
+    Cleanup and simplify Tenant "Sudo" Code
+    
+    Change-Id: I1005a7aba3153ee116dc11e8d9c5d830aac5830e
+
+commit 4b76292490a1a10c18f9b4242fae23dabec1a7dd
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Jan 30 18:20:58 2013 +0000
+
+    Cleanup Blacklist code, Protect from sub-domain hijacking. Upgrade to pyflakes 0.6.1
+    
+    Change-Id: I7da11d5b7fe0dbf7b1472777034dbb83fb9225d1
+
+commit 3ba2cce5cd9089504d3b57eb3b50899c0393eb64
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Wed Jan 30 22:43:40 2013 +0100
+
+    Override the format for records
+    
+    Change-Id: I4cc6105246fd3cf07d4da6f803fc2e297fa3f927
+
+commit 269b55db1199d90830fb321efdc2d6b603901651
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Jan 30 12:38:26 2013 +0000
+
+    Replace reserved domain suffixes with regex based domain name blacklist
+    
+    Change-Id: I894ddf6b1213a02f43b6dc2029b8fb9b7eb6e7d8
+
+commit 8c2c3b64cfd186a148dad6f0dbc21375fe9ee5ea
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Jan 29 19:25:43 2013 +0000
+
+    Use Policy enforcement to record an Audit trail
+    
+    Change-Id: Id36e5adc6bd6d7f895f995212e741a2dc31bb42f
+
+commit e922d4cd98dbf254935ffd4aeda8ce714215a601
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Jan 30 10:16:41 2013 +0000
+
+    Update to JSONSchema 0.8 final
+    
+    Change-Id: I5230943841165c1b552afce4c21c6d0836ea4a94
+
+commit 82acdf09e365afc03b9dbb646a8abf049b72c3cd
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Jan 29 18:23:56 2013 +0000
+
+    Re-add version.py.
+    
+    Change-Id: Ib5eb33de753c933c28b1408f4f1456c9be4f7030
+
+commit d07dc8e0b090c9261b5730ce7da56dfc27d130ec
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Jan 29 14:25:18 2013 +0000
+
+    Initial Diagnostics API endpoint.
+    
+    Change-Id: I1f030d7124eb4aee14006de5c80e50f08be04ba8
+
+commit 512f379cda1c16295c3c85562bf04d7dc8f40989
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Jan 28 23:42:27 2013 +0000
+
+    Sync with Oslo 30a50c8a
+    
+    Change-Id: I2614b234d0d59b698ddefbeb87541867843848b2
+
+commit 00ea223c6e0462ea7ced34bde394056cafb0ff58
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Jan 28 23:41:31 2013 +0000
+
+    Move config files from 'etc/' to 'etc/moniker/' to match what oslo's update.py expects.
+    
+    Change-Id: I53d7ed83ed3918e38ec44d9549fb006efaf93b7a
+
+commit 44f1419b21a834b5a2a084d3ce823498cbbd9684
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Jan 28 23:16:40 2013 +0000
+
+    Allow Moniker Services to Spawn N processes each.
+    
+    Change-Id: Ib19ed1d7a3edb2c90138490c5c7fd0adde22c245
+    Warning: This makes no sense for most moniker-agent implementations, and does not currently work with moniker-api due to the point in time where Oslo opens the HTTP socket.
+
+commit 9b700950c1ad54abe2de0b4bb0a994284e9f7910
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Jan 24 10:08:16 2013 +0000
+
+    Add sample config entry for reserved_domain_suffixes
+    
+    Change-Id: Ib642986e216e6d28c9553afb0aa5a8167776d354
+
+commit 422243384b9d1fc19249eb8a40cbf5d900be163e
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Tue Jan 22 10:27:54 2013 +0100
+
+    Change to rootwrapper - bug #1075120
+    
+    Change-Id: I2292d1a47772859904bd8f1bb1add30387abb481
+
+commit 4fc128e96aae2f5cfdf6f2ec75bd5d0dfa134f83
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Jan 24 09:32:27 2013 +0000
+
+    A Domain's TTL should be optional
+    
+    Change-Id: Ib2badf6270d80df8d4d4f894ddb35e8a98a9694a
+
+commit e9326d62d5e43639050e608bf44cc2c655ec9c64
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Mon Jan 21 13:06:03 2013 +0000
+
+    Sanitize content field for certain record types.
+    
+    Change-Id: I0c4b3e73ce740291bb1530a4d6feb3433cd6ab39
+
+commit e9503bb5b60ebb96cd9f71efd2641b4f780b9e59
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sat Jan 19 18:10:45 2013 +0000
+
+    Pass server list from central -> backend for domain operations.
+    
+    Change-Id: Ib5c11750cc6ec00376361d28f24f683d31c51a77
+
+commit 5160e7081b80eef2a1bec87855123fe92e56320e
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Jan 18 12:37:49 2013 +0000
+
+    Add sample PowerDNS backend config
+    
+    Change-Id: I48954d77b18a449d83d9f2d3fdf7d936cde5d05e
+
+commit 07203697eaaf2d9734ecaec7c8a359780d68aef0
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Jan 18 12:19:52 2013 +0000
+
+    Minor doc cleanup's
+    
+    Change-Id: I159fcf8059c576833c5101cc473ffde9c4a9a575
+
+commit 9a9a32e94266df1a66ddc505b8edd3f1dd8a4f2f
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Jan 18 12:09:17 2013 +0000
+
+    Update Docs with GetRecord call
+    
+    Change-Id: I1299537deccece151889d90cf44cf09edcf3b67d
+
+commit 355efb104092c5725b6f97d38aa7bdbf16977c9f
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Fri Jan 18 11:47:24 2013 +0000
+
+    PowerDNS Backend Driver
+    
+    Change-Id: Ia1fad83a0219778ae4704b32b8d8e3a209d046e9
+
+commit c52f08ea484c5d0e6a366e2b42fa4cf9fa7f3c6c
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Jan 14 15:31:33 2013 +0000
+
+    Fix bug #1075268 - Support multiple notification handlers listening to the same notification type
+    
+    Change-Id: I4816f494ecee46eec3721160648dabae845edca0
+
+commit 621155307935e74c42edbc5c2109793fe71e364f
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Jan 14 15:24:27 2013 +0000
+
+    Log messages produced by the Keystone Auth Token middleware
+    
+    Change-Id: I1a5bb3d2f75aad8163bfc589bc2f1092803ca6b9
+
+commit 7ba580fa1e30c5ed7afdf0390596aa8dd1827ab9
+Merge: da8032e 8620245
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Mon Jan 14 16:32:18 2013 +0000
+
+    Merge "Add support for a "sudo" like mechanism in the API."
+
+commit 86202458caee112a69aba04b44388390aedb170b
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Jan 14 14:42:31 2013 +0000
+
+    Add support for a "sudo" like mechanism in the API.
+    
+    Adding an X-Moniker-Tenant-ID request header to API calls will allow admins to `sudo` to another tenant.
+    
+    Fixes bug #1083597
+    
+    Change-Id: I95f07cc7f017b0ecf9989bf0c4bae8962c039523
+
+commit da8032e327ad403b3147773ffce6efa6b6cafb7e
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Mon Jan 14 15:03:12 2013 +0000
+
+    Add dummy versions list endpoint
+    
+    Change-Id: I974e29a038021fa4fe81021887fbf8b67439de63
+
+commit 49e9691d47fd106c2a8bde0ba6f32e2a9a0cd2a7
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Jan 10 16:30:45 2013 +0000
+
+    Add support for admin-reserved DNS domain name suffixes.
+    
+    Fixes bug #1098244
+    
+    Change-Id: I8e704d5201e9937423081b2f6e0bf9d4fb656566
+
+commit 96a0d6a92f06b2ba4b5dd87617f3e3c1a3c6787e
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Thu Jan 10 11:38:24 2013 +0000
+
+    Add support for PTR records
+    
+    Fixes bug #1075006
+    
+    Change-Id: I1e8fdd090d61f8d7acbdb557a523860482bcc5d3
+
+commit 882662977922ca7b58f91388bad915beb1933962
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Jan 9 17:01:42 2013 +0000
+
+    *Really* cleanup the sample config this time
+    
+    Change-Id: I7f3a9b48e40b8b33acad308b68eced64ed210cce
+
+commit 0dd33e99c49ace96d2dd4a01f1ac61f7c9ed2b01
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Jan 9 16:59:48 2013 +0000
+
+    Sync with oslo a8973c52
+    
+    Change-Id: I2ba927e068c71dd8a91674e36f2bf26650d1c58e
+
+commit bc4b73019868d8d60fd856e36e6b03c7b766b972
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Jan 9 13:37:23 2013 +0000
+
+    Add tests for API 409 Handling (Duplicates / Conflicts)
+    
+    Change-Id: Ia70845ac303d5c9a46efa8514725420a421268c3
+
+commit 89c056274e0d696293474b3568b3724934bd67ac
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Jan 9 13:12:43 2013 +0000
+
+    Add tests for API 404 Handling
+    
+    Change-Id: I71ab970ddd2f3d4af4c21fe55e908917572f22be
+
+commit 1d71b7ae584db5d8eac8f6bc550707cd8d9609e4
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Wed Jan 9 12:12:53 2013 +0000
+
+    Handle RPC timeout's appropriately in the API
+    
+    Change-Id: I178912ddf5e2dde45bc68b5dc14a8fd17f455ad2
+
+commit cbb8337e944f9016b29d553558719e8d280cd2e7
+Author: Patrick Galbraith <patg@patg.net>
+Date:   Wed Jan 9 02:45:43 2013 +0000
+
+    Updated Docs with recent API changes, particularly records
+    
+    Change-Id: I35d23fd53194c3266aa149bc78ca44c0653d56e6
+
+commit 5f05e9985dde84e587147214641e33faa036b43a
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Jan 8 18:31:06 2013 +0000
+
+    Cleanup sample config file
+    
+    Change-Id: I656763e57c7337289acdba7c7ea76f2efddb2d66
+
+commit 7c2b2fca21424dda2633b152a49d8b2350eff3de
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Jan 8 15:44:36 2013 +0000
+
+    Add tests for KeystoneContextMiddleware and NoAuthMiddleware
+    
+    Change-Id: I3fa40ae111c48810f1f2c5774925c1460c958163
+
+commit e347945ca800dfb6712641ba7ced625dafe2bd68
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Jan 8 14:26:37 2013 +0000
+
+    Allow wildcard DNS records using a *
+    
+    Fixes bug #1097284
+    
+    Change-Id: I5901db79b5fff5ce0dbe0648c0f0a2d842d55bc2
+
+commit 64bd947a64f0af7526455f80078ce0cf93d219e7
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Jan 8 13:32:56 2013 +0000
+
+    Update MANIFEST.in to ensure only sample configs are included.
+    
+    Change-Id: Idcd504cddc4a10f02397c690bfff29186ebd4103
+
+commit 0d89628ba004df6ea9559b42d3bb1ea9f9529a68
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Jan 8 12:46:19 2013 +0000
+
+    Ensure `moniker-manage --version` reports the correct version number.
+    
+    Change-Id: Iecd5f9192cb89f8f0c987bb374067350945b400a
+
+commit bfe00ece09ae93c4d9ceb1967678e3b257df9c4d
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Jan 8 12:43:07 2013 +0000
+
+    Sync with oslo-incubator ad93e4e3
+    
+    Change-Id: I441c29d5dda591a7d1fa1970edc69b0e97615a1e
+
+commit f489f61303818cbf293c2cd190d8140a70d8bb04
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Jan 8 12:34:08 2013 +0000
+
+    Fix coverage output folder
+    
+    Change-Id: Ibef8932a5db6ba261c4076c06edb4fae5156ce64
+
+commit bc5fa37b20a937b74554f24af7e25e6203d09392
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Jan 8 11:06:56 2013 +0000
+
+    Switch to a single config file, using a config group per service.
+    
+    This has two advantages:
+    
+     - Avoids Naming Conflicts (e.g. backend-driver)
+     - Allows common options to be specified once for all services (e.g. pybasedir, logdir)
+    
+    Fixs bug #1096850
+    
+    Change-Id: I5b02f591ccea6d1a8201b21c3cb8f92bcf6b30fa
+
+commit f4c0f899d8316cce458ac7f364c69ff55ed1c3c3
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Jan 8 10:20:34 2013 +0000
+
+    Fixup default policy.json
+    
+    Change-Id: I8c71e83d5ebfdda67c985276115513b81e1a84bb
+
+commit 523811014a398f33aa1e578fb50913c1b2d5cd16
+Author: Kiall Mac Innes <kiall@hp.com>
+Date:   Tue Jan 8 10:06:04 2013 +0000
+
+    Allow configuration file to be specified via --config-file
+    
+    Additionally - Allows Moniker to run when no configuration file is found, using the defaults.
+    
+    Fixes bug #1083331
+    
+    Change-Id: Ie7659db7c873ae1ba47a29d160a0fb73739dbeb0
+
+commit 19a3ae7acba7aeff8b2c69eb00bd6f7cf77d5004
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Mon Jan 7 12:40:32 2013 +0000
+
+    Add more happy path API tests for servers/domains/records.
+    
+    Change-Id: I4e74dcae34083355663a54446e617a1c6b678e6a
+
+commit 14900f1ed0589b9c7132a51289f27df05bba0221
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Mon Jan 7 12:59:58 2013 +0000
+
+    Ensure Schema handle datetime objects appropriately
+    
+    Change-Id: I52c436371d65757d8bcd2d18106465f1f7ee73fe
+
+commit d66f65919d6b70cfca1c89646dd6a02fff29440f
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Mon Jan 7 11:50:56 2013 +0000
+
+    Centralize argv slicing
+    
+    Change-Id: I2e06d4b2f33fa24da2f61a28bb01509515614336
+
+commit 01156524691115238cec1871f137d97465cce8fa
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Mon Jan 7 11:39:19 2013 +0000
+
+    Use consistent base class name for moniker.backend tests
+    
+    Change-Id: I211fda02092a34da82445ced1c70e0eae15f00f5
+
+commit 3d61bb5351afd6b8c3a510b0c617c1486bdef3dd
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Jan 6 17:20:50 2013 +0000
+
+    Remove dead code from moniker.storage
+    
+    Change-Id: I2d5dd768a02ef2baa2e5ef90f727c7ffac6b2050
+
+commit 50ab5d105bb58799f073e04ed948f5ed25f36b16
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sat Dec 29 21:53:26 2012 +0000
+
+    Fixup hostname regex + add some tests for valid host names.
+    
+    Change-Id: I530f03961a2108a529c68dad35c713d800a6e681
+
+commit beca3927890c6f2f537ae02142ddcc53039fed20
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sat Dec 29 17:41:08 2012 +0000
+
+    Provide sample logdir config option.
+    
+    Change-Id: Iacf112520c6d700f46d67fc722631cf1b02be103
+
+commit b5ecff2d2274264ae3057cce2b00268c1ee55e54
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sat Dec 29 16:16:46 2012 +0000
+
+    Sync with oslo 8888ad01
+    
+    Change-Id: If7d7b820ba67fa681a8899c071bfc449f8ebd8f0
+
+commit 985c74f99bf9462f156f47c685ab963fd14d6eac
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Fri Dec 28 19:12:44 2012 +0000
+
+    Ensure bin/moniker-manage is executable
+    
+    Change-Id: Ie1d672f0760947b2b3472054d3fcd17809a018dd
+
+commit bcbd0795b08e692a4c6b0bc72a9219975d3a73da
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Dec 23 15:45:13 2012 +0000
+
+    Ensure MANIFEST.in is correct - No longer include *.pyc
+    
+    Change-Id: I645cebb04a0a961bb4812ae69ff9dbf36ec486d7
+
+commit cbc692d165abc1edd806637463f04dd8dded2488
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Dec 23 15:31:06 2012 +0000
+
+    Exclude ST2 project file from sdist
+    
+    Change-Id: I1a068fc4d1f3b351399a1e2fdfa3ec26696f6150
+
+commit ca2330ec8e0df7b0af8045635ece1bcbfa646a4a
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Dec 23 15:12:59 2012 +0000
+
+    Ditch pre_version argument to oslo-version.
+    
+    Change-Id: Ifda021830f0bd4d2d09c7e6b20421bd71ccccc80
+
+commit b8b24209a9a600ba9a0db7d6d8b650f465ca9c54
+Author: Patrick Galbraith <patg@patg.net>
+Date:   Mon Dec 17 16:36:21 2012 +0000
+
+    Added generic SQLOPTS
+    
+    Change-Id: I74efa2e25ef5c2b202b4404721d9f6d39550955a
+
+commit eff475382253f971c91611a47eac352fa65ff2cd
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Fri Dec 14 12:48:32 2012 -0800
+
+    Record TTL should default to, and accept, NULL values
+    
+    Change-Id: Ib7be1f3669e012c28b95cd77f297a635b40a1a10
+
+commit ba5dfd540261caea6fef4b1461748d70756ac232
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Thu Dec 13 11:14:03 2012 -0800
+
+    Remove unnecessary if/else block from the bind9 zone template
+    
+    Change-Id: Ica4cc94becde5b4bc0be1b63611e28f92aa1d65d
+
+commit 4503712b52dc7a10a4d8e9beefd68a8de7e1ffda
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Thu Dec 13 11:06:24 2012 -0800
+
+    Move database_connection sample config to the correct section
+    
+    Change-Id: I0c9cc52d040a4b1ed0a47a72e518f06d70ad37be
+
+commit 8ac65a9b853e38d5e57501231d311ff9ee45b394
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Dec 11 15:58:07 2012 -0800
+
+    Remove unnecessary steps from the install guide
+    
+    Change-Id: If69a650ec4eefaae71cbe33aa9f7877561157c6d
+
+commit 14ec28790229871653afbf2a4c9f1f4e3fb637f5
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Dec 11 07:12:10 2012 -0800
+
+    Ensure partial API updates are validated correctly
+    
+    Change-Id: Id8123a780131989e5a0f36da478c3d34e21db209
+
+commit cecd0f43bb8ea166c84cfcec89947ea643515c3f
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Dec 11 06:10:14 2012 -0800
+
+    Include setup-requires in tox.ini
+    
+    Change-Id: Ia626ee77690eec3034d70a1e338bb5d427152720
+
+commit 60d26a020c4a17e6dd4ba58d140ce00c95eed43f
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Dec 9 20:21:33 2012 +0000
+
+    Sync with Oslo e6c576d9
+    
+    Change-Id: Ib83c0d6b60ce70c00dbcc10dda2226c24acea8b6
+
+commit 74789f9e50345521945092ccaa70f7aad466d410
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Dec 9 17:53:01 2012 +0000
+
+    Fixup sample moniker-api.conf
+    
+    Change-Id: I3f11bebb7dde29c507aca6625e794fe9e268066f
+
+commit b16e39599edbb8f484fa4ea0773104e0e89879fe
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Dec 9 17:34:48 2012 +0000
+
+    moniker-manage CLI should read DB connection string from correct config group
+    
+    Change-Id: I6d2283bd042fabc4c549d7dbd030ab019268b565
+
+commit ac9c4f3b0e95968bdc24a35a336754874b34136e
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Dec 9 17:20:26 2012 +0000
+
+    Minor install doc corrections
+    
+    Change-Id: I20943ccbde38c951d449bca46e2fb704b0e9906b
+
+commit 8bb8987cccaa3ccba17c1a654076ebc51dd94d4f
+Merge: e02a0df 58ed519
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Thu Dec 6 21:21:13 2012 +0000
+
+    Merge "Correctly raise Duplicate exceptions with MySQL."
+
+commit e02a0df23a6ed26f4db25e00aacea41dfeac0be0
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Thu Dec 6 20:36:00 2012 +0000
+
+    Ensure Plugin config declarations are compatible with oslo-config's `import_opt` method
+    
+    Change-Id: I29bbffcff00576ddbef1ecd283a3fad65dd5fc84
+
+commit f8df098d3059d6a9c58395348eb876394d825fe4
+Author: JC Martin <jemartin@ebay.com>
+Date:   Mon Dec 3 14:04:52 2012 -0800
+
+    Partial fix for bug #1074093
+    
+    engine and makers are stored in dictionnary in the
+    sqlalchemy/session.py
+    
+    Change-Id: Ied2c13e9ed7117730eccc8db4c3a03b54c66d4b9
+
+commit c8ea8fc55441b62f64e8c766c90de0addd056a4d
+Merge: ee952c7 fccd885
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Wed Dec 5 21:24:25 2012 +0000
+
+    Merge "bug #1086467, fixed by using moniker record ID in dns_domains column."
+
+commit 58ed5199446eaa9412e5b07df8be82fe06253f85
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Dec 4 18:31:04 2012 +0000
+
+    Correctly raise Duplicate exceptions with MySQL.
+    
+    Fixes bug #1083593.
+    
+    Change-Id: Iaa3f32d7acddc7a876dbd5b3d534490aef2d298f
+
+commit ee952c7e08e5cc252c9e77e4b89c19d266f90b99
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Dec 4 18:21:01 2012 +0000
+
+    Fixup migration #3 for MySQL
+    
+    Change-Id: I164422917b07a2e931fc6a9bc50d7b1f30d47220
+
+commit 6aa3cc712d4afaac10b3933844764a16e2099f4a
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Dec 4 17:58:34 2012 +0000
+
+    Add /bind9 to .gitignore
+    
+    Change-Id: I4d71c54933a66a8c52dbb0385e8ce5d39201d95d
+
+commit 822c3165d6b81f0d7e36de164cdc066b5d9bb356
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Dec 4 17:35:38 2012 +0000
+
+    Fixup bind9 zone template
+    
+    Change-Id: Ib8a4594549c4d98ddb7a49b033d5b08604c737f2
+
+commit fccd88521af9538a295445acdd835715c22cf834
+Author: Patrick Galbraith <patg@patg.net>
+Date:   Mon Dec 3 14:11:43 2012 +0000
+
+    bug #1086467, fixed by using moniker record ID in dns_domains column.
+    
+    Change-Id: Iae156f379c4b873c09200d479e9edcaa4c54f6a6
+
+commit 960ae0ed769380bd5c23fe3e467969fd3a9995b8
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Dec 4 16:41:59 2012 +0000
+
+    Fixup final pyflakes error + enable pyflakes check by default
+    
+    Change-Id: I4ddc56a66c8b291e4f7dca7ea8d9ae9f7f21e45a
+
+commit 860ea3408ad34e303066b2f5e3bfb60422dcf0d0
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Dec 4 16:06:07 2012 +0000
+
+    Fixup Server JSONSchema
+    
+    Change-Id: I5cc15555aa6603d27f63178216417bc21ad380bf
+
+commit 9c893b60f47971cbb2897372b6520f6ac774aed8
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Dec 4 11:26:49 2012 +0000
+
+    Allow the central and agent services to have separate defaults for the backend_driver config option.
+    
+    Change-Id: Iccf6f140bf16b34c9f7031b5a9d17a2a6f04e64a
+
+commit 59c0c3a5ee87142655f655a9dc367e2692fedc34
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Dec 4 11:19:35 2012 +0000
+
+    cfg.CONF is a global, let's not pass it around unnecessarily
+    
+    Change-Id: I5ea697d385e8b5da4078c7cabfbf7d37f887f374
+
+commit 49a6c3e6a8b8dedab78acce17dbf557f16fdcfe0
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Mon Dec 3 19:15:46 2012 +0000
+
+    Add backend_driver default to moniker-central.conf
+    
+    Change-Id: Icbc4d1cc9e2c2b2e1e19b89caf74e708562a4fe2
+
+commit a934531a436b89ba13862332037836e311c8fc16
+Merge: ac596c2 88882e4
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Mon Dec 3 15:18:33 2012 +0000
+
+    Merge "Switch to plain .json schemas and improve Schema handling."
+
+commit 88882e4373dd7202c2601a2b70be13ad4ebff571
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Dec 2 13:07:25 2012 +0000
+
+    Switch to plain .json schemas and improve Schema handling.
+    
+    Additionaly - All hostnames now REQUIRE a trailing "."
+    
+    Change-Id: I1ee0b6e8911e1b6207aace619dd19c014363bfd7
+
+commit ac596c2e0d12db2c90155586690a3bcf3d1bb00f
+Author: Patrick Galbraith <patg@patg.net>
+Date:   Sun Dec 2 15:17:53 2012 +0000
+
+    Added central backend changes and rpc plugin. Added write_database flag to mysqlbind agent.
+    
+    Change-Id: I6097536958648128372a54facb0f73e0e53b3673
+
+commit 52c7dd4fb3bdd60c5853210d8c5b37eb59575c32
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Fri Nov 30 13:53:12 2012 +0000
+
+    Fix inconsistencies in use of IPAddr and UUID instances.
+    
+    We no longer use instances of either class, allowing us to be confident if we
+    are dealing with a string rather than a string OR UUID/IPAddr instance.
+    
+    Change-Id: I602e9f2e6bc63d692b4dfc0bcffd30b923286576
+
+commit 6228e0c59d0ecaa5439169beb5b5f8f51df5fee2
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Fri Nov 30 13:46:15 2012 +0000
+
+    Fixup API after breakage in change Ie65b6d25
+    
+    Change-Id: I53c9ca91b038a5b0b4b7dfbd0a6e5d0b5ca9ad12
+
+commit cd18828cebe9ae797eb13ed73223e6a4340a0882
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Fri Nov 30 00:30:34 2012 +0000
+
+    Cleanup use of Flask Blueprint's in the API
+    
+    (Import side effects are evil)
+    
+    Change-Id: Ie65b6d2578ae855d8db52465ff9aa07cb61cb876
+
+commit 400dae73485bbe4e9268b23e9295e0b70cd50cf4
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Thu Nov 29 23:41:08 2012 +0000
+
+    Sync with Oslo-Incubator 1fd7694e
+    
+    Change-Id: Iba4619e4a2b50c3e471133c4f65826a0be7c9e90
+
+commit 5f3860464296c7fbbdfce421b1143835fd54d0e9
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Thu Nov 29 23:33:01 2012 +0000
+
+    Move SQLA types to shared location
+    
+    Change-Id: I26747a9a1deda69d507c68e8d33a6b45dfba73e9
+
+commit dcb8bc2a4bb06c9a6fd5d76d90a6c7621a2f7011
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Thu Nov 29 18:22:24 2012 +0000
+
+    Add empty testcase for the MySQL Bind9 backend
+    
+    Change-Id: I55ef157b0c3dbf5f353553336d15c1f9681a92d4
+
+commit b95ae23fd4a4968e9050ade7797b1ceffec56524
+Author: Patrick Galbraith <patg@patg.net>
+Date:   Wed Nov 21 14:08:12 2012 +0000
+
+    Working mysqlbind agent. Thank you to Endre and Kiall for the help!
+    
+    Change-Id: Ibbe011408fbce1d6dd863e37e9c7f365b264c859
+
+commit e3cc4d2a1a92c8bab22a90deb08723adcd019f93
+Author: andrewbogott <abogott@wikimedia.org>
+Date:   Mon Nov 26 22:15:49 2012 -0600
+
+    Fixed a single-letter typo in docs
+    
+    Change-Id: I77a81ac6fc748049b28bc92037eb98f1fededf8d
+
+commit 4a12145ee10de19645f3baa628ce718069dfda99
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Mon Nov 26 21:01:49 2012 +0100
+
+    Move out session from the sqlalchemy impl to a more re-usable place
+    
+    Change-Id: Ibed2812202e8ea82789c23e208fd3ee9f9c950ef
+
+commit f891714b34f8701a861ead9ca1a0de74ac565621
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Fri Nov 23 16:41:34 2012 +0100
+
+    Keystone helper
+    
+    Change-Id: Ib3c314f98550dc90dcbe772cef356647c2df4576
+
+commit 272a0bcbf916b4c14679d2f02d2c30ca4288ad0f
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Thu Nov 22 15:21:53 2012 +0100
+
+    Change the use of self.conf to cfg.CONF[self.name]
+    
+    Change-Id: Iecf84e62331b6a639d247d2bb4ec5108450e2699
+
+commit 59513d3683eb0031ada8b24b70b19a42634017b4
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Thu Nov 22 14:36:53 2012 +0000
+
+    Fixup sample agent config
+    
+    Change-Id: I35165f89dabdf203e98665f99f763e709371fc9c
+
+commit a30c6a0c7205afa8fcb94adb7661a7090efecccb
+Merge: 60aaa04 241e4d0
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Thu Nov 22 14:34:51 2012 +0000
+
+    Merge "Fixup config access in bind9 backend."
+
+commit 60aaa04d65a2ad12412d61e32a1492c82c97be59
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Thu Nov 22 13:35:34 2012 +0100
+
+    Tests cleanup and add helpers
+    
+    Change the way fixtures work to align tests
+    Add assertResponse, does self.assertData and verifies a schema if
+    schema=... is passed
+    
+    Change-Id: If8ac0601e1b7a6354b7d0f1ef618dc9dbcc7f363
+
+commit eb1b8f9c503fb988d18fed35a4b19ba1428f3c23
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Thu Nov 22 10:40:53 2012 +0100
+
+    Add more test helpers
+    
+    Change-Id: Ica9ff6b209c82e873c9c21d9909014a0476c2e7d
+
+commit 4e583ae467f89da7972727f0647d4735e00db687
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Thu Nov 22 10:06:59 2012 +0000
+
+    More install doc corrections
+    
+    Change-Id: I69533c682d02ea57cb8f4bd1d6dc5530c6a32c72
+
+commit 00e2c7451b07e54daedaa598713d7149376e0dd9
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Thu Nov 22 09:32:26 2012 +0000
+
+    Install doc corrections
+    
+    Change-Id: I2ef504a8d2fcb005d72b1e24088a4296d926f2af
+
+commit aeb171c14ab5e67ca5213fbaba8621bad0e87e0a
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Thu Nov 22 10:00:46 2012 +0100
+
+    POST helper for API tests
+    
+    Change-Id: Idbefd5ef21b4f1b46460c4e5813eb628039d6d3b
+
+commit b158e09060e5d841d81359378b7a97095a48cf1c
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Thu Nov 22 09:03:59 2012 +0100
+
+    Do teardown properly
+    
+    Change-Id: Ieff1b104342c591522a89d9d06453699d0a96893
+
+commit f0dcd06a7178002150d390191214fc65c7ef3a4a
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Thu Nov 22 08:56:58 2012 +0100
+
+    Abstract test functionality a bit more - make more use of get_*_fixture
+    
+    Change-Id: Ifd639be7fa89aa2a50fa8afd4a4f1eb40034de5d
+
+commit 241e4d01e6cf3188a043298bb06b012f87fcde9a
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Nov 21 16:46:26 2012 +0000
+
+    Fixup config access in bind9 backend.
+    
+    Change-Id: I36197f4fe8eaa4b8a66f33544f9cc96b4404c5e7
+
+commit d405a6401b144b7ba4fe86c487f2b4af6fa86d78
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Nov 21 16:39:28 2012 +0000
+
+    Add DB init commands to README.md
+    
+    Change-Id: Ie4daab922b6075ad6290ae24fd8ed263c5534bb5
+
+commit 3318f7e2db2ac4c9b4ea5b590ff9d89415a03c27
+Merge: e98b5b7 54bf6d2
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Wed Nov 21 13:44:24 2012 +0000
+
+    Merge "The PyFlakes tox env should not run by default"
+
+commit e98b5b72b6d5a561ef4a42db3ca0d7605d9bd674
+Merge: 9ae7241 40fb298
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Wed Nov 21 13:43:45 2012 +0000
+
+    Merge "Add first API test for listing servers"
+
+commit 40fb2989d2fed3217b5387efca359e47f9b342c8
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sat Nov 17 22:54:25 2012 +0000
+
+    Add first API test for listing servers
+    
+    Change-Id: I090796adfad7aab60962505797fd25dfa086738b
+
+commit 54bf6d25a14ede66e4311817991a5ebc5fb1a675
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Nov 21 12:20:36 2012 +0000
+
+    The PyFlakes tox env should not run by default
+    
+    Change-Id: Ia61b0ccc0a55b9bf6cfcc7d6c1cc5d9e45ae1ba0
+
+commit 9ae7241cb461e7f1a749edff74753fca915d831f
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Wed Nov 21 12:12:36 2012 +0100
+
+    Process only events with handlers - skip the rest.
+    
+    Change-Id: I63ff16e4bf63b6ea6e2eb29320410efa20dc44b4
+
+commit c474c8f45a588ca852bcabfc6a4f4343ba7c026c
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Wed Nov 21 11:06:05 2012 +0100
+
+    Fixes bug #1081525
+    
+    Change-Id: I732130ae1a5b356e0db46116584144252fef021a
+
+commit bf4ce3557630e273deaba0ddd8b7c985eca1a4c3
+Author: andrewbogott <abogott@wikimedia.org>
+Date:   Wed Nov 21 02:42:12 2012 -0600
+
+    Typo fix in install docs
+    
+    Change-Id: Id7b648128e391b018bf87fcbd30d9a5a54a3b784
+
+commit ea478960904c59247ecbb4182a1123510599de8d
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Wed Nov 21 21:27:48 2012 +0100
+
+    Move fixtures to be available to all tests
+    
+    Change-Id: I3701dda0806c7acdc0aacaf02d6c4abe55a37dd8
+
+commit 0ab85095c244f162948922eadec4747bc34142ef
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Wed Nov 21 19:13:16 2012 +0100
+
+    Move docs where they belong (RTFD)
+    
+    Change-Id: Ic865b0ab7a2b45ce6e1771efc1984874fe2d55c4
+
+commit faa471acf6080529029feb4cc1797196393ac961
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Nov 20 09:53:59 2012 +0000
+
+    Add cliff to pip-requires and ensure all bin/ files are checked with pep8
+    
+    Fixup of Ib881a57a
+    
+    Change-Id: I5661166f7c5f05b2ec777631ac7d4a359f43637e
+
+commit 016a629e127169d40c49071d5a3d64f811f90ec2
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Tue Nov 20 09:44:26 2012 +0100
+
+    Make us client library independent for server side operations
+    
+    Change-Id: Ib881a57a2c1ff856d011e0dc832cedd6281fd3e3
+
+commit e0eeba656b42ddd2d79bd0f31ad36d64a70dfda0
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Tue Nov 20 09:27:37 2012 +0100
+
+    Fix so it invokes on load
+    
+    Change-Id: I9806ac61bc1338e566a533f57a50c214ec6e14e7
+
+commit 26a96222ebd41b6a12dab4bc166eeb664d6a812a
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Mon Nov 19 20:40:19 2012 +0100
+
+    Generalize tests of plugins take 2, bug #1080415
+    
+    Change-Id: I6162bc4074ae389564b7cc82ca630e4f65ba3dbc
+
+commit 070f1896fa20b0c6e49a6963370c9a4f0bba4ba1
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Sun Nov 18 21:51:45 2012 +0100
+
+    Add Quantum handlers for floating ip with tests
+    
+    Change-Id: Iae90d73d3627174ce2db595d75cd4db579d693ac
+
+commit a7844a03dec322df9683961219997d1389828bf2
+Author: Patrick Galbraith <patg@patg.net>
+Date:   Mon Nov 19 12:00:17 2012 +0000
+
+    Fixes bug #1080467
+    
+    Change-Id: I26c0e59994927363f7edb7ac7f9c8d15813a843c
+
+commit d56fb2857d818ffd14330b23ac224152c8cf8424
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Sun Nov 18 20:02:23 2012 +0100
+
+    Generalize testcases for handlers, bug #1080415
+    
+    Change-Id: I0fbbc41e807c1fa7a61be33ed3724b10b6d6a392
+
+commit 3b80b84c352b688eca285caeaa0d5bcef689c6d5
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Sun Nov 18 18:41:55 2012 +0100
+
+    Fix broken version for migrate..
+    
+    Change-Id: Ibd35fb57791c6738773da2dcaa6c84241b343530
+
+commit 25ff30a2de70a8cd6150bdcbcfb14777b698419e
+Author: Patrick Galbraith <patg@patg.net>
+Date:   Thu Nov 15 17:21:00 2012 +0000
+
+    Implemented deltetion in the bind9 agent, fixed deletion in the backend, added migrate for foreign key changes
+    
+    Change-Id: Ibf68e6090c66e33cbc43bf4f63c13013ac3a3ea0
+
+commit ceebf859eb80cd51c4cd6be728fa3633b2993d4a
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Nov 18 03:03:58 2012 +0000
+
+    Cleanup tox / test deps
+    
+    Change-Id: I4f18d98b71a18b7a314d52db8ff31bdef16ba2f1
+
+commit 8f447d91dccc80c438e138ed5353d9d413970c83
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Nov 18 02:48:47 2012 +0000
+
+    Fix most issues identified by PyFlakes
+    
+    Change-Id: Ie7c9ff1ab4d18a449b0b1a87b7a7d4c5dc6c636c
+
+commit 0a53f232c22818f84d9c6eef3d5117cdb518a2ce
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Nov 18 02:21:08 2012 +0000
+
+    Add PyFlakes tox env
+    
+    Change-Id: I4195a203c30d0104c33c41b0e60fa8fc2a89643b
+
+commit f121e0ff57cc9d15761461f5a9b33abd5fc6c040
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Sun Nov 18 03:05:57 2012 +0100
+
+    Update readme a bit
+    
+    Change-Id: Ie753cc6c87842327cd49283bf5d7dea92e440d6e
+
+commit d8925690b37df85dfe00604e9f4923baf8c08b02
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Sun Nov 18 02:52:12 2012 +0100
+
+    Add Quantum samples
+    
+    Change-Id: I54950535fa004b45a7ea011cc20f06dc916cc3b1
+
+commit fff3b5ceae43b45ef8501d3b28cbf958eb24ed40
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sat Nov 17 21:36:00 2012 +0000
+
+    Minor test cleanups
+    
+    Change-Id: Ia2279ea09ee3a479a03f5e095a8c9f5f06d0867f
+
+commit 6d42f250a534896c7972a98a5adfa20c8388cd2c
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sat Nov 17 21:12:29 2012 +0000
+
+    Remove `get_config_overrides` method from tests
+    
+    Change-Id: Ieba4dc54fcb1f4c40c8819adcb11c971fca23b3a
+
+commit b353fdad0373a6471aa96c4d1b5d8572914e8121
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sat Nov 17 15:46:19 2012 +0000
+
+    Add policy checks for all resource create/update/delete/get/list actions
+    
+    Change-Id: I78c3e0ace5dbc8007d7e90e37349a07171acc3c0
+
+commit 815736f358e33688f2cd1f189dbe6fa1ce2390f4
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sat Nov 17 15:21:16 2012 +0000
+
+    Pull Keystone middleware from the keystone client package.
+    
+    Change-Id: Id4fe251bca4df501ab5cc911afa2d02861c739f2
+
+commit ba2d80f5b8c895b52f7353357a5bc21a5b6a72eb
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sat Nov 17 14:45:49 2012 +0000
+
+    Restrict the Servers resource to admin users
+    
+    Change-Id: I8407a8b82b7f90b1d5a3b57d41d49c03ff8e5d5f
+
+commit 4ba6d97f5621a12ea9586059405c4c107272b22f
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sat Nov 17 14:43:50 2012 +0000
+
+    Parse roles from Keystone into the Context
+    
+    Change-Id: I9e2f1e45db70384943b5d59b8e27599905711634
+
+commit f2d8fe6f36c9c330c2ac28c0f19d717c5c2c5c9e
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Sat Nov 17 00:21:49 2012 +0100
+
+    Track plugin name and type within records
+    
+    Change-Id: I48fe85e367ac5b63578d5a5b297c2ee36f49dc19
+
+commit e4b210541dc86e56ec97eacbfa7aebe65b5c70f4
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Fri Nov 16 22:09:56 2012 +0000
+
+    Update the docs to use virtualenv's --no-site-packages flag
+    
+    Change-Id: If1b2050d526a23a37a74b6230f294a8e30455769
+
+commit b5a1813b98b5706568a8f361a17105f9a69e3805
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Fri Nov 16 10:45:56 2012 +0100
+
+    Update docs according to latest plugin change
+    
+    Change-Id: Ia44075a555ceeb6ec0aab7f31e4ab54e8d043341
+
+commit 89a101b266c7ab316006ce39147f70fc70376f14
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Thu Nov 15 10:36:54 2012 +0100
+
+    Abstract out functionality into plugins
+    
+    Abstract handlers into plugins and make handlers more generic
+    Same with Storage and Backends as well
+    
+    Also now you just subclass the BaseAddressHandler and run self._create
+    and self._delete in process_noticiation for Notification handling.
+    
+    This change will allow us to configure options on a pr handler base using the
+    __plugin_type__ + __plugin_name__ of each plugin to add sections in the configs
+    easily like:
+    [handler:nova_fixed]
+    domain = test.com
+    
+    [storage:sql]
+    connection_debug = 100
+    
+    [backend:bind9]
+    someopt = x
+    
+    Also change the default record format of handlers to use octet data
+    
+    bug #1078935
+    
+    Change-Id: Ic2ddf5a113dd1a306fce0513da2bfdbda991f647
+
+commit 84dadfdbb17b0a3c22df2ef274aed57c3978c15b
+Author: Patrick Galbraith <patg@patg.net>
+Date:   Wed Nov 14 15:26:31 2012 +0000
+
+    Fixed bind9 agent backend to handle new domains properly
+    
+    Change-Id: Ide49036ac3b89d65c93c923f538be57d3d7aab6c
+
+commit b1fc09af82faeb2cc07f1e0a710697ecc8c72473
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Nov 13 16:38:31 2012 +0000
+
+    Add *.egg to .gitignore
+    
+    Change-Id: If0eab25743c53da90012e1e906c020a52e3b2486
+
+commit bddab4fef33340d0cdb76ba123f292db169a5c9a
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Nov 13 13:26:15 2012 +0000
+
+    Subclass OS-Common's Context class
+    
+    This provides tenant_id and user_id fields for consistency.
+    
+    Change-Id: Ia9c161a3802d59361a5d2a8788c987e25916a6ac
+
+commit 9709bc99f8e5333de535031240bc8f168cc9694f
+Merge: f08dc82 88ed4f0
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Mon Nov 12 23:45:50 2012 +0000
+
+    Merge "Add utils.resource_string() method"
+
+commit f08dc82cb4e19827ae2f39721cd2a172b9a328c5
+Author: Patrick Galbraith <patg@patg.net>
+Date:   Mon Nov 12 22:28:17 2012 +0000
+
+    Added fix to zone template to append dot to end of data for various records that require it
+    
+    Change-Id: I89506267f5c4695f8a519567bb69ed8e30e43464
+
+commit 88ed4f093d85c1010190ddf41003e441e0b5cb65
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Mon Nov 12 22:01:47 2012 +0000
+
+    Add utils.resource_string() method
+    
+    Change-Id: Icdf0eace30819701a07a659b47bf563be630ff53
+
+commit 02f9ae1d23c907b0e208640d579954fff14875ba
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Mon Nov 12 19:58:25 2012 +0000
+
+    Ensure Agent service calls the backends register_opts() method.
+    
+    Change-Id: I2ce6c15cec1f1814b87be14abf9b7da53ed971b8
+
+commit e45dc74923c0229ead3a553c30f15276b1e5bfac
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Mon Nov 12 17:26:18 2012 +0000
+
+    Be consistent with sample state_path configuration value.
+    
+    Change-Id: Ifdee5289e908dc99d2f3968ff2aa105313324404
+
+commit e199113a96693904918250431c189779059139db
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Thu Nov 8 20:39:22 2012 +0000
+
+    Switch bind9 agent to a driver based implementation.
+    
+    Fixes bug #1074091
+    Fixes bug #1077023
+    
+    Change-Id: I2d3077fcc38c33a0a4916c935ffad6ab63f73e7b
+
+commit e8e457db4e5fc4a143e4c99e4fe6bae1e6de0997
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Fri Nov 9 21:41:47 2012 +0000
+
+    Sync up notification handler test naming
+    
+    Change-Id: I0b47e7720b7bc2e503b51a7f783d55e7813e74c7
+
+commit 16297b3394eeede1b4bc4a5bcf34bf2347c991c8
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Fri Nov 9 21:22:03 2012 +0000
+
+    Remove backported unittest assertions in favour of unittest2.
+    
+    Change-Id: I99535799838a68e3132414b32fef4a475d666ef3
+
+commit d3fe6b8712e15d1411e68fd677a4c693ff3d3409
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Fri Nov 9 15:13:35 2012 +0000
+
+    Ensure database-connection config variable is defined correctly
+    
+    Change-Id: Icae129dfd6487c473957ff94967ac8eb0f9f5eeb
+
+commit f27d40194c732cd1bd7ec38c918bc2ace9228e46
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Fri Nov 9 15:13:20 2012 +0000
+
+    Minor sample config file fixes
+    
+    Change-Id: I67bf5a658cb09b86aefe728c18ca2095d3b42439
+
+commit f153d019ef8a6eb49d34d5425c77c055efbb17f8
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Thu Nov 8 17:37:59 2012 +0000
+
+    Make notification handler config option name consistent
+    
+    Change-Id: Ifa92356ad59882f5642718c9018533f2915b311c
+
+commit 60ae4add3298db6b0d8a1231da91d34c162ee704
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Nov 6 21:51:54 2012 +0000
+
+    Add nosexcover and nosehtmloutput Nosetests plugins to tools/test-requires
+    
+    I believe adding these should be all that's needed to procduce HTML test output on Jenkins.
+    
+    Change-Id: I55bee56f08c8911094725062ed4fa10a0f7cf0ca
+
+commit 8e6df8721eb0ff52c0507db715adc4389233281a
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Nov 6 16:58:28 2012 +0000
+
+    Document state-path configuration option
+    
+    Change-Id: If586c8bd89d653bdacdf167073be7d97cdbebe02
+
+commit c305423b85ad7b1ce2e12b5be790ac948d88087a
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Nov 6 16:13:17 2012 +0000
+
+    Fix bug #1075595 - Ensure a missing configuration file raises an error
+    
+    Change-Id: Id87635a2434fd439070a271afe288ea3f581081b
+
+commit 64d7e8842e3adf79558718552d6f9cc8d40557b2
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Nov 6 15:57:22 2012 +0000
+
+    Ensure the bind9 agent logs an error when there are no servers configured
+    
+    Change-Id: I139fb1653d672dbfde7864690c1930ded00afcda
+
+commit 235ebed3e0f9423e4d2be0ea605661d724269d86
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Nov 6 14:33:21 2012 +0000
+
+    Provide a sane sample database_connection config value
+    
+    Change-Id: Ieb05090b358effc215bc111329c78116da26bbe8
+
+commit da418a094592cf48f8fa7aeb696f4ca9491894a9
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Nov 6 14:21:44 2012 +0000
+
+    Ensure we depend on SQLAlchemy 7.x
+    
+    Change-Id: I2d220d2ea36d074818b352de497eaeaa7fda82fa
+
+commit cf09904001755c55021a2217c55221043d706af9
+Merge: d28b459 867baf4
+Author: Jenkins <jenkins@review.openstack.org>
+Date:   Mon Nov 5 18:27:20 2012 +0000
+
+    Merge "Added moniker API documentation"
+
+commit 867baf43192f06a72dae03ce0d7ec7aaba100d46
+Author: Patrick Galbraith <patg@patg.net>
+Date:   Fri Nov 2 03:18:28 2012 +0000
+
+    Added moniker API documentation
+    
+    Change-Id: I930c3eec9717a78e0cca714763df1bdea107526d
+
+commit d28b4595b658697717297681ab9dcf0ffb7bd9d0
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Mon Nov 5 15:07:25 2012 +0000
+
+    Re-order tox.ini sections
+    
+    Change-Id: I68cfb18f620d39a71fb4ef0bb909837f2049c567
+
+commit b68a898a8735b8bdbd0c952c1bd1ebe8f97a76b2
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Mon Nov 5 00:26:54 2012 +0000
+
+    Fixup broken migration
+    
+    Change-Id: I3460a74ede14584110394b8b18fbe6b545b71df2
+
+commit 3baf0052a3faec141ac9e17fa4fbebdd37b25923
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Nov 4 23:17:24 2012 +0000
+
+    Cleanup UnitTest assert backports
+    
+    Change-Id: I585b9c2f97660d4493d0fd8c661f114fa043e646
+
+commit e3e3f41588a9499f04289cc345cb6ece2e151a09
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Oct 31 16:43:51 2012 +0000
+
+    Add initial support for handling notifications from other OpenStack services.
+    
+    Change-Id: Icb8ed892f11bc195c83e8165776c11889fcf8f07
+
+commit f4a3ade630be77971679cab056c54005f094a72e
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Nov 4 21:51:07 2012 +0000
+
+    Add filtering to the storage layers get_* methods
+    
+    Change-Id: I12aa4dae095c8ae49909c64a00f10fed68f3d554
+
+commit d9e2afae09af98c5f6fd65a002c8afc0271f66e7
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Fri Nov 2 10:06:23 2012 +0100
+
+    Split on "+" to determine driver..
+    
+    Fixes bug 1072451
+    
+    Change-Id: I8f1bd45a9ffcac2a9cedaa7d19d7e9ea0e502924
+
+commit fb6160b14e335ee84b87a9dcbda8ff3b76d4105f
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Thu Nov 1 15:18:37 2012 +0000
+
+    Update requirements for monikerclient -> python-monikerclient
+    
+    Change-Id: Ic80439c824289aee5b4506383999bbd99e8e7027
+
+commit 5148b247ac2052f7fde1482b5fd42037ecf8baca
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Thu Nov 1 15:03:59 2012 +0000
+
+    Add pypi trove classifiers
+    
+    Change-Id: I5c1e3fd552e97011308e1aef1d450b153acfa21b
+
+commit 0eed4519561bf14e6a22427468b67d2f735bd139
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Thu Nov 1 14:35:21 2012 +0000
+
+    Import and make use of openstack.common.version module
+    
+    Change-Id: I3c3192a12a7dbd6cf7d9a376325a2b0b9b29db41
+
+commit e843f721171e19456652a04c1d44ba7b4ced855a
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Thu Nov 1 14:17:17 2012 +0000
+
+    Sync with OS-Common 3d6c2368a5de16d875341426db8ddc9888213264
+    
+    Change-Id: I6a468a63f45047d51d145ec595e7ed6adf31be72
+
+commit 4c095e3e8c0c42cd48a0be69023b80cc44ab3a0e
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Thu Nov 1 14:03:44 2012 +0000
+
+    Remove duplicated line from docs
+    
+    Change-Id: Ibee6058ac1a0bc6bfc4033a260397017046fc2e5
+
+commit 173984b1be5c64bfab44deb6b052261b50656f5f
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Thu Nov 1 14:07:36 2012 +0100
+
+    Update docs a little
+    
+    Change-Id: Ifc47984ab0854e44553a8aa4235a69467e955da5
+
+commit 749f730f4a9216d6e8dd88ad8e1aa1967da5fdb1
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Thu Nov 1 10:48:15 2012 +0100
+
+    Add requirements for RTD
+    
+    Change-Id: Ibe91a36210e30d8816f61b0238b8ca59a2c0d2c4
+
+commit 1412b8a9e4c2f4923dc4637ef864e0beb9a4f5fa
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Thu Nov 1 03:21:57 2012 +0000
+
+    Cache pip downloads on Jenkins
+    
+    Change-Id: I76cfa3e1a8e9a54556cefe76e347d7ec4c56ebcd
+
+commit 74168ebd437453a0916c57227e65e464ff33bc3a
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Thu Nov 1 01:46:43 2012 +0000
+
+    Remove Travis CI config, now that Moniker is on Gerrit.
+    
+    Change-Id: I78646dc65225df477a9a428345751c36c54a4cc0
+
+commit 43550a969bf738718ee75fca45c4b1d5d5167f37
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Thu Nov 1 02:49:50 2012 +0000
+
+    Fixup deps and tox.ini for Stackforge+Gerrit
+    
+    Change-Id: Ic227d28d74d5b63b6b633ebc22ed37e57c796223
+
+commit 2c66df879574cb595bd8f703818f503badce3bad
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Oct 31 20:57:17 2012 +0000
+
+    Update docs for Servers API
+
+commit 8612d4b44ea27b9e326be4561ac8035cc7904908
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Oct 31 19:40:21 2012 +0000
+
+    Hide autogenated doc files in Sublime Text 2 project
+
+commit 145076a38b73b933e07dbc1d2818835f27d4e8aa
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Oct 31 19:30:14 2012 +0000
+
+    Add sample API call to the sphinx docs (It's not necessarily accurate!)
+
+commit c9e22f7808629337cc2f138aed279b699b14b12c
+Merge: bbe253d a2f022d
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Oct 31 19:12:15 2012 +0000
+
+    Merge branch 'docs'
+
+commit a2f022d41be3afe242d49c7ec366a9a4ed169830
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Oct 31 19:01:30 2012 +0000
+
+    Add sphinx doc skeleton
+
+commit bbe253d5c07429aa6a869ebc88d7b2d7566978d0
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Oct 30 18:02:04 2012 +0000
+
+    Update MANIFEST.in
+
+commit fe8a1bcf5a0ca0055c897eae684caad9b699b125
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Oct 30 16:33:51 2012 +0000
+
+    Ensure CLI only loads local file if it exists
+
+commit 0e80f0fe9675e2815c3d94beb5014cf065ceaad4
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Oct 30 16:33:01 2012 +0000
+
+    Move optional dep's to their own file
+
+commit d2108485806e57b6cf17a25acb14c2a4228b3d8d
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Oct 30 15:16:24 2012 +0000
+
+    Use a local config file only when it exists
+
+commit e630a0628dc2c97436488e044cc6d45db476ea89
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 28 21:19:39 2012 +0000
+
+    Sync with OS Common aca1805d911caefe14a73edb6ced281cf54e7ad2
+
+commit 00143f84129bbb04ffb0927704c40640dac62aca
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 28 21:07:15 2012 +0000
+
+    Update default config files
+
+commit 9c60c84453eb197755c434e691157a1caf174602
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 28 20:33:42 2012 +0000
+
+    Remove DB migrations from TODO list
+
+commit 3e9b8a3e1a8f4e5c067a1162b8d55defdd1792a8
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 28 20:24:26 2012 +0000
+
+    Move SQLA dep in pip-requires to indicate it is optional (kinda)
+
+commit e8007617484b4b542a0c273b1d2fc8841554cee2
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 28 20:22:32 2012 +0000
+
+    Complete Skipped storage tests
+
+commit 54ed1fea96bc2821eeff5010dcc39d258d3f28da
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 28 19:57:34 2012 +0000
+
+    Ensure we use a single Service instance per test case.
+
+commit 581a216b48ae3e93bede5422a973d83a338c5805
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 28 19:42:23 2012 +0000
+
+    Ensure tearDown is performed in the reverse order of setUp
+
+commit 631b258a97df0b0d7214ffcb38d6c43123032333
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 28 19:41:12 2012 +0000
+
+    Switch from Query.filter() -> Query.get() for single record fetches
+
+commit 806618e55907769b92f5408fafc0cfce8bd70715
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 28 19:25:28 2012 +0000
+
+    Add Storage test for get_record/get_records
+
+commit 43a42331c88fa198abac528cd888715f95020310
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 28 19:25:11 2012 +0000
+
+    Minor cleanup
+
+commit afa411315d50a4530ea0cc42758d108dabbdc763
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 28 18:36:07 2012 +0000
+
+    Lower the default SQL debug level
+
+commit d412263d53476c4621e61625195169b6a8950fb6
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 28 18:24:34 2012 +0000
+
+    NULL is an acceptable value for tenant_id.
+
+commit 1e22bc2f3ea365dd63695f5a64ed5568e48178e2
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 28 18:20:17 2012 +0000
+
+    Ensure `moniker database` commands read the moniker-central config file
+
+commit b8bbfd3d34d52d59f95f8d21ebfbb0b6de332996
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 28 18:01:34 2012 +0000
+
+    Cleanup SQLA migrate changes + "Un-Abstract" the type definitions
+    
+    Abstracting the type definitions provides little gain for high risk. The
+    abstraction can *never* be updated, otherwise it would affect the result of
+    existing migrations that depend on the abstraction.
+
+commit 0310f220b7c69e07148ec6c4478e2b6c35357778
+Author: Patrick Galbraith <patg@hp.com>
+Date:   Fri Oct 26 20:53:39 2012 +0000
+
+    Migrate scripts now work! Also re-coded the tenant_id NULL fix
+
+commit 6f5cc691e82500edfffff70e290340b73ea9d7b2
+Author: Patrick Galbraith <patg@hp.com>
+Date:   Fri Oct 26 16:26:43 2012 +0000
+
+    Found a bug that allows insertion into domains with NULL tenant_id
+
+commit edc9de12d959e5a4356670e809b6a0efda67f23d
+Author: Patrick Galbraith <patg@hp.com>
+Date:   Fri Oct 26 14:30:41 2012 +0000
+
+    Changes to get sqlalchemy migrate to work. Still not there.
+
+commit 4edf9b5aa1a167398339258c5675addc944788bf
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 28 17:28:29 2012 +0000
+
+    Move create/destroy DB hacks to the tests themselves, and ensure they respect the storage driver choice.
+
+commit 073250ed942f71e98e80cf672bfbf9d4c6fdb28b
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 28 17:15:46 2012 +0000
+
+    Update DB CLI commands for database -> storage changes
+
+commit dbda83142a8bd389745a46a9767878c81b4a0128
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 28 16:30:03 2012 +0000
+
+    Fixup previous commit
+
+commit 0b6003c2cbaa40beb2de041c1a777a8ae9f626c0
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 28 16:23:57 2012 +0000
+
+    Saner default values for Path+DB configs
+
+commit 68824bba2413c78eff0aa0073f34a77a475d954e
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 28 16:20:58 2012 +0000
+
+    Ensure the SQLA tests actually use the SQLA driver
+
+commit 76f126f320ec13902f7caab40b2eb88d4abff746
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 28 16:05:18 2012 +0000
+
+    Remove unnecessary hack inherited from ceilometer.
+
+commit 61557f807f4fdeb128317eb4154260e6bdd40dbd
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 28 16:03:41 2012 +0000
+
+    Rename "sqla" to "impl_sqlalchemy"
+
+commit 3ff7c40f506c13806a370a262bf4e7b1eaa04adc
+Merge: 998a3ef b3dfe9d
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 28 08:45:22 2012 -0700
+
+    Merge pull request #2 from ekarlso/master
+    
+    Move to a storage based backend approach like the one in Ceilometer.
+
+commit b3dfe9d13822e9708e38cd5c7eae8d649b2ea759
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Sun Oct 28 16:32:26 2012 +0100
+
+    Fix license headers and skip setting engine before connection
+
+commit d1a5e56a505ddd6f49bab126c85921ffe553d823
+Author: Endre Karlson <endre.karlson@gmail.com>
+Date:   Sun Oct 28 12:24:43 2012 +0100
+
+    Attempt to make backends more driver based like in Ceilometer
+
+commit 998a3ef37641589b8ff472a1316ae27f5e240858
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sat Oct 27 15:55:56 2012 +0100
+
+    Switch from git:// to GubHub tarball via https for python-monikerclient dep
+
+commit c93436984875454538318abb0224f63dc5e7d4ea
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sat Oct 27 11:25:54 2012 +0100
+
+    Rename sql_connection to the more generic database_connection
+
+commit 64b6f35c820e7c29129825d20c30c93d9ce7bf5a
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sat Oct 27 11:09:18 2012 +0100
+
+    PEP8 Fix
+
+commit 61d0f9a0299fc3cf1fec9c1fd66c4a881d260685
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Fri Oct 26 19:36:10 2012 +0100
+
+    Add database init + sync commands
+
+commit d533ec92b721d9e42ea1b8a0a781f10c00c54930
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Thu Oct 25 21:40:23 2012 +0100
+
+    Backport a few of assert methods not present in Py26. Fixes the tests on Py26
+
+commit edd51874eb08193ca916d1ffd5f8f36eecedff9c
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Thu Oct 25 18:21:10 2012 +0100
+
+    Remove pypi from travis-ci config
+
+commit d06d660fe5e056ff57dddce5e6ee9897462cb27a
+Merge: 567b07f cd6eeb4
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Thu Oct 25 18:12:13 2012 +0100
+
+    Merge remote-tracking branch 'CaptTofu/newline_fix'
+
+commit 567b07f305744700c21c1f6490c6342d91188f6f
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Thu Oct 25 18:10:41 2012 +0100
+
+    Add openstack.nose_plugin as a test dep
+
+commit 15a271cbda7fa6d063902b96f267cf673020d0d7
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Thu Oct 25 18:01:31 2012 +0100
+
+    Add Openstack-Nose test dep
+
+commit fe73ad11664ce7acdd5ed782b65675bd749b1f0e
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Thu Oct 25 17:56:01 2012 +0100
+
+    Fixup Travis-CI and tox config
+
+commit cd6eeb4e29bdbf3425378c39cf9a93010a1902f1
+Author: Patrick Galbraith <patg@hp.com>
+Date:   Thu Oct 25 00:15:44 2012 +0000
+
+    Two newlines needed for zone files that have more than one RR to have one newline at end
+
+commit 6b8dff988989087009ff8e26a79b5bd49cf6b366
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Oct 24 20:16:53 2012 +0100
+
+    Add Travis-CI config file
+
+commit 20c13f601c336917624dc9a592f27a19c6154b54
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Oct 24 19:57:32 2012 +0100
+
+    Final fixes for migrations addition.
+
+commit ff7335eca3a945ef132aaf16ab26c8695bd95292
+Merge: 36d287b 4a5ffdd
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Oct 24 19:51:48 2012 +0100
+
+    Merge remote-tracking branch 'laptop/master'
+
+commit 36d287b8a70062f05dbab9910046f8096b2ac582
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Oct 24 19:50:16 2012 +0100
+
+    Add tests policy.json
+
+commit 341c756c50dfd128ca9e0a3c75e59be3bb3dfa11
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Oct 24 19:41:31 2012 +0100
+
+    Ensure utils.find_config() raises correctly on failure to find config
+
+commit 6c3104926203decd9520034263d242c0e2624ab1
+Merge: 2d5ed8b f3c5ccf
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Oct 24 19:39:29 2012 +0100
+
+    Merge branch 'policy'
+
+commit f3c5ccf9ec190c22ce12d23bbc3b98d923e7708c
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Oct 24 19:38:44 2012 +0100
+
+    Policy implementation (part 1)
+
+commit 2d5ed8bf1d6a2272d5999ebbf180dce1380eba91
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Oct 24 19:38:29 2012 +0100
+
+    Add Database driver server method tests
+
+commit e9c8e1c18c3f7e4cdcd3eebdca206fca143b8fd0
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Oct 24 19:38:02 2012 +0100
+
+    Ensure agents recieve the correct params for delete_domain calls
+
+commit b492ac5f051927c4f41e2e31034612f8755c2fbb
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Oct 24 19:38:02 2012 +0100
+
+    Handle `exceptions.Forbidden` appropriately in the API.
+
+commit c1a1748042d9e32ee4f28f03818dd7cb6ce2459d
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Oct 24 19:38:02 2012 +0100
+
+    Correct handling of duplicates
+
+commit 4a5ffddd82b159d264e61730b582db1649ccac95
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Oct 23 18:30:14 2012 +0100
+
+    Fixup PEP8 errors in previous merge + remove license info from empty files.
+
+commit bfeda124879131f5faf44c1b0c69c724b84611dc
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Oct 23 18:22:20 2012 +0100
+
+    Add SQLAlchemy Migrate dep
+
+commit bca3d75d7509c30c2d297d5e1eeb03a57a8ce212
+Merge: a03c834 799bb94
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Oct 23 18:20:56 2012 +0100
+
+    Merge remote-tracking branch 'CaptTofu/capttofu-mysql-cleaned'
+
+commit a03c8349558a4e0cbb9d87573dc967c52d86bae2
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Oct 23 18:05:48 2012 +0100
+
+    Add some missing deps required by OS-Common
+
+commit fbf3d45bb44a69ccf0d73c8580316df1fcc0e811
+Merge: 8953d62 7dd8afa
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Oct 23 16:36:01 2012 +0100
+
+    Merge branch 'master' of github.com:managedit/moniker
+    
+    Conflicts:
+    	tox.ini
+
+commit 8953d6277b0fb2cee1ae793a1e6189c8b47434ce
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Oct 23 16:32:45 2012 +0100
+
+    Delete duplicated schemas.py
+
+commit eca1b6c28784c147054f62251051f3bec7ce618f
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Oct 23 16:32:27 2012 +0100
+
+    Include newer bin/ files on tox pep8 checks
+
+commit 7dd8afa3d70f4b1858de72a8de0f98ad1299477c
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Mon Oct 22 21:41:56 2012 +0100
+
+    Use the latest version of PEP8
+
+commit 799bb94553c7b2b922c5853de5d3ce8e941c6989
+Author: Patrick Galbraith <patg@hp.com>
+Date:   Mon Oct 22 17:19:13 2012 +0000
+
+    Re-creating changes, this time with Git identity set!
+    * Changes to models.py to set column width
+    * Added initial migration scripts
+
+commit 2939ef73a991264a7446ec6bc6271aaf484a6ef1
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Mon Oct 22 17:21:18 2012 +0100
+
+    Add PasteDeploy dep to tools/pip-requires
+
+commit d3cd6007ad119642c4e80c1b977272ee4d29db18
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 21 17:10:53 2012 +0100
+
+    Remove duplicate requirement on setuptools-git
+
+commit 9f88e0b8a82122e2dd6749d5c00a396aea9b4bd7
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 14 21:22:04 2012 +0100
+
+    Extract setup-requires from setup.py
+
+commit 9777657f69b1bf18303340b5ac8454817233aa21
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 14 21:19:16 2012 +0100
+
+    Add tests_require to setup.py
+
+commit bd58c9805bd22d5d204f60afbe8b19da8c0f38e4
+Merge: 34dc390 bbe6a58
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 14 20:58:44 2012 +0100
+
+    Merge branch 'master' of github.com:managedit/moniker
+
+commit bbe6a58395a1b7a3a45c002ac3e04671fd931cb9
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 14 19:19:32 2012 +0100
+
+    Move TODO's to the bottom on the readme
+
+commit 14d38041f97f961362abaa4a03e6c59df42ee474
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 14 19:15:31 2012 +0100
+
+    Move some dep's from test-requires to pip-requires
+
+commit 6b315ec6195691b4d6dd063a6dda5c8748722d24
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 14 19:12:12 2012 +0100
+
+    Add some *really* basic instructions.
+
+commit 841ae8bd152065c36cbf55cc974cd70eed333b34
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 14 19:01:55 2012 +0100
+
+    Add .venv to gitignore file
+
+commit 69fca2f4a9798ef8cb90c26cc6b1e6dac42c4f0f
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 14 18:55:18 2012 +0100
+
+    Ensure all bin/ files are as "dumb" as possible.
+
+commit 7c80526a6c4dd7107b2f33ad9b3801a783d19f6b
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 14 18:46:37 2012 +0100
+
+    Add Moniker Central tests for domains and records
+
+commit d5a000a5863fd8a9bbc944bbd370911f0d67e1da
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 14 18:10:12 2012 +0100
+
+    Remove temporary keystone config options
+
+commit b5d4a0b7488fe800c881c835fc926146e021fa15
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 14 18:08:34 2012 +0100
+
+    Remove Debug API endpoint + Remove some unneeded imports
+
+commit 5d9513349e39f2574c9a5f631dfc48b1602a9de5
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 14 18:04:25 2012 +0100
+
+    Switch from Flask's WSGI Server to OpenStack Commons + Use PasteDeploy for easier Keystone integration.
+
+commit 79dda034de3f1ce17eda47cf7ca5246172ec2578
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 14 17:19:54 2012 +0100
+
+    Add OpenStack Common WSGI module
+
+commit 60f34f122ce8610e39c666ed8efd329de3d56dc7
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 14 16:22:19 2012 +0100
+
+    Ensuring fitering a empty collection works
+
+commit edd955129b1aff43f338d6af5544f4bee6d1c027
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 14 15:55:59 2012 +0100
+
+    Move API app from __init__.py -> app.py
+
+commit 18c17eae6a4232c7de9952ee4fc757890df80817
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 14 15:52:46 2012 +0100
+
+    Use fake RPC backend for testing
+
+commit 34249743cbe8f85da45231e7296ca16de1548708
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 14 15:24:07 2012 +0100
+
+    Add Moniker Central server management tests.
+
+commit 9bb9b597ea59501c90a4044a735dbd05bd3656fb
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 14 14:30:36 2012 +0100
+
+    Remove some un-used imports
+
+commit 2008fcc41f9c01dc38fccd8c6625d68efe76b252
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sun Oct 14 14:28:05 2012 +0100
+
+    Move create schema hack into into it's own method.
+
+commit 34dc390dd27508ee634ff31a1b482eff06669005
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sat Oct 13 01:19:22 2012 +0100
+
+    Add tox and venv to ST2 folder ignores
+
+commit e614c58bc3c47e445ec543adff83bc86ec353a80
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sat Oct 13 01:17:29 2012 +0100
+
+    Fix another missing license header
+
+commit 829ad53ed1492965164de4ac4d3ed79aaf1d9921
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sat Oct 13 01:05:53 2012 +0100
+
+    Add skeleton test framework
+
+commit 76dc41b11beb0d88266d7bc355175b7f63e9c71e
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sat Oct 13 01:05:27 2012 +0100
+
+    Fix license headers
+
+commit 8bc792c373a81a4a52665cb2d3bd3aa3817ccb1c
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Sat Oct 13 00:59:39 2012 +0100
+
+    Make use of OpenStack Common setup module
+
+commit ba222e64aefccb8feff118e49ba0cc1329bb49c5
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Fri Oct 12 23:46:35 2012 +0100
+
+    Ensure the bind9 agent's output path is created, if necessary.
+
+commit a7f8d2f1c05f936348aa9e0b3ad4a39582c8d40a
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Fri Oct 12 23:46:08 2012 +0100
+
+    Ensure delete's are flushed to the DB immediately.
+
+commit 83919984f17d19eaaf5c068efb2cf44cecf5dc54
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Fri Oct 12 23:45:40 2012 +0100
+
+    Ensure moniker's exceptions are re-raised over RPC
+
+commit a4398a80c37d38af6f8c815ab18bfc388afd8ce5
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Fri Oct 12 22:55:58 2012 +0100
+
+    Reapply WIP openstack common patch from https://review.openstack.org/#/c/13953/
+
+commit 97b9c4b0d508ed983f9ce4cf01834f31444b32a7
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Fri Oct 12 22:26:03 2012 +0100
+
+    Ensure the RNDC call only supplies a config file option if one has been explicitly set
+
+commit 98b65a5ed2fe184b8759dc259cdca33adefb6764
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Fri Oct 12 20:39:34 2012 +0100
+
+    Remove leftover config file
+
+commit d210bae0e6fc66f17e37f520c0c02ce9c2449642
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Fri Oct 12 20:23:24 2012 +0100
+
+    Sync with OpenStack Common rev f182936b
+
+commit e90a0fd76ae3a811102b99eb77cfa9b8642fb25e
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Oct 3 18:59:07 2012 +0100
+
+    Add some temp config vars to disable keystone and use a default tenant/user instead.
+
+commit 9ad2e6e8dfd70c595e72293c326a0b5c7aab7f33
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Wed Oct 3 18:45:24 2012 +0100
+
+    Lots of changes:
+    
+    * Sync with OS-Common
+      * Switch from openstack.common.manager to openstack.common.rpc.service
+      * Apply WIP patch from https://review.openstack.org/13953
+    * Re-add Keystone Middleware
+    * Rename config files to *.conf.sample as keystone tokens will now be required
+    * Fixed a few bugs in the bind9 agent. (It still needs an overhaul to be considered stable though)
+
+commit 579c49ca37eb171664afa94b4cf795ada12e47c1
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Sep 25 15:14:56 2012 +0100
+
+    Add utils and exception modules from openstack-common.
+
+commit 7984e1da4b2f2a148fc54f0dffbab11c004f937d
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Sep 25 14:29:32 2012 +0100
+
+    Switch default sql_connection to an in-memory sqlite DB
+
+commit 82aa6ae1f52fa3da973b78a5f5b25d9795dad8ef
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Sep 25 14:15:59 2012 +0100
+
+    Sync to openstack-common rev 974989d9
+
+commit a466a4fad56f6846ea1b043409bc0e1a1e004ec2
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Sep 25 08:33:07 2012 +0100
+
+    Remove leftover file.
+
+commit baeb260f040564fcdbee9762a6ebad80482c6543
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Sep 25 08:16:54 2012 +0100
+
+    Add TODO note
+
+commit 3e8acd1ddfa2ba82a24aca4386ed0a49456602f9
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Sep 25 08:09:34 2012 +0100
+
+    Rename TODO list
+
+commit e851d552c80a450d2e564b2b20432fd656699d01
+Author: Kiall Mac Innes <kiall@managedit.ie>
+Date:   Tue Sep 25 08:00:23 2012 +0100
+
+    Initial Public Commit.
+    
+    The previous history contained sensitive imformation.

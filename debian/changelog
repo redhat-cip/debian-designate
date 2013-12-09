@@ -1,3 +1,22 @@
+designate (2014.1.a40.g019d753-1) precise; urgency=low
+
+  * New upstream snapshot 
+
+ -- Artom Lifshitz <artom.lifshitz@enovance.com>  Mon, 09 Dec 2013 20:59:25 +0000
+
+designate (2014.1.a39.gaf6da95-1) precise; urgency=low
+
+  * New upstream snapshot 
+
+ -- Artom Lifshitz <artom.lifshitz@enovance.com>  Fri, 06 Dec 2013 21:47:38 +0000
+
+designate (2014.1.a35.g5aaf7c5-2) precise; urgency=low
+
+  * New upstream snapshot 
+  * Add build-dependency on python-testscenarios
+
+ -- Artom Lifshitz <artom.lifshitz@enovance.com>  Wed, 04 Dec 2013 21:43:02 +0000
+
 designate (2013.2-4) precise; urgency=high
 
   * Add recommends on python-mysqldb

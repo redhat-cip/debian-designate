@@ -1,15 +1,25 @@
+From: Artom Lifshitz <artom.lifshitz@enovance.com>
+Date: Fri, 22 Nov 2013 20:09:19 +0000
+Subject: support-old-webtest
+
+---
+ designate/tests/__init__.py |    1 +
+ designate/tests/patches.py  |   48 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 49 insertions(+)
+ create mode 100644 designate/tests/patches.py
+
 diff --git a/designate/tests/__init__.py b/designate/tests/__init__.py
-index ee4dd0a..bfb4f4b 100644
+index 4013bd2..a7616da 100644
 --- a/designate/tests/__init__.py
 +++ b/designate/tests/__init__.py
-@@ -18,6 +18,7 @@ import unittest2
- import mox
- import nose
+@@ -19,6 +19,7 @@ import functools
+ import os
+ from testtools import testcase
  from oslo.config import cfg
-+from designate.tests import patches  # flake8: noqa
++from designate.tests import patches # flake8: noqa
  from designate.openstack.common import log as logging
  from designate.openstack.common.notifier import test_notifier
- from designate.openstack.common import policy
+ from designate.openstack.common.fixture import config
 diff --git a/designate/tests/patches.py b/designate/tests/patches.py
 new file mode 100644
 index 0000000..c60543d
@@ -64,3 +74,4 @@ index 0000000..c60543d
 +    webtest.TestApp = TestApp
 +except ImportError:
 +    pass
+-- 

@@ -1,9 +1,19 @@
+From: Artom Lifshitz <artom.lifshitz@enovance.com>
+Date: Fri, 22 Nov 2013 20:07:21 +0000
+Subject: remove-mysqlbind
+
+---
+ designate/backend/impl_mysqlbind9.py          |  399 -------------------------
+ designate/tests/test_backend/test_backends.py |    2 -
+ 2 files changed, 401 deletions(-)
+ delete mode 100644 designate/backend/impl_mysqlbind9.py
+
 diff --git a/designate/backend/impl_mysqlbind9.py b/designate/backend/impl_mysqlbind9.py
 deleted file mode 100644
-index 62797b8..0000000
+index fc6059e..0000000
 --- a/designate/backend/impl_mysqlbind9.py
 +++ /dev/null
-@@ -1,398 +0,0 @@
+@@ -1,399 +0,0 @@
 -# Copyright 2012 Hewlett-Packard Development Company, L.P. All Rights Reserved.
 -# Copyright 2012 Managed I.T.
 -#
@@ -43,7 +53,8 @@ index 62797b8..0000000
 -    cfg.IntOpt('rndc-port', default=953, help='RNDC Port'),
 -    cfg.StrOpt('rndc-config-file',
 -               default=None, help='RNDC Config File'),
--    cfg.StrOpt('rndc-key-file', default=None, help='RNDC Key File'),
+-    cfg.StrOpt('rndc-key-file', secret=True,
+-               default=None, help='RNDC Key File'),
 -    cfg.StrOpt('dns-server-type', default='master',
 -               help='slave or master DNS server?'),
 -    cfg.BoolOpt('write-database', default=True,
@@ -402,37 +413,17 @@ index 62797b8..0000000
 -        rndc_call.extend(['reconfig'])
 -
 -        utils.execute(*rndc_call)
-diff --git a/designate/tests/test_backend/test_mysqlbind9.py b/designate/tests/test_backend/test_mysqlbind9.py
-deleted file mode 100644
-index 9c254a2..0000000
---- a/designate/tests/test_backend/test_mysqlbind9.py
-+++ /dev/null
-@@ -1,28 +0,0 @@
--# Copyright 2012 Managed I.T.
--#
--# Author: Kiall Mac Innes <kiall@managedit.ie>
--#
--# Licensed under the Apache License, Version 2.0 (the "License"); you may
--# not use this file except in compliance with the License. You may obtain
--# a copy of the License at
--#
--#      http://www.apache.org/licenses/LICENSE-2.0
--#
--# Unless required by applicable law or agreed to in writing, software
--# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
--# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
--# License for the specific language governing permissions and limitations
--# under the License.
--from designate.openstack.common import log as logging
--from designate.tests.test_backend import BackendTestCase
--
--LOG = logging.getLogger(__name__)
--
--
--class MySQLBind9BackendDriverTestCase(BackendTestCase):
--    __test__ = True
--
--    def setUp(self):
--        super(MySQLBind9BackendDriverTestCase, self).setUp()
--
--        self.config(backend_driver='mysqlbind9', group='service:agent')
+diff --git a/designate/tests/test_backend/test_backends.py b/designate/tests/test_backend/test_backends.py
+index 9564022..668a002 100644
+--- a/designate/tests/test_backend/test_backends.py
++++ b/designate/tests/test_backend/test_backends.py
+@@ -24,8 +24,6 @@ class BackendTestCase(tests.TestCase, BackendTestMixin):
+         ('bind9', dict(backend_driver='bind9', group='service:agent')),
+         ('dnsmasq', dict(backend_driver='dnsmasq', group='service:agent')),
+         ('fake', dict(backend_driver='fake', group='service:agent')),
+-        ('mysqlbind9', dict(backend_driver='mysqlbind9',
+-                            group='service:agent')),
+         ('nsd4slave', dict(backend_driver='nsd4slave', group='service:agent',
+                            server_fixture=NSD4Fixture)),
+         ('powerdns', dict(backend_driver='powerdns', group='service:agent'))
+-- 
