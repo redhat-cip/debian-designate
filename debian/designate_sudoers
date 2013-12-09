@@ -1,3 +1,0 @@
-Defaults:designate !requiretty
-
-designate ALL = (root) NOPASSWD: /usr/sbin/rndc

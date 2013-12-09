@@ -1,5 +1,0 @@
-usr/bin/designate-manage
-debian/designate_sudoers /etc/sudoers.d/
-etc/designate/designate.conf.sample /usr/share/designate/
-etc/designate/rootwrap.conf.sample /usr/share/designate/
-etc/designate/policy.json /usr/share/designate/

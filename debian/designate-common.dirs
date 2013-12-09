@@ -1,5 +1,0 @@
-etc/designate
-etc/designate/conf.d
-var/lib/designate
-var/log/designate
-usr/share/designate

@@ -1,3 +1,0 @@
-/usr/share/designate/designate.conf.sample /etc/designate/designate.conf
-/usr/share/designate/rootwrap.conf.sample /etc/designate/rootwrap.conf
-/usr/share/designate/policy.json /etc/designate/policy.json
